@@ -121,13 +121,24 @@ app.get('/', function (req, res) {
     res.redirect('/index.html');
 });
 
+/*
+
+Optional parameters:
+    @param extended     Use extended template. Show user information at header. e.g., extended=true. Default: false. 
+    @param lang         Set code language, for highlight. e.g., lang=python. Default is based in file extension. e.g., file.py returns python highlight style.
+    @param locale       Set template locale, for translation. e.g., locale=en. Default: en.
+    @param slice        Slice file, returning only the lines selected. e.g., slice=1:8. Default: null.
+    @param theme        Set template theme. e.g., theme=github, Default: github.
+    @param type         Return type for content. e.g. type=html. Default: js.
+*/
 app.get('/github/gist/:id', function (req, res) {
 
     var extended = req.query.extended,
         lang = req.query.lang,
-        //locale = req.query.locale || 'en',
+        locale = req.query.locale || 'en',
         slice = req.query.slice,
         theme = req.query.theme || 'github',
+        type = req.query.type || 'js',
         from, to;
 
     var url = 'https://api.github.com/gists/{0}'.format(req.params.id);
@@ -195,14 +206,13 @@ app.get('/github/gist/:id', function (req, res) {
 /*
 
 Optional parameters:
-    @param branch       Set file branch. Required if changeset is null. e.g., branch=master. Default master.
-    @param changeset    Set file changeset. Required if branch is null. e.g., changeset=38d25e12627b. Default null.
-    @param extended     Use extended template. Show user information at header. e.g., extended=true. Default false. 
+    @param branch       Set file branch or changeset. e.g., branch=master or branch=38d25e12627b. Default: master.
+    @param extended     Use extended template. Show user information at header. e.g., extended=true. Default: false. 
     @param lang         Set code language, for highlight. e.g., lang=python. Default is based in file extension. e.g., file.py returns python highlight style.
-    @param locale       Set template locale, for translation. e.g., locale=en. Default en.
-    @param slice        Slice file, returning only the lines selected. e.g., slice=1:8. Default "null.
-    @param theme        Set template theme. e.g., theme=github, Default github.
-    @param type         Return type for content. e.g. type=html. Default js.
+    @param locale       Set template locale, for translation. e.g., locale=en. Default: en.
+    @param slice        Slice file, returning only the lines selected. e.g., slice=1:8. Default: null.
+    @param theme        Set template theme. e.g., theme=github, Default: github.
+    @param type         Return type for content. e.g. type=html. Default: js.
 */
 app.get('/:host/:user/:repo/:path(*)', function (req, res) {
 
@@ -211,27 +221,22 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
         repo = req.params.repo,
         user = req.params.user,
         branch = req.query.branch || 'master',
-        changeset = req.query.changeset,
         extended = req.query.extended,
         lang = req.query.lang,
-        //locale = req.query.locale || 'en',
+        locale = req.query.locale || 'en',
         slice = req.query.slice,
         theme = req.query.theme || 'github',
+        type = req.query.type || 'js',
         fileName = path.split('/').pop(),
         htmlUrl, rawUrl, repoUrl, from, to;
-
 
     if (host === 'github') {
         htmlUrl =  'https://github.com/{0}/{1}/blob/{2}/{3}'.format(user, repo, branch, path);
         rawUrl =  'https://raw.githubusercontent.com/{0}/{1}/{2}/{3}'.format(user, repo, branch, path);
         repoUrl = 'https://github.com/{0}/{1}'.format(user, repo);
     } else if (host === 'bitbucket') {
-        if (!changeset) {
-            // TODO: Return error.
-        }
-
+        htmlUrl =  'https://bitbucket.org/{0}/{1}/src/{2}/{3}'.format(user, repo, branch, path);
         rawUrl =  'https://api.bitbucket.org/1.0/repositories/{0}/{1}/raw/{2}/{3}'.format(user, repo, branch, path);
-        htmlUrl =  'https://bitbucket.org/{0}/{1}/src/{2}/{3}?at={4}'.format(user, repo, changeset, path, branch);
         repoUrl = 'https://bitbucket.org/{0}/{1}'.format(user, repo);
     } else {
         res.end();
