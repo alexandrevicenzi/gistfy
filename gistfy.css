@@ -1,0 +1,229 @@
+/*
+
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+
+*/
+
+.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    color: #333;
+    background: #f8f8f8;
+    -webkit-text-size-adjust: none;
+}
+
+.hljs-comment,
+.hljs-template_comment,
+.diff .hljs-header,
+.hljs-javadoc {
+    color: #998;
+    font-style: italic;
+}
+
+.hljs-keyword,
+.css .rule .hljs-keyword,
+.hljs-winutils,
+.javascript .hljs-title,
+.nginx .hljs-title,
+.hljs-subst,
+.hljs-request,
+.hljs-status {
+    color: #333;
+    font-weight: bold;
+}
+
+.hljs-number,
+.hljs-hexcolor,
+.ruby .hljs-constant {
+    color: #008080;
+}
+
+.hljs-string,
+.hljs-tag .hljs-value,
+.hljs-phpdoc,
+.hljs-dartdoc,
+.tex .hljs-formula {
+    color: #d14;
+}
+
+.hljs-title,
+.hljs-id,
+.scss .hljs-preprocessor {
+    color: #900;
+    font-weight: bold;
+}
+
+.javascript .hljs-title,
+.hljs-list .hljs-keyword,
+.hljs-subst {
+    font-weight: normal;
+}
+
+.hljs-class .hljs-title,
+.hljs-type,
+.vhdl .hljs-literal,
+.tex .hljs-command {
+    color: #458;
+    font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-tag .hljs-title,
+.hljs-rules .hljs-property,
+.django .hljs-tag .hljs-keyword {
+    color: #000080;
+    font-weight: normal;
+}
+
+.hljs-attribute,
+.hljs-variable,
+.lisp .hljs-body {
+    color: #008080;
+}
+
+.hljs-regexp {
+    color: #009926;
+}
+
+.hljs-symbol,
+.ruby .hljs-symbol .hljs-string,
+.lisp .hljs-keyword,
+.clojure .hljs-keyword,
+.scheme .hljs-keyword,
+.tex .hljs-special,
+.hljs-prompt {
+    color: #990073;
+}
+
+.hljs-built_in {
+    color: #0086b3;
+}
+
+.hljs-preprocessor,
+.hljs-pragma,
+.hljs-pi,
+.hljs-doctype,
+.hljs-shebang,
+.hljs-cdata {
+    color: #999;
+    font-weight: bold;
+}
+
+.hljs-deletion {
+    background: #fdd;
+}
+
+.hljs-addition {
+    background: #dfd;
+}
+
+.diff .hljs-change {
+    background: #0086b3;
+}
+
+.hljs-chunk {
+    color: #aaa;
+}
+
+/*
+
+Gist style.
+
+*/
+
+.gist {
+    color: #000
+}
+
+.gist .gist-render iframe {
+    width: 100%;
+}
+
+.gist pre {
+    font: inherit;
+    line-height: inherit;
+    white-space: pre;
+}
+
+.gist .gist-file {
+    border: 1px solid #ddd;
+    border-bottom: 1px solid #ccc;
+    border-radius: 3px;
+    font-family: Consolas, "Liberation Mono", Courier, monospace;
+    margin-bottom: 1em;
+}
+
+.gist {
+    border: none;
+}
+
+.gist .gist-file .gist-meta {
+    font: 12px "Helvetica Neue", Helvetica, arial, freesans, clean, sans-serif;
+    text-shadow: 1px 1px rgba(255,255,255,0.8);
+    overflow: hidden;
+    color: #999;
+    padding: 10px;
+    background-color: #e8e8e8;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#e8e8e8));
+    background-image: -webkit-linear-gradient(#fafafa, #e8e8e8);
+    background-image: linear-gradient(#fafafa, #e8e8e8);
+    background-repeat: repeat-x;
+}
+
+.gist .gist-file .gist-meta a {
+    font-weight: bold;
+    color: #666;
+    text-decoration: none;
+}
+
+.gist .gist-file .gist-data {
+    overflow: auto;
+    word-wrap: normal;
+    background-color: #f8f8ff;
+    border-bottom: 1px solid #ddd;
+    font-size: 100%;
+}
+
+.gist .gist-file.scroll .gist-data {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 30px;
+    left: 0px;
+    overflow: scroll;
+}
+
+.gist .gist-file.scroll .gist-meta {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+}
+
+.gist .gist-file .gist-data .line-data {
+    padding: .5em !important;
+}
+
+.gist .gist-file .gist-data .line-pre {
+    font-family: Consolas, "Liberation Mono", Courier, monospace;
+    background: transparent !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.gist .gist-file .gist-data .line-numbers {
+    background-color: #ececec;
+    color: #aaa;
+    border-right: 1px solid #ddd;
+    text-align: right;
+    padding: .5em;
+    clear: right;
+    display: block;
+}
+
+.line-number {
+    clear: inherit;
+    display: inherit;
+}
