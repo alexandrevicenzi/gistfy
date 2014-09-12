@@ -15,6 +15,7 @@ Gist your GitHub and Bitbucket repositories
 ## Build dependencies
 
 - jshint
+- minify
 
 ## Usage
 
