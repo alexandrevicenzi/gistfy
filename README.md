@@ -28,3 +28,9 @@ Gist your GitHub and Bitbucket repositories
 #### Extended
 
 - `/github/<user>/<repo>/<branch>/<path_to_file>?branch=<branch>&slice=<from_line>:<to_line>&lang=<language>`
+
+#### Embed
+
+```html
+<script type="text/javascript" src="/github/alexandrevicenzi/gistfy/examples/minimal.py?branch=master"></script>
+```
