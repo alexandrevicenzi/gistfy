@@ -121,24 +121,88 @@ app.get('/', function (req, res) {
     res.redirect('/index.html');
 });
 
-app.get('/github/gists/:id', function (req, res) {
+app.get('/github/gist/:id', function (req, res) {
+
+    var extended = req.query.extended,
+        lang = req.query.lang,
+        //locale = req.query.locale || 'en',
+        slice = req.query.slice,
+        theme = req.query.theme || 'github',
+        from, to;
 
     var url = 'https://api.github.com/gists/{0}'.format(req.params.id);
-    // TODO:
-    res.end();
+
+    if (slice) {
+        slice = slice.split(':');
+
+        if (slice && slice.length === 2) {
+            from = parseInt(slice.shift()) - 1;
+            to = parseInt(slice.shift()) - 1;
+        }
+    }
+
+    downloadJSON(url, function (data) {
+        var files = [];
+
+        for (var k in data.files) {
+            var file = data.files[k];
+            var c = file.content;
+
+            if (c.startsWith('\n')) {
+                c = c.substring(1);
+            }
+
+            if (c.endsWith('\n')) {
+                c = c.substring(0, c.length - 1);
+            }
+
+            // FIX ME: If the 1st file has 5 lines, the 2nd will be cutted to 5 too.
+            from = 0;
+            to = 0;
+            if (!(from >= 0 && to > 0)) {
+                from = 0;
+                to = c.split('\n').length - 1;
+            } else {
+                c = c.split('\n').slice(from, to + 1).join('\n');
+            }
+
+            var lines = range(from, to);
+            c = highlight(c, lang || guessLanguage(file.filename));
+
+            files.push({
+                htmlUrl: data.html_url,
+                rawUrl: file.raw_url,
+                fileName: file.filename,
+                content: c,
+                lineRange: lines,
+            });
+        }
+
+        var options = {
+            files: files,
+            repoUrl: null,
+            theme: theme,
+            extended: extended
+        };
+
+        var js = buildJS(options);
+
+        res.setHeader('content-type', 'text/javascript');
+        res.send(js);
+    });
 });
 
 /*
 
 Optional parameters:
-    slice
-    lang
-    locale
-    theme
-    extended
-    branch
-    changeset
-
+    @param branch       Set file branch. Required if changeset is null. e.g., branch=master. Default master.
+    @param changeset    Set file changeset. Required if branch is null. e.g., changeset=38d25e12627b. Default null.
+    @param extended     Use extended template. Show user information at header. e.g., extended=true. Default false. 
+    @param lang         Set code language, for highlight. e.g., lang=python. Default is based in file extension. e.g., file.py returns python highlight style.
+    @param locale       Set template locale, for translation. e.g., locale=en. Default en.
+    @param slice        Slice file, returning only the lines selected. e.g., slice=1:8. Default "null.
+    @param theme        Set template theme. e.g., theme=github, Default github.
+    @param type         Return type for content. e.g. type=html. Default js.
 */
 app.get('/:host/:user/:repo/:path(*)', function (req, res) {
 
@@ -200,6 +264,7 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
             data = data.split('\n').slice(from, to + 1).join('\n');
         }
 
+        var lines = range(from, to);
         data = highlight(data, lang || guessLanguage(fileName));
 
         var options = {
@@ -208,9 +273,7 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
                 rawUrl: rawUrl,
                 fileName: fileName,
                 content: data,
-                lineRange: function () {
-                    return range(from, to);
-                }
+                lineRange: lines
             }],
             repoUrl: repoUrl,
             theme: theme,
@@ -236,5 +299,5 @@ app.get('/:file(*)', function(req, res, next) {
 });
 
 app.listen(PORT, IP_ADDRESS, function () {
-    console.log('Listening on http://{0}:{1}'.format(IP_ADDRESS, PORT))
+    console.log('Listening on http://{0}:{1}'.format(IP_ADDRESS, PORT));
 });
