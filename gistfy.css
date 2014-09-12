@@ -219,11 +219,9 @@ Gist style.
     border-right: 1px solid #ddd;
     text-align: right;
     padding: .5em;
-    clear: right;
-    display: block;
 }
 
 .line-number {
-    clear: inherit;
-    display: inherit;
+    clear: right;
+    display: block;
 }
