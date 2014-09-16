@@ -1,0 +1,4 @@
+"scripts": {
+  "start": "node gistfy.js"
+},
+"main": "gistfy.js"
