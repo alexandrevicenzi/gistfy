@@ -1,0 +1,18 @@
+#!/bin/sh
+
+echo Installing dependencies for Gistfy
+
+echo Downloading express
+npm install express
+
+echo Downloading highlight.js
+npm install highlight.js
+
+echo Downloading swig
+npm install swig
+
+echo Downloading jshint
+npm install jshint
+
+echo Downloading minify
+npm install minify
