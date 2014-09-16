@@ -102,11 +102,6 @@ function downloadJSON(url, callback) {
     });
 }
 
-function buildJS(options) {
-    return 'document.write(\'<link rel=\"stylesheet\" href=\"' + BASE_URL + '/gistfy.css\">\');\n'+
-           'document.write(\'' + escapeJS(template(options)) + '\');';
-}
-
 function guessLanguage(file) {
     if (file) {
         // FIX ME: Doesn't work for all extensions. e.g. ".cpp".
@@ -114,6 +109,73 @@ function guessLanguage(file) {
         return file.split('.').pop();
     } else {
         return null;
+    }
+}
+
+function processData(data, slice) {
+
+    var start, end, len;
+
+    // TODO: Use while, maybe more than once.
+    if (data.startsWith('\n')) {
+        data = data.substring(1);
+    }
+
+    if (data.endsWith('\n')) {
+        data = data.substring(0, data.length - 1);
+    }
+
+    if (slice) {
+
+        if (slice.indexOf(':') > -1) {
+            slice = slice.split(':');
+            if (slice) {
+                // e.g 1:5 or -3:-1
+                start = parseInt(slice.shift()) || 0;
+                end = parseInt(slice.shift()) || -1;
+            }
+        } else {
+            start = parseInt(slice) || 0;
+            end = start;
+        }
+
+        len = data.split('\n').length;
+
+        if (start < 0) {
+            start = len + start;
+        } else if (start + 1 > len) {
+            start = 0
+        }
+
+        if (end < 0) {
+            end = len + end;
+        } else if (end + 1 > len) {
+            end = len - 1
+        }
+
+        data = data.split('\n').slice(start, end + 1).join('\n');
+
+    } else {
+        start = 0;
+        end = data.split('\n').length - 1;
+    }
+
+    return { data: data, start: start, end: end };
+}
+
+function buildResponse(type, options, callback) {
+    switch (type) {
+        case "js":
+            var js = 'document.write(\'<link rel=\"stylesheet\" href=\"' + BASE_URL + '/gistfy.css\">\');\n'+
+                     'document.write(\'' + escapeJS(template(options)) + '\');';
+            callback(200, js, 'text/javascript');
+            break;
+        case "html":
+            var html = '<link rel=\"stylesheet\" href=\"' + BASE_URL + '/gistfy.css\"><br>' + template(options);
+            callback(200, html.replace('\n', '<br>'), 'text/html');
+            break;
+        default:
+            callback(400, 'Invalid type.', 'text/html')
     }
 }
 
@@ -138,47 +200,19 @@ app.get('/github/gist/:id', function (req, res) {
         locale = req.query.locale || 'en',
         slice = req.query.slice,
         theme = req.query.theme || 'github',
-        type = req.query.type || 'js',
-        from, to;
+        type = req.query.type || 'js';
 
     var url = 'https://api.github.com/gists/{0}'.format(req.params.id);
-
-    if (slice) {
-        slice = slice.split(':');
-
-        if (slice && slice.length === 2) {
-            from = parseInt(slice.shift()) - 1;
-            to = parseInt(slice.shift()) - 1;
-        }
-    }
 
     downloadJSON(url, function (data) {
         var files = [];
 
         for (var k in data.files) {
             var file = data.files[k];
-            var c = file.content;
 
-            if (c.startsWith('\n')) {
-                c = c.substring(1);
-            }
-
-            if (c.endsWith('\n')) {
-                c = c.substring(0, c.length - 1);
-            }
-
-            // FIX ME: If the 1st file has 5 lines, the 2nd will be cutted to 5 too.
-            from = 0;
-            to = 0;
-            if (!(from >= 0 && to > 0)) {
-                from = 0;
-                to = c.split('\n').length - 1;
-            } else {
-                c = c.split('\n').slice(from, to + 1).join('\n');
-            }
-
-            var lines = range(from, to);
-            c = highlight(c, lang || guessLanguage(file.filename));
+            var newData = processData(file.content, slice),
+                lines = range(newData.start, newData.end),
+                c = highlight(newData.data, lang || guessLanguage(file.filename));
 
             files.push({
                 htmlUrl: data.html_url,
@@ -196,10 +230,10 @@ app.get('/github/gist/:id', function (req, res) {
             extended: extended
         };
 
-        var js = buildJS(options);
-
-        res.setHeader('content-type', 'text/javascript');
-        res.send(js);
+        buildResponse(type, options, function (status, content, contentType) {
+            res.setHeader('content-type', contentType);
+            res.send(content);
+        });
     });
 });
 
@@ -243,41 +277,18 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
         return;
     }
 
-    if (slice) {
-        slice = slice.split(':');
-
-        if (slice && slice.length === 2) {
-            from = parseInt(slice.shift()) - 1;
-            to = parseInt(slice.shift()) - 1;
-        }
-    }
-
     downloadFile(rawUrl, function (data) {
 
-        if (data.startsWith('\n')) {
-            data = data.substring(1);
-        }
-
-        if (data.endsWith('\n')) {
-            data = data.substring(0, data.length - 1);
-        }
-
-        if (!(from >= 0 && to > 0)) {
-            from = 0;
-            to = data.split('\n').length - 1;
-        } else {
-            data = data.split('\n').slice(from, to + 1).join('\n');
-        }
-
-        var lines = range(from, to);
-        data = highlight(data, lang || guessLanguage(fileName));
+        var newData = processData(data, slice),
+            lines = range(newData.start, newData.end),
+            content = highlight(newData.data, lang || guessLanguage(fileName));
 
         var options = {
             files: [{
                 htmlUrl: htmlUrl,
                 rawUrl: rawUrl,
                 fileName: fileName,
-                content: data,
+                content: content,
                 lineRange: lines
             }],
             repoUrl: repoUrl,
@@ -285,10 +296,10 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
             extended: extended
         };
 
-        var js = buildJS(options);
-
-        res.setHeader('content-type', 'text/javascript');
-        res.send(js);
+        buildResponse(type, options, function (status, content, contentType) {
+            res.setHeader('content-type', contentType);
+            res.send(content);
+        });
     });
 });
 
