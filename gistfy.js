@@ -7,12 +7,14 @@ if (process.env.OPENSHIFT_APP_DNS) {
     BASE_URL = 'http://localhost:3000';
 }
 
-var express = require('express'),
-    fs = require('fs'),
-    hljs = require('highlight.js'),
+var fs = require('fs'),
     https = require('https'),
-    swig  = require('swig'),
-    url = require('url');
+    url = require('url'),
+    path = require('path');
+
+var express = require('express'),
+    hljs = require('highlight.js'),
+    swig  = require('swig');
 
 var app = express(),
     template = swig.compileFile('template.html');
@@ -308,16 +310,7 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
     });
 });
 
-app.get('/:file(*)', function(req, res, next) {
-
-    fs.exists(req.params.file, function(exists) {
-        if (exists) {
-            res.sendFile(req.params.file, { root: __dirname });
-        } else {
-            res.sendStatus(404);
-        }
-    });
-});
+app.use(express.static(path.join(__dirname, 'static/')));
 
 app.listen(PORT, IP_ADDRESS, function () {
     console.log('Listening on http://{0}:{1}'.format(IP_ADDRESS, PORT));
