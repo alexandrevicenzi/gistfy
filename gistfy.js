@@ -1,6 +1,6 @@
 var PORT = process.env.OPENSHIFT_NODEJS_PORT || 3000,
     IP_ADDRESS = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1',
-    BASE_URL = 'http://localhost:3000';
+    BASE_URL = process.env.OPENSHIFT_APP_DNS || 'http://localhost:3000';
 
 var express = require('express'),
     fs = require('fs'),
