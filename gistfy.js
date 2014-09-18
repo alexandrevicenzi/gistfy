@@ -12,7 +12,8 @@ if (process.env.OPENSHIFT_APP_DNS) {
 var fs = require('fs'),
     https = require('https'),
     url = require('url'),
-    path = require('path');
+    path = require('path'),
+    util = require('util');
 
 var express = require('express'),
     hljs = require('highlight.js'),
@@ -20,18 +21,6 @@ var express = require('express'),
 
 var app = express(),
     template = swig.compileFile('template.html');
-
-
-String.prototype.format = function () {
-    var s = this.toString();
-
-    for (var i = 0; i < arguments.length; i++) {
-        var re = new RegExp('\\{' + i + '\\}', 'gm');
-        s = s.replace(re, arguments[i]);
-    }
-
-    return s;
-};
 
 /*
 
@@ -153,13 +142,13 @@ function processData(data, slice) {
         if (start < 0) {
             start = len + start;
         } else if (start + 1 > len) {
-            start = 0
+            start = 0;
         }
 
         if (end < 0) {
             end = len + end;
         } else if (end + 1 > len) {
-            end = len - 1
+            end = len - 1;
         }
 
         data = data.split('\n').slice(start, end + 1).join('\n');
@@ -184,7 +173,7 @@ function buildResponse(type, options, callback) {
             callback(200, html.replace('\n', '<br>'), 'text/html');
             break;
         default:
-            callback(400, 'Invalid type.', 'text/html')
+            callback(400, 'Invalid type.', 'text/html');
     }
 }
 
@@ -211,7 +200,7 @@ app.get('/github/gist/:id', function (req, res) {
         theme = req.query.theme || 'github',
         type = req.query.type || 'js';
 
-    var url = 'https://api.github.com/gists/{0}'.format(req.params.id);
+    var url = util.format('https://api.github.com/gists/%s', req.params.id);
 
     downloadJSON(url, function (data) {
         var files = [];
@@ -274,13 +263,13 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
         htmlUrl, rawUrl, repoUrl, from, to;
 
     if (host === 'github') {
-        htmlUrl =  'https://github.com/{0}/{1}/blob/{2}/{3}'.format(user, repo, branch, path);
-        rawUrl =  'https://raw.githubusercontent.com/{0}/{1}/{2}/{3}'.format(user, repo, branch, path);
-        repoUrl = 'https://github.com/{0}/{1}'.format(user, repo);
+        htmlUrl =  util.format('https://github.com/%s/%s/blob/%s/%s', user, repo, branch, path);
+        rawUrl =  util.format('https://raw.githubusercontent.com/%s/%s/%s/%s', user, repo, branch, path);
+        repoUrl = util.format('https://github.com/%s/%s', user, repo);
     } else if (host === 'bitbucket') {
-        htmlUrl =  'https://bitbucket.org/{0}/{1}/src/{2}/{3}'.format(user, repo, branch, path);
-        rawUrl =  'https://api.bitbucket.org/1.0/repositories/{0}/{1}/raw/{2}/{3}'.format(user, repo, branch, path);
-        repoUrl = 'https://bitbucket.org/{0}/{1}'.format(user, repo);
+        htmlUrl =  util.format('https://bitbucket.org/%s/%s/src/%s/%s', user, repo, branch, path);
+        rawUrl =  util.format('https://api.bitbucket.org/1.0/repositories/%s/%s/raw/%s/%s', user, repo, branch, path);
+        repoUrl = util.format('https://bitbucket.org/%s/$s', user, repo);
     } else {
         res.end();
         return;
@@ -315,5 +304,5 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
 app.use(express.static(path.join(__dirname, 'static/')));
 
 app.listen(PORT, IP_ADDRESS, function () {
-    console.log('Listening on http://{0}:{1}'.format(IP_ADDRESS, PORT));
+    console.log(util.format('Listening on http://%s:%s', IP_ADDRESS, PORT));
 });
