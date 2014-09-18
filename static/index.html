@@ -1,144 +1,158 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Gistfy</title>
+<html lang="en" ng-app="App">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gistfy</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <style type="text/css">
-      .main {
-        margin-top: 60px;
-      }
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <style type="text/css">
+    .main {
+      margin-top: 60px;
+    }
 
-      .footer {
-        margin-bottom: 5px;
-        width: 100%;
-      }
-    </style>
-  </head>
-  <body>
-<div class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="/" class="navbar-brand"><strong>Gistfy</strong></a>
-          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-        <div class="navbar-collapse collapse" id="navbar-main">
-          <ul class="nav navbar-nav">
-            <li>
-              <a href="#">Home</a>
-            </li>
-            <li>
-              <a href="#">API</a>
-            </li>
-            <li>
-              <a href="#">Examples</a>
-            </li>
-            <li>
-              <a href="#">About</a>
-            </li>
-          </ul>
-        </div>
+    .footer {
+      margin-bottom: 5px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body ng-controller="MainController">
+  <div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a href="/" class="navbar-brand"><strong>Gistfy</strong></a>
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse" id="navbar-main">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="#">Home</a>
+          </li>
+          <li>
+            <a href="#">API</a>
+          </li>
+          <li>
+            <a href="#">Examples</a>
+          </li>
+          <li>
+            <a href="#">About</a>
+          </li>
+        </ul>
       </div>
     </div>
+  </div>
 
-    <div class="container main">
-        <h1>Gist your GitHub and Bitbucket repositories</h1>
-        <br>
-        <div class="row"></div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="panel panel-primary">
-              <div class="panel-heading">
-                <h3 class="panel-title">Try</h3>
-              </div>
-              <div class="panel-body">
-                <form class="form-horizontal">
-                  <fieldset>
-                    <div class="form-group">
-                      <label for="select" class="col-lg-2 control-label">Type</label>
-                      <div class="col-lg-10">
-                        <select class="form-control" id="type">
-                          <option>Gist</option>
-                          <option>Repository</option>
-                        </select>
-                      </div>
+  <div class="container main">
+      <h1>Gist your GitHub and Bitbucket repositories</h1>
+      <p>Gistfy is a easy way to create Gists from your <a href="https://github.com/" target="_blank">GitHub</a> and <a href="https://bitbucket.org/" target="_blank">Bitbucket</a> repositories or your <a href="https://gist.github.com/" target="_blank">GitHub Gist</a>.</p>
+      <p><i>A Gist is a <a href="http://en.wikipedia.org/wiki/Snippet_(programming)">code snippet</a>.</i></p>
+      <br>
+      <div class="row"></div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Try</h3>
+            </div>
+            <div class="panel-body">
+              <form class="form-horizontal">
+                <fieldset>
+                  <div class="form-group">
+                    <label for="select" class="col-lg-2 control-label">Type</label>
+                    <div class="col-lg-10">
+                      <select class="form-control" id="type" ng-model="model.type" ng-options="t.desc for t in types">
+                        <option value="" selected="selected">Choose gist type</option>
+                      </select>
                     </div>
+                  </div>
+                  <div ng-show="model.type.id === 'gist'">
                     <div class="form-group">
                       <label for="gistId" class="col-lg-2 control-label">Id</label>
                       <div class="col-lg-10">
-                        <input class="form-control" id="gistId" placeholder="Gist id" type="text">
+                        <input class="form-control" id="gistId" placeholder="Gist id" type="text" ng-model="model.id">
                       </div>
                     </div>
+                  </div>
+                  <div ng-show="model.type.id === 'repo'">
                     <div class="form-group">
                       <label for="select" class="col-lg-2 control-label">Host</label>
                       <div class="col-lg-10">
-                        <select class="form-control" id="host">
-                          <option>GitHub</option>
-                          <option>Bitbucket</option>
+                        <select class="form-control" id="host" ng-model="model.host" ng-options="h.desc for h in hosts">
+                          <option value="" selected="selected">Choose a host</option>
                         </select>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="user" class="col-lg-2 control-label">User</label>
                       <div class="col-lg-10">
-                        <input class="form-control" id="user" placeholder="User name" type="text">
+                        <input class="form-control" id="user" placeholder="User name" type="text" ng-model="model.user">
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="repo" class="col-lg-2 control-label">Repo</label>
                       <div class="col-lg-10">
-                        <input class="form-control" id="repo" placeholder="Repositoty name" type="text">
+                        <input class="form-control" id="repo" placeholder="Repositoty name" type="text" ng-model="model.repo">
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="path" class="col-lg-2 control-label">File</label>
                       <div class="col-lg-10">
-                        <input class="form-control" id="path" placeholder="File path" type="text">
+                        <input class="form-control" id="path" placeholder="File path" type="text" ng-model="model.file">
                       </div>
                     </div>
-                    <div class="form-group">
-                      <div class="col-lg-10 col-lg-offset-2">
-                        <span class="btn btn-primary" style="width: 75px;">OK</span>
-                      </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                      <span class="btn btn-primary" style="width: 75px;" ng-disabled="!model.type" ng-click="btnOkClick()">OK</span>
                     </div>
-                  </fieldset>
-                </form>
-              </div>
+                  </div>
+                </fieldset>
+              </form>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="panel panel-primary">
-              <div class="panel-heading">
-                <h3 class="panel-title">Result</h3>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Result</h3>
+            </div>
+            <div class="panel-body">
+              <p ng-show="!model.type">Select gist type to see the result.</p>
+              <div ng-show="model.type.id === 'repo'">
+                <pre>http://gistfy.com/{{model.host.id || ':host' }}/{{model.user || ':user' }}/{{model.repo || ':repository' }}/{{model.file || ':path' }}</pre>
               </div>
-              <div class="panel-body">
-                Panel content
+              <div ng-show="model.type.id === 'gist'">
+                <pre>http://gistfy.com/github/gist/{{model.id || ':id' }}</pre>
+              </div>
+              <div>
+                <script type="text/javascript" ng-src="/github/gist/{{model.id}}"></script>
               </div>
             </div>
           </div>
         </div>
-    </div>
+      </div>
+  </div>
 
-    <div class="footer text-center">
-      <div>Copyright © Gistfy 2014. Theme created by <a href="http://bootswatch.com/yeti/">Bootswatch</a>.</div>
-    </div>
+  <div class="footer text-center">
+    <div>Copyright © Gistfy 2014. Theme created by <a href="http://bootswatch.com/yeti/">Bootswatch</a>.</div>
+  </div>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/angular.min.js"></script>
-  </body>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/angular.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
 </html>
