@@ -26,7 +26,3 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
-
-# Minified files
-*.min.css
-*.min.js
