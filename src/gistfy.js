@@ -1,14 +1,5 @@
 #!/usr/bin/env node
 
-var PORT = process.env.OPENSHIFT_NODEJS_PORT || 3000,
-    IP_ADDRESS = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-
-if (process.env.OPENSHIFT_APP_DNS) {
-    BASE_URL = 'http://' + process.env.OPENSHIFT_APP_DNS;
-} else {
-    BASE_URL = 'http://localhost:3000';
-}
-
 var fs = require('fs'),
     https = require('https'),
     url = require('url'),
@@ -19,8 +10,10 @@ var express = require('express'),
     hljs = require('highlight.js'),
     swig  = require('swig');
 
+var config = require('./config');
+
 var app = express(),
-    template = swig.compileFile('template.min.html');
+    template = swig.compileFile(path.resolve(__dirname, '../template.min.html'));
 
 /*
 
@@ -73,7 +66,7 @@ function downloadFile(urlStr, callback) {
     var options = url.parse(urlStr);
 
     options.headers = {
-        'User-Agent': 'Gistfy-App 0.1.0'
+        'User-Agent': config.user_agent
     };
 
     https.get(options, function (response) {
@@ -164,12 +157,12 @@ function processData(data, slice) {
 function buildResponse(type, options, callback) {
     switch (type) {
         case "js":
-            var js = 'document.write(\'<link rel=\"stylesheet\" href=\"' + BASE_URL + '/css/gistfy.github.css\">\');\n'+
+            var js = 'document.write(\'<link rel=\"stylesheet\" href=\"' + config.base_url() + '/css/gistfy.github.css\">\');\n'+
                      'document.write(\'' + escapeJS(template(options)) + '\');';
             callback(200, js, 'text/javascript');
             break;
         case "html":
-            var html = '<link rel=\"stylesheet\" href=\"' + BASE_URL + '/css/gistfy.github.css\">' + template(options);
+            var html = '<link rel=\"stylesheet\" href=\"' + config.base_url() + '/css/gistfy.github.css\">' + template(options);
             callback(200, html, 'text/html');
             break;
         default:
@@ -195,10 +188,10 @@ app.get('/github/gist/:id', function (req, res) {
 
     var extended = req.query.extended,
         lang = req.query.lang,
-        locale = req.query.locale || 'en',
+        locale = req.query.locale || config.locale,
         slice = req.query.slice,
-        theme = req.query.theme || 'github',
-        type = req.query.type || 'js';
+        theme = req.query.theme || config.theme,
+        type = req.query.type || config.type;
 
     var url = util.format('https://api.github.com/gists/%s', req.params.id);
 
@@ -252,13 +245,13 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
         path = req.params.path,
         repo = req.params.repo,
         user = req.params.user,
-        branch = req.query.branch || 'master',
+        branch = req.query.branch || config.branch,
         extended = req.query.extended,
         lang = req.query.lang,
-        locale = req.query.locale || 'en',
+        locale = req.query.locale || config.locale,
         slice = req.query.slice,
-        theme = req.query.theme || 'github',
-        type = req.query.type || 'js',
+        theme = req.query.theme || config.theme,
+        type = req.query.type || config.type,
         fileName = path.split('/').pop(),
         htmlUrl, rawUrl, repoUrl, from, to;
 
@@ -301,8 +294,8 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
     });
 });
 
-app.use(express.static(path.join(__dirname, 'static/')));
+app.use(express.static(path.resolve(__dirname, '../static/')));
 
-app.listen(PORT, IP_ADDRESS, function () {
-    console.log(util.format('Listening on http://%s:%s', IP_ADDRESS, PORT));
+app.listen(config.port, config.host, function () {
+    console.log(util.format('Listening on http://%s:%s', config.host, config.port));
 });
