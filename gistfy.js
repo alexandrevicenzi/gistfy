@@ -20,7 +20,8 @@ var express = require('express'),
     swig  = require('swig');
 
 var app = express(),
-    template = swig.compileFile('template.min.html');
+    template = swig.compileFile('template.min.html'),
+    supportedLangs = hljs.listLanguages();
 
 /*
 
@@ -53,7 +54,7 @@ function highlight(code, language) {
 
     var s;
 
-    if (language) {
+    if (language && supportedLangs.indexOf(language) > -1) {
         s = hljs.highlight(language, code).value;
     } else {
         s = hljs.highlightAuto(code).value;
