@@ -152,10 +152,10 @@
                             <div class="panel-body">
                                 <strong>Add this snippet to your page</strong>
                                 <div ng-show="model.type.id === 'repo'">
-                                    <pre><code>&lt;script type='text/javascript' src='http://gistfy.com/{{ model.host.id || ':host' }}/{{ model.user || ':user' }}/{{ model.repo || ':repository' }}/{{ model.file || ':path' }}'&gt;&lt;/script&gt;</code></pre>
+                                    <pre><code>&lt;script type='text/javascript' src='http://www.gistfy.com/{{ model.host.id || ':host' }}/{{ model.user || ':user' }}/{{ model.repo || ':repository' }}/{{ model.file || ':path' }}'&gt;&lt;/script&gt;</code></pre>
                                 </div>
                                 <div ng-show="model.type.id === 'gist'">
-                                    <pre><code>&lt;script type='text/javascript' src='http://gistfy.com/github/gist/{{ model.id || ':id' }}'&gt;&lt;/script&gt;</code></pre>
+                                    <pre><code>&lt;script type='text/javascript' src='http://www.gistfy.com/github/gist/{{ model.id || ':id' }}'&gt;&lt;/script&gt;</code></pre>
                                 </div>
                                 <strong>And this will be the result</strong>
                                 <div ng-bind-html="htmlResult"></div>
