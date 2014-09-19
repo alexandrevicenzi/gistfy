@@ -169,8 +169,8 @@ function buildResponse(type, options, callback) {
             callback(200, js, 'text/javascript');
             break;
         case "html":
-            var html = '<link rel=\"stylesheet\" href=\"' + BASE_URL + '/css/gistfy.github.css\"><br>' + template(options);
-            callback(200, html.replace('\n', '<br>'), 'text/html');
+            var html = '<link rel=\"stylesheet\" href=\"' + BASE_URL + '/css/gistfy.github.css\">' + template(options);
+            callback(200, html.replace('\n', ''), 'text/html');
             break;
         default:
             callback(400, 'Invalid type.', 'text/html');
