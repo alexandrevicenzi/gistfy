@@ -20,8 +20,7 @@ var express = require('express'),
     swig  = require('swig');
 
 var app = express(),
-    template = swig.compileFile('template.min.html'),
-    supportedLangs = hljs.listLanguages();
+    template = swig.compileFile('template.min.html');
 
 /*
 
@@ -50,17 +49,16 @@ Object.defineProperty(String.prototype, 'endsWith', {
     }
 });
 
-function highlight(code, language) {
-
-    var s;
-
-    if (language && supportedLangs.indexOf(language) > -1) {
-        s = hljs.highlight(language, code).value;
-    } else {
-        s = hljs.highlightAuto(code).value;
-    }
-
+function escapeJS(s) {
     return s.replace(/\\/g, '&#92;')/*.replace(/\\/g,"\\\\")*/.replace(/\n/g, '<br>').replace(/\'/g, '\\\'').replace(/\"/g, '\\\"');
+}
+
+function highlight(code, language) {
+    if (language && hljs.getLanguage(language)) {
+        return hljs.highlight(language, code).value;
+    } else {
+        return hljs.highlightAuto(code).value;
+    }
 }
 
 function range(low, high) {
@@ -104,9 +102,9 @@ function downloadJSON(url, callback) {
 
 function guessLanguage(file) {
     if (file) {
-        // FIX ME: Doesn't work for all extensions. e.g. ".cpp".
-        // http://highlightjs.readthedocs.org/en/latest/css-classes-reference.html
-        return file.split('.').pop();
+        var langDef = hljs.getLanguage(file.split('.').pop());
+        if (!langDef) return null;
+        return langDef.aliases[0];
     } else {
         return null;
     }
@@ -167,7 +165,7 @@ function buildResponse(type, options, callback) {
     switch (type) {
         case "js":
             var js = 'document.write(\'<link rel=\"stylesheet\" href=\"' + BASE_URL + '/css/gistfy.github.css\">\');\n'+
-                     'document.write(\'' + template(options) + '\');';
+                     'document.write(\'' + escapeJS(template(options)) + '\');';
             callback(200, js, 'text/javascript');
             break;
         case "html":
