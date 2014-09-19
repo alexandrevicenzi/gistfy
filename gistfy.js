@@ -20,7 +20,7 @@ var express = require('express'),
     swig  = require('swig');
 
 var app = express(),
-    template = swig.compileFile('template.html');
+    template = swig.compileFile('template.min.html');
 
 /*
 
@@ -49,16 +49,17 @@ Object.defineProperty(String.prototype, 'endsWith', {
     }
 });
 
-function escapeJS(s) {
-    return s.replace(/\n/g, '\\n').replace(/\'/g, '\\\'').replace(/\"/g, '\\\"');
-}
-
 function highlight(code, language) {
+
+    var s;
+
     if (language) {
-        return hljs.highlight(language, code).value;
+        s = hljs.highlight(language, code).value;
     } else {
-        return hljs.highlightAuto(code).value;
+        s = hljs.highlightAuto(code).value;
     }
+
+    return s.replace(/\\/g, '&#92;')/*.replace(/\\/g,"\\\\")*/.replace(/\n/g, '<br>').replace(/\'/g, '\\\'').replace(/\"/g, '\\\"');
 }
 
 function range(low, high) {
@@ -165,12 +166,12 @@ function buildResponse(type, options, callback) {
     switch (type) {
         case "js":
             var js = 'document.write(\'<link rel=\"stylesheet\" href=\"' + BASE_URL + '/css/gistfy.github.css\">\');\n'+
-                     'document.write(\'' + escapeJS(template(options)) + '\');';
+                     'document.write(\'' + template(options) + '\');';
             callback(200, js, 'text/javascript');
             break;
         case "html":
             var html = '<link rel=\"stylesheet\" href=\"' + BASE_URL + '/css/gistfy.github.css\">' + template(options);
-            callback(200, html.replace('\n', ''), 'text/html');
+            callback(200, html, 'text/html');
             break;
         default:
             callback(400, 'Invalid type.', 'text/html');
