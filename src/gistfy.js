@@ -95,9 +95,14 @@ function downloadJSON(url, callback) {
 
 function guessLanguage(file) {
     if (file) {
-        var langDef = hljs.getLanguage(file.split('.').pop());
-        if (!langDef) return null;
-        return langDef.aliases[0];
+        var lang = file.split('.').pop();
+        var langDef = hljs.getLanguage(lang);
+
+        if (!langDef){
+            return null;
+        }
+
+        return langDef.aliases ? langDef.aliases[0] : lang;
     } else {
         return null;
     }
