@@ -162,12 +162,12 @@ function processData(data, slice) {
 function buildResponse(type, options, callback) {
     switch (type) {
         case "js":
-            var js = 'document.write(\'<link rel=\"stylesheet\" href=\"' + config.base_url() + '/css/gistfy.github.css\">\');\n'+
+            var js = 'document.write(\'<link rel=\"stylesheet\" href=\"' + config.base_url + '/css/gistfy.github.css\">\');\n'+
                      'document.write(\'' + escapeJS(template(options)) + '\');';
             callback(200, js, 'text/javascript');
             break;
         case "html":
-            var html = '<link rel=\"stylesheet\" href=\"' + config.base_url() + '/css/gistfy.github.css\">' + template(options);
+            var html = '<link rel=\"stylesheet\" href=\"' + config.base_url + '/css/gistfy.github.css\">' + template(options);
             callback(200, html, 'text/html');
             break;
         default:
