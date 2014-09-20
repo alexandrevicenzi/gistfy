@@ -2,7 +2,7 @@
   "name": "gistfy",
   "version": "0.1.1",
   "description": "Gist your GitHub and Bitbucket repositories",
-  "bin": "./gistfy.js",
+  "bin": "src/gistfy.js",
   "keywords": [
     "Gist",
     "GitHub",
@@ -28,6 +28,7 @@
   "dependencies": {
     "express": "4.9.0",
     "highlight.js": "8.2.0",
+    "rc": "^0.5.1",
     "swig": "1.4.2"
   },
   "devDependencies": {
@@ -42,5 +43,5 @@
   ],
   "bundleDependencies": [],
   "private": false,
-  "main": "gistfy.js"
+  "main": "src/gistfy.js"
 }
