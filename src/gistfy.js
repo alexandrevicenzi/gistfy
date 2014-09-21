@@ -175,10 +175,6 @@ function buildResponse(type, options, callback) {
     }
 }
 
-app.get('/', function (req, res) {
-    res.redirect('/index.html');
-});
-
 /*
 
 Optional parameters:
