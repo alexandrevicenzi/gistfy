@@ -39,7 +39,7 @@ angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http
         if ($scope.isGist) {
             url = '/github/gist/' + $scope.model.id + '?type=html';
         } else if ($scope.isRepo) {
-            url = '/' + $scope.model.host + '/' + $scope.model.user + '/' + $scope.model.repo + '/' + $scope.model.file + '?type=html';
+            url = '/' + $scope.model.host.id + '/' + $scope.model.user + '/' + $scope.model.repo + '/' + $scope.model.file + '?type=html';
         }
 
         $http({method: 'GET', url: url})
