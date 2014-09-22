@@ -13,12 +13,13 @@ var config = {
     locale: 'en',
     branch: 'master'
 };
+
 config.base_url = (function() {
     if (process.env.OPENSHIFT_APP_DNS) {
-        return 'http://' + process.env.OPENSHIFT_APP_DNS;
+        return 'http://www.gistfy.com';
     } else {
         return 'http://' + this.host + ':' + this.port;
     }
 }).call(config);
-module.exports = rc('gistfy', config);
 
+module.exports = rc('gistfy', config);
