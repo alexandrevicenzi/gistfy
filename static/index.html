@@ -26,7 +26,12 @@
         }
 
         .hljs {
-            background: 
+            background: none;
+        }
+
+        .alert-danger {
+            background-color: #EB3838;
+            border-color: #EB3838;
         }
 
         .ng-cloak {
@@ -142,24 +147,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" ng-show="showResult">
+                <div class="row" ng-show="result.show">
                     <div class="col-md-offset-1 col-md-10">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <button type="button" class="close" ng-click="showResult = false"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <button type="button" class="close" ng-click="result.show = false;"><span>&times;</span></button>
                                 <h3 class="panel-title">Result</h3>
                             </div>
                             <div class="panel-body">
-                                <strong>Add this snippet to your page</strong>
-                                <div ng-show="model.type.id === 'repo'">
-                                    <pre><code>&lt;script type='text/javascript' src='http://www.gistfy.com/{{ model.host.id || ':host' }}/{{ model.user || ':user' }}/{{ model.repo || ':repository' }}/{{ model.file || ':path' }}'&gt;&lt;/script&gt;</code></pre>
+                                <div ng-hide="result.hasError">
+                                    <strong>Add this snippet to your page</strong>
+                                    <div ng-show="model.type.id === 'repo'">
+                                        <pre><code>&lt;script type='text/javascript' src='http://www.gistfy.com/{{ model.host.id || ':host' }}/{{ model.user || ':user' }}/{{ model.repo || ':repository' }}/{{ model.file || ':path' }}'&gt;&lt;/script&gt;</code></pre>
+                                    </div>
+                                    <div ng-show="model.type.id === 'gist'">
+                                        <pre><code>&lt;script type='text/javascript' src='http://www.gistfy.com/github/gist/{{ model.id || ':id' }}'&gt;&lt;/script&gt;</code></pre>
+                                    </div>
+                                    <strong>And this will be the result</strong>
+                                    <div ng-bind-html="result.html"></div>
                                 </div>
-                                <div ng-show="model.type.id === 'gist'">
-                                    <pre><code>&lt;script type='text/javascript' src='http://www.gistfy.com/github/gist/{{ model.id || ':id' }}'&gt;&lt;/script&gt;</code></pre>
+                                <div ng-show="result.hasError">
+                                    <div class="alert alert-danger" role="alert"><span>{{ result.errorMsg }}</span></div>
                                 </div>
-                                <strong>And this will be the result</strong>
-                                <div ng-bind-html="htmlResult"></div>
-                                <div class="alert alert-danger" role="alert" ng-show="resultError"><span>Oh snap! There's an error.</span></div>
                             </div>
                         </div>
                     </div>

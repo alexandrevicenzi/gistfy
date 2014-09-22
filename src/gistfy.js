@@ -79,8 +79,9 @@ function downloadFile(urlStr, callback) {
         });
 
         response.on('end', function () {
-            callback(body);
+            callback(body, response.statusCode, response.headers);
         });
+
 
     }).on('error', function (e) {
         // TODO:
@@ -88,8 +89,8 @@ function downloadFile(urlStr, callback) {
 }
 
 function downloadJSON(url, callback) {
-    downloadFile(url, function (data) {
-        callback(JSON.parse(data));
+    downloadFile(url, function (data, status, headers) {
+        callback(JSON.parse(data), status, headers);
     });
 }
 
@@ -196,36 +197,40 @@ app.get('/github/gist/:id', function (req, res) {
 
     var url = util.format('https://api.github.com/gists/%s', req.params.id);
 
-    downloadJSON(url, function (data) {
-        var files = [];
+    downloadJSON(url, function (data, status, headers) {
+        if (status === 200) {
+            var files = [];
 
-        for (var k in data.files) {
-            var file = data.files[k];
+            for (var k in data.files) {
+                var file = data.files[k];
 
-            var newData = processData(file.content, slice),
-                lines = range(newData.start, newData.end),
-                c = highlight(newData.data, lang || guessLanguage(file.filename));
+                var newData = processData(file.content, slice),
+                    lines = range(newData.start, newData.end),
+                    c = highlight(newData.data, lang || guessLanguage(file.filename));
 
-            files.push({
-                htmlUrl: data.html_url,
-                rawUrl: file.raw_url,
-                fileName: file.filename,
-                content: c,
-                lineRange: lines,
+                files.push({
+                    htmlUrl: data.html_url,
+                    rawUrl: file.raw_url,
+                    fileName: file.filename,
+                    content: c,
+                    lineRange: lines,
+                });
+            }
+
+            var options = {
+                files: files,
+                repoUrl: null,
+                theme: theme,
+                extended: extended
+            };
+
+            buildResponse(type, options, function (status, content, contentType) {
+                res.setHeader('content-type', contentType);
+                res.send(content);
             });
+        } else {
+            res.status(status).send(data);
         }
-
-        var options = {
-            files: files,
-            repoUrl: null,
-            theme: theme,
-            extended: extended
-        };
-
-        buildResponse(type, options, function (status, content, contentType) {
-            res.setHeader('content-type', contentType);
-            res.send(content);
-        });
     });
 });
 
@@ -265,33 +270,37 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
         rawUrl =  util.format('https://api.bitbucket.org/1.0/repositories/%s/%s/raw/%s/%s', user, repo, branch, path);
         repoUrl = util.format('https://bitbucket.org/%s/$s', user, repo);
     } else {
-        res.end();
+        res.status(400).send('Invalid host: ' + host);
         return;
     }
 
-    downloadFile(rawUrl, function (data) {
+    downloadFile(rawUrl, function (data, status, headers) {
 
-        var newData = processData(data, slice),
-            lines = range(newData.start, newData.end),
-            content = highlight(newData.data, lang || guessLanguage(fileName));
+        if (status === 200) {
+            var newData = processData(data, slice),
+                lines = range(newData.start, newData.end),
+                content = highlight(newData.data, lang || guessLanguage(fileName));
 
-        var options = {
-            files: [{
-                htmlUrl: htmlUrl,
-                rawUrl: rawUrl,
-                fileName: fileName,
-                content: content,
-                lineRange: lines
-            }],
-            repoUrl: repoUrl,
-            theme: theme,
-            extended: extended
-        };
+            var options = {
+                files: [{
+                    htmlUrl: htmlUrl,
+                    rawUrl: rawUrl,
+                    fileName: fileName,
+                    content: content,
+                    lineRange: lines
+                }],
+                repoUrl: repoUrl,
+                theme: theme,
+                extended: extended
+            };
 
-        buildResponse(type, options, function (status, content, contentType) {
-            res.setHeader('content-type', contentType);
-            res.send(content);
-        });
+            buildResponse(type, options, function (status, content, contentType) {
+                res.setHeader('content-type', contentType);
+                res.send(content);
+            });
+        } else {
+            res.status(status).send(data);
+        }
     });
 });
 
