@@ -10,6 +10,7 @@ Gist your GitHub and Bitbucket repositories
 
 - express
 - highlight.js
+- rc
 - swig
 
 ## Build dependencies

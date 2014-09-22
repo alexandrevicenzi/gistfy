@@ -1,7 +1,3 @@
-$(document).ready(function() {
-
-});
-
 angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http', function ($scope, $sce, $http) {
 
     $scope.types = [{ id: 'gist' , desc: 'Gist' }, { id: 'repo', desc: 'Repository' }];
@@ -16,9 +12,12 @@ angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http
         file: null
     };
 
-    $scope.showResult = false;
-    $scope.htmlResult = null;
-    $scope.resultError = false;
+    $scope.result = {
+        show: false,
+        html: null,
+        hasError: false,
+        errorMsg: null
+    };
 
     $scope.changeType = function () {
         $scope.isGist = ($scope.model.type !== null) && ($scope.model.type.id === 'gist');
@@ -44,20 +43,29 @@ angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http
         }
 
         $http({method: 'GET', url: url})
-            .success(function(data, status, headers, config) {
-                $scope.htmlResult = $sce.trustAsHtml(data);
-                $scope.resultError = false;
+            .success(function (data, status, headers, config) {
+                $scope.result.html = $sce.trustAsHtml(data);
+                $scope.result.hasError = false;
 
                 $('pre code').each(function(i, block) {
                     hljs.highlightBlock(block);
                 });
 
-                $scope.showResult = true;
+                $scope.result.show = true;
             })
-            .error(function(data, status, headers, config) {
-                $scope.htmlResult = null;
-                $scope.resultError = true;
-                $scope.showResult = true;
+            .error(function (data, status, headers, config) {
+                $scope.result.html = null;
+                $scope.result.hasError = true;
+
+                if (status === 400 || status === 412) {
+                    $scope.result.errorMsg =  $sce.trustAsHtml(data);
+                } else if (status === 404) {
+                    $scope.result.errorMsg = ($scope.isGist ? 'Gist not found.' : 'File not found.');
+                } else {
+                    $scope.result.errorMsg = 'Oh snap! There\'s an error.';
+                }
+
+                $scope.result.show = true;
             });
     };
 
