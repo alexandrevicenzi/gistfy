@@ -26,12 +26,16 @@
         }
 
         .hljs {
-            background: 
+            background: none !important;
         }
 
         .ng-cloak {
             display: none;
             visibility: hidden;
+        }
+
+        table {
+            font-size: 14px;
         }
     </style>
 </head>
@@ -165,7 +169,67 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane" id="api">API</div>
+            <div class="tab-pane" id="api">
+                <h1>API</h1>
+
+                <h2>Gistfy a Gist from GitHub</h2>
+                <pre><code class="ng-binding hljs xml"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">'text/javascript'</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">'http://www.gistfy.com/github/gist/:id'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span></code></pre>
+                <strong>Parameters</strong>
+                <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="width: 75px;">lang</td>
+                            <td style="width: 75px;">string</td>
+                            <td>Programming language used for code highlighting. See supported languages <a href="http://highlightjs.readthedocs.org/en/latest/css-classes-reference.html">here</a>.</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 75px;">slice</td>
+                            <td style="width: 75px;">int</td>
+                            <td>Show only selected lines. For example, <span class="label label-default">slice=1:4</span>.</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 75px;">type</td>
+                            <td style="width: 75px;">string</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 75px;"></td>
+                            <td style="width: 75px;"></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 75px;"></td>
+                            <td style="width: 75px;"></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2>Gistfy a file from Bitbucket or GitHub</h2>
+                <pre><code class="ng-binding hljs xml"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">'text/javascript'</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">'http://www.gistfy.com/:host/:user/:repo/:path'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span></code></pre>
+                <table class="table table-striped table-hover ">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <div class="tab-pane" id="examples">
                 <h1>Gistfy gist examples</h1>
                 <p>Most snippets do not contain working code.</p>
