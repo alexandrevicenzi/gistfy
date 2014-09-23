@@ -9,7 +9,7 @@ var config = {
     }(),
 
     type: 'js',
-    theme: 'github',
+    style: 'github',
     locale: 'en',
     branch: 'master'
 };

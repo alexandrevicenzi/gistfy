@@ -163,12 +163,12 @@ function processData(data, slice) {
 function buildResponse(type, options, callback) {
     switch (type) {
         case "js":
-            var js = 'document.write(\'<link rel=\"stylesheet\" href=\"' + config.base_url + '/css/gistfy.github.css\">\');\n'+
+            var js = 'document.write(\'<link rel=\"stylesheet\" href=\"' + config.base_url + '/css/gistfy.' + options.style + '.min.css\">\');\n'+
                      'document.write(\'' + escapeJS(template(options)) + '\');';
             callback(200, js, 'text/javascript');
             break;
         case "html":
-            var html = '<link rel=\"stylesheet\" href=\"' + config.base_url + '/css/gistfy.github.css\">' + template(options);
+            var html = '<link rel=\"stylesheet\" href=\"' + config.base_url + '/css/gistfy.' + options.style + '.min.css\">' + template(options);
             callback(200, html, 'text/html');
             break;
         default:
@@ -183,7 +183,7 @@ Optional parameters:
     @param lang         Set code language, for highlight. e.g., lang=python. Default is based in file extension. e.g., file.py returns python highlight style.
     @param locale       Set template locale, for translation. e.g., locale=en. Default: en.
     @param slice        Slice file, returning only the lines selected. e.g., slice=1:8. Default: null.
-    @param theme        Set template theme. e.g., theme=github, Default: github.
+    @param style        Set template style. e.g., style=github, Default: github.
     @param type         Return type for content. e.g. type=html. Default: js.
 */
 app.get('/github/gist/:id', function (req, res) {
@@ -192,7 +192,7 @@ app.get('/github/gist/:id', function (req, res) {
         lang = req.query.lang,
         locale = req.query.locale || config.locale,
         slice = req.query.slice,
-        theme = req.query.theme || config.theme,
+        style = req.query.style || config.style,
         type = req.query.type || config.type;
 
     var url = util.format('https://api.github.com/gists/%s', req.params.id);
@@ -220,7 +220,7 @@ app.get('/github/gist/:id', function (req, res) {
             var options = {
                 files: files,
                 repoUrl: null,
-                theme: theme,
+                style: style,
                 extended: extended
             };
 
@@ -242,7 +242,7 @@ Optional parameters:
     @param lang         Set code language, for highlight. e.g., lang=python. Default is based in file extension. e.g., file.py returns python highlight style.
     @param locale       Set template locale, for translation. e.g., locale=en. Default: en.
     @param slice        Slice file, returning only the lines selected. e.g., slice=1:8. Default: null.
-    @param theme        Set template theme. e.g., theme=github, Default: github.
+    @param style        Set template style. e.g., style=github, Default: github.
     @param type         Return type for content. e.g. type=html. Default: js.
 */
 app.get('/:host/:user/:repo/:path(*)', function (req, res) {
@@ -256,7 +256,7 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
         lang = req.query.lang,
         locale = req.query.locale || config.locale,
         slice = req.query.slice,
-        theme = req.query.theme || config.theme,
+        style = req.query.style || config.style,
         type = req.query.type || config.type,
         fileName = path.split('/').pop(),
         htmlUrl, rawUrl, repoUrl, from, to;
@@ -290,7 +290,7 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
                     lineRange: lines
                 }],
                 repoUrl: repoUrl,
-                theme: theme,
+                style: style,
                 extended: extended
             };
 
