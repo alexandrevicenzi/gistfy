@@ -39,6 +39,14 @@
             visibility: hidden;
         }
 
+        .param {
+            color: #D14000;
+            white-space: nowrap;
+            border: 1px solid #E1E1E8;
+            padding: 1px;
+            background: #F8F8F8;
+        }
+
         table {
             font-size: 14px;
         }
@@ -196,33 +204,36 @@
                         <tr>
                             <td style="width: 75px;">lang</td>
                             <td style="width: 75px;">string</td>
-                            <td>Programming language used for code highlighting. See supported languages <a href="http://highlightjs.readthedocs.org/en/latest/css-classes-reference.html">here</a>.</td>
+                            <td>Programming language used for code highlighting. For example, 
+                                <span class="param">lang=python</span>. See supported languages 
+                                <a href="http://highlightjs.readthedocs.org/en/latest/css-classes-reference.html">here</a>.
+                            </td>
                         </tr>
                         <tr>
                             <td style="width: 75px;">slice</td>
                             <td style="width: 75px;">int</td>
-                            <td>Show only selected lines. For example, <span class="label label-default">slice=1:4</span>.</td>
+                            <td>Show only selected lines. For example, 
+                                <span class="param">slice=1</span> show only line 1, 
+                                <span class="param">slice=-1</span> show only the last line, 
+                                <span class="param">slice=1:</span> skip the first line, 
+                                <span class="param">slice=:-2</span> skip the last line, 
+                                <span class="param">slice=1:4</span> show lines 1 through 4, 
+                                <span class="param">slice=-5:-1</span> show (last - 5) line through last line.
+                            </td>
                         </tr>
                         <tr>
                             <td style="width: 75px;">type</td>
                             <td style="width: 75px;">string</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td style="width: 75px;"></td>
-                            <td style="width: 75px;"></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td style="width: 75px;"></td>
-                            <td style="width: 75px;"></td>
-                            <td></td>
+                            <td>Response type. For example <span class="param">type=js</span> for JavaScript to be used with 
+                                <span class="param">script</span> tag and <span class="param">type=html</span> 
+                                for HTML to be used with AngularJS or jQuery.
+                            </td>
                         </tr>
                     </tbody>
                 </table>
                 <h2>Gistfy a file from Bitbucket or GitHub</h2>
                 <pre><code class="ng-binding hljs xml"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">'text/javascript'</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">'http://www.gistfy.com/:host/:user/:repo/:path'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span></code></pre>
-                <table class="table table-striped table-hover ">
+                <table class="table table-striped table-hover table-bordered">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -232,8 +243,42 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td></td>
-                            <td></td>
+                            <td style="width: 75px;">branch</td>
+                            <td style="width: 75px;">string</td>
+                            <td>Branch or changeset to be used. Default is <i>master</i>. For example, <span class="param">branch=0ff893db335695744dfed3d3e4be4eb4f9815534</span> to use a specific changeset.</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 75px;">lang</td>
+                            <td style="width: 75px;">string</td>
+                            <td>Programming language used for code highlighting. For example, 
+                                <span class="param">lang=python</span>. See supported languages 
+                                <a href="http://highlightjs.readthedocs.org/en/latest/css-classes-reference.html">here</a>.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 75px;">slice</td>
+                            <td style="width: 75px;">int</td>
+                            <td>Show only selected lines. For example, 
+                                <span class="param">slice=1</span> show only line 1, 
+                                <span class="param">slice=-1</span> show only the last line, 
+                                <span class="param">slice=1:</span> skip the first line, 
+                                <span class="param">slice=:-2</span> skip the last line, 
+                                <span class="param">slice=1:4</span> show lines 1 through 4, 
+                                <span class="param">slice=-5:-1</span> show (last - 5) line through last line.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 75px;">type</td>
+                            <td style="width: 75px;">string</td>
+                            <td>Response type. For example <span class="param">type=js</span> for JavaScript to be used with 
+                                <span class="param">script</span> tag and <span class="param">type=html</span> 
+                                for HTML to be used with AngularJS or jQuery.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width: 75px;"></td>
+                            <td style="width: 75px;"></td>
                             <td></td>
                         </tr>
                     </tbody>

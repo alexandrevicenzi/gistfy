@@ -22,7 +22,7 @@ angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http
     $scope.changeType = function () {
         $scope.isGist = ($scope.model.type !== null) && ($scope.model.type.id === 'gist');
         $scope.isRepo = ($scope.model.type !== null) && ($scope.model.type.id === 'repo');
-        $scope.showResult = false;
+        $scope.result.show = false;
     };
 
     $scope.thisYear = function () {
