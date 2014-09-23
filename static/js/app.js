@@ -1,3 +1,14 @@
+$(document).ready(function () {
+    var hash = location.hash;
+    if (hash) {
+        $('#tabMenu a[href="' + hash + '"]').tab('show');
+    }
+
+    $('#tabMenu a').click(function () {
+        location.hash = $(this).context.hash;
+    });
+});
+
 angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http', function ($scope, $sce, $http) {
 
     $scope.types = [{ id: 'gist' , desc: 'Gist' }, { id: 'repo', desc: 'Repository' }];
