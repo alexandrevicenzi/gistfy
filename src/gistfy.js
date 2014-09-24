@@ -165,11 +165,11 @@ function buildResponse(type, options, callback) {
         case "js":
             var js = 'document.write(\'<link rel=\"stylesheet\" href=\"' + config.base_url + '/css/gistfy.' + options.style + '.min.css\">\');\n'+
                      'document.write(\'' + escapeJS(template(options)) + '\');';
-            callback(200, js, 'text/javascript');
+            callback(200, js, 'text/javascript; charset=utf-8');
             break;
         case "html":
             var html = '<link rel=\"stylesheet\" href=\"' + config.base_url + '/css/gistfy.' + options.style + '.min.css\">' + template(options);
-            callback(200, html, 'text/html');
+            callback(200, html, 'text/html; charset=utf-8');
             break;
         default:
             callback(400, 'Invalid type.', 'text/html');
