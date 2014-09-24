@@ -1,46 +1,33 @@
 #!/usr/bin/env node
 
-var fs = require('fs'),
-    https = require('https'),
-    url = require('url'),
-    path = require('path'),
-    util = require('util');
-
-var express = require('express'),
+var config = require('./config'),
+    express = require('express'),
+    fs = require('fs'),
     hljs = require('highlight.js'),
-    swig  = require('swig');
-
-var config = require('./config');
+    https = require('https'),
+    path = require('path'),
+    swig  = require('swig'),
+    url = require('url'),
+    util = require('util');
 
 var app = express(),
     template = swig.compileFile(path.resolve(__dirname, '../template.min.html'));
 
-/*
+/* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String */
+String.prototype.startsWith = function (searchString, position) {
+    position = position || 0;
+    return this.lastIndexOf(searchString, position) === position;
+};
 
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
-
-*/
-Object.defineProperty(String.prototype, 'startsWith', {
-    enumerable: false,
-    configurable: false,
-    writable: false,
-    value: function (searchString, position) {
-        position = position || 0;
-        return this.lastIndexOf(searchString, position) === position;
+String.prototype.endsWith = function (searchString, position) {
+    var subjectString = this.toString();
+    if (position === undefined || position > subjectString.length) {
+        position = subjectString.length;
     }
-});
-
-Object.defineProperty(String.prototype, 'endsWith', {
-    value: function (searchString, position) {
-        var subjectString = this.toString();
-        if (position === undefined || position > subjectString.length) {
-            position = subjectString.length;
-        }
-        position -= searchString.length;
-        var lastIndex = subjectString.indexOf(searchString, position);
-        return lastIndex !== -1 && lastIndex === position;
-    }
-});
+    position -= searchString.length;
+    var lastIndex = subjectString.indexOf(searchString, position);
+    return lastIndex !== -1 && lastIndex === position;
+};
 
 function escapeJS(s) {
     return s.replace(/\\/g, '&#92;')/*.replace(/\\/g,"\\\\")*/.replace(/\n/g, '<br>').replace(/\'/g, '\\\'').replace(/\"/g, '\\\"');
