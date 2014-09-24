@@ -169,12 +169,7 @@
                             <div class="panel-body">
                                 <div ng-hide="result.hasError">
                                     <strong>Add this snippet to your page</strong>
-                                    <div ng-show="model.type.id === 'repo'">
-                                        <pre><code>&lt;script type='text/javascript' src='http://www.gistfy.com/{{ model.host.id || ':host' }}/{{ model.user || ':user' }}/{{ model.repo || ':repository' }}/{{ model.file || ':path' }}'&gt;&lt;/script&gt;</code></pre>
-                                    </div>
-                                    <div ng-show="model.type.id === 'gist'">
-                                        <pre><code>&lt;script type='text/javascript' src='http://www.gistfy.com/github/gist/{{ model.id || ':id' }}'&gt;&lt;/script&gt;</code></pre>
-                                    </div>
+                                    <pre><code class="ng-binding hljs xml"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">'text/javascript'</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">'{{ result.url }}'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span></code></pre>
                                     <strong>And this will be the result</strong>
                                     <div ng-bind-html="result.html"></div>
                                 </div>
@@ -339,7 +334,6 @@ SOFTWARE.</pre>
 
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/highlight.pack.min.js"></script>
     <script type="text/javascript" src="js/angular.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
 </body>

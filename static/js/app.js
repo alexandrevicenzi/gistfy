@@ -24,6 +24,7 @@ angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http
     };
 
     $scope.result = {
+        url: null,
         show: false,
         html: null,
         hasError: false,
@@ -48,20 +49,16 @@ angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http
         var url;
 
         if ($scope.isGist) {
-            url = '/github/gist/' + $scope.model.id + '?type=html';
+            url = '/github/gist/' + $scope.model.id;
         } else if ($scope.isRepo) {
-            url = '/' + $scope.model.host.id + '/' + $scope.model.user + '/' + $scope.model.repo + '/' + $scope.model.file + '?type=html';
+            url = '/' + $scope.model.host.id + '/' + $scope.model.user + '/' + $scope.model.repo + '/' + $scope.model.file;
         }
 
-        $http({method: 'GET', url: url})
+        $http({ method: 'GET', url: url + '?type=html' })
             .success(function (data, status, headers, config) {
+                $scope.result.url = /*'http://www.gistfy.com'*/location.origin + url;
                 $scope.result.html = $sce.trustAsHtml(data);
                 $scope.result.hasError = false;
-
-                $('pre code').each(function(i, block) {
-                    hljs.highlightBlock(block);
-                });
-
                 $scope.result.show = true;
             })
             .error(function (data, status, headers, config) {
