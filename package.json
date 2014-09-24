@@ -1,6 +1,6 @@
 {
   "name": "gistfy",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Gist your GitHub and Bitbucket repositories",
   "bin": "src/gistfy.js",
   "keywords": [
@@ -22,18 +22,18 @@
     "url": "https://github.com/alexandrevicenzi/gistfy/issues"
   },
   "engines": {
-    "node": ">= 0.10.31",
-    "npm": ">= 1.4.21"
+    "node": ">=0.10.31",
+    "npm": ">=1.4.21"
   },
   "dependencies": {
-    "express": "4.9.0",
-    "highlight.js": "8.2.0",
+    "express": "^4.9.0",
+    "highlight.js": ">=8.2.0",
     "rc": "^0.5.1",
-    "swig": "1.4.2"
+    "swig": "^1.4.2"
   },
   "devDependencies": {
-    "jshint": "2.5.5",
-    "minify": "1.0.2"
+    "jshint": ">=2.5.5",
+    "minify": ">=1.0.2"
   },
   "licenses": [
     {
