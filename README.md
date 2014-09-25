@@ -2,7 +2,7 @@
 
 Gist your GitHub and Bitbucket repositories
 
-Gistfy is a easy way to create Gists from your GitHub and Bitbucket repositories or your GitHub Gist.
+Gistfy is an easy way to create embeddable code snippets from your Github and Bitbucket repositories or your Github Gists.
 
 ## Requirements
 
