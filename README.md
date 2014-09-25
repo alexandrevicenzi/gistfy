@@ -1,4 +1,4 @@
-## Gistfy
+## Gistfy [![Version](http://img.shields.io/npm/v/gistfy.svg)](https://www.npmjs.org/package/gistfy)
 
 Gist your GitHub and Bitbucket repositories
 
