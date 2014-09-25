@@ -74,6 +74,9 @@
                         <a href="#api" role="tab" data-toggle="tab">API</a>
                     </li>
                     <li>
+                        <a href="#usage" role="tab" data-toggle="tab">Usage</a>
+                    </li>
+                    <li>
                         <a href="#examples" role="tab" data-toggle="tab">Examples</a>
                     </li>
                     <li>
@@ -138,7 +141,7 @@
                                             <div class="form-group">
                                                 <label for="repo" class="col-md-2 control-label">Repo</label>
                                                 <div class="col-md-10">
-                                                    <input class="form-control" name="repo" placeholder="Repositoty name" type="text" ng-model="model.repo" ng-required="isRepo">
+                                                    <input class="form-control" name="repo" placeholder="Repository name" type="text" ng-model="model.repo" ng-required="isRepo">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -292,9 +295,21 @@
                     </tbody>
                 </table>
             </div>
+            <div class="tab-pane" id="usage">
+                <h1>Usage</h1>
+                <p>Full working samples in <a href="https://angularjs.org/">AngularJS</a>, <a href="http://jquery.com/">jQuery</a> and <a href="http://www.w3schools.com/tags/tag_script.asp">HTML</a>.</p>
+                <h2>AngularJS</h2>
+                <script type="text/javascript" src="/github/alexandrevicenzi/gistfy/samples/angularjs/app.js?lang=JavaScript"></script>
+                <script type="text/javascript" src="/github/alexandrevicenzi/gistfy/samples/angularjs/index.html?lang=html"></script>
+                <h2>jQuery</h2>
+                <script type="text/javascript" src="/github/alexandrevicenzi/gistfy/samples/jquery/app.js?lang=JavaScript"></script>
+                <script type="text/javascript" src="/github/alexandrevicenzi/gistfy/samples/jquery/index.html?lang=html"></script>
+                <h2>HTML</h2>
+                <script type="text/javascript" src="/github/alexandrevicenzi/gistfy/samples/html/index.html?lang=html"></script>
+            </div>
             <div class="tab-pane" id="examples">
                 <h1>Gistfy gist examples</h1>
-                <p>Most snippets do not contain working code.</p>
+                <p>These examples are based on <a href="https://highlightjs.org/static/test.html">highlight.js</a> examples. Most snippets do not contain working code.</p>
                 <div>
                     <strong>C++</strong>
                     <script type="text/javascript" src="/github/isagalaev/highlight.js/test/detect/cpp/default.txt?type=js&lang=c"></script>

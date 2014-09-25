@@ -212,6 +212,8 @@ app.get('/github/gist/:id', function (req, res) {
             };
 
             buildResponse(type, options, function (status, content, contentType) {
+                res.header("Access-Control-Allow-Origin", "*");
+                res.header("Access-Control-Allow-Headers", "X-Requested-With");
                 res.setHeader('content-type', contentType);
                 res.send(content);
             });
@@ -282,6 +284,8 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
             };
 
             buildResponse(type, options, function (status, content, contentType) {
+                res.header("Access-Control-Allow-Origin", "*");
+                res.header("Access-Control-Allow-Headers", "X-Requested-With");
                 res.setHeader('content-type', contentType);
                 res.send(content);
             });
