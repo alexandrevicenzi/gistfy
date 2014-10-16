@@ -7,7 +7,7 @@ $(document).ready(function () {
             if (jqXHR.status === 400 || jqXHR.status === 412) {
                 $('#result').html(errorThrown);
             } else if (jqXHR.status === 404) {
-                $('#result').html('<strong>' + $scope.isGist ? 'Gist not found.' : 'File not found.' + '</strong>');
+                $('#result').html('<strong>File not found.</strong>');
             } else {
                 $('#result').html('<strong>Oh snap! There\'s an error.</strong>');
             }

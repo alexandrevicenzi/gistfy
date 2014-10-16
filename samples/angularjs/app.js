@@ -9,7 +9,7 @@ angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http
             if (status === 400 || status === 412) {
                 $scope.result =  $sce.trustAsHtml(data);
             } else if (status === 404) {
-                $scope.result = $sce.trustAsHtml('<strong>' + $scope.isGist ? 'Gist not found.' : 'File not found.' + '</strong>');
+                $scope.result = $sce.trustAsHtml('<strong>File not found.</strong>');
             } else {
                 $scope.result = $sce.trustAsHtml('<strong>Oh snap! There\'s an error.</strong>');
             }
