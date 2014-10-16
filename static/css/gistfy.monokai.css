@@ -149,6 +149,7 @@ pre {
     font: inherit;
     line-height: inherit;
     white-space: pre;
+    background-color: transparent;
 }
 
 .gist .gist-file {
@@ -161,6 +162,11 @@ pre {
 
 .gist {
     border: none;
+}
+
+.gist-data table {
+    margin: 0;
+    padding: 0;
 }
 
 .gist .gist-file .gist-meta {
@@ -180,8 +186,11 @@ pre {
 .gist .gist-file .gist-data {
     overflow: auto;
     word-wrap: normal;
-    background-color: #23241f;
     font-size: 100%;
+}
+
+.line-data, .gist .gist-file .gist-data {
+    background-color: #23241f !important;
 }
 
 .gist .gist-file.scroll .gist-data {
@@ -205,7 +214,7 @@ pre {
 }
 
 .gist .gist-file .gist-data .line-pre {
-    font-family: monospace;
+    font-family: monospace !important;
     background: transparent !important;
     border: none !important;
     margin: 0 !important;

@@ -158,6 +158,11 @@ Gist style.
     border: none;
 }
 
+.gist-data table {
+    margin: 0;
+    padding: 0;
+}
+
 .gist .gist-file .gist-meta {
     font: 12px "Helvetica Neue", Helvetica, arial, freesans, clean, sans-serif;
     text-shadow: 1px 1px rgba(255,255,255,0.8);
@@ -180,9 +185,12 @@ Gist style.
 .gist .gist-file .gist-data {
     overflow: auto;
     word-wrap: normal;
-    background-color: #f8f8ff;
     border-bottom: 1px solid #ddd;
     font-size: 100%;
+}
+
+.line-data, .gist .gist-file .gist-data {
+    background-color: #f8f8ff !important;
 }
 
 .gist .gist-file.scroll .gist-data {
@@ -206,7 +214,7 @@ Gist style.
 }
 
 .gist .gist-file .gist-data .line-pre {
-    font-family: Consolas, "Liberation Mono", Courier, monospace;
+    font-family: Consolas, "Liberation Mono", Courier, monospace !important;
     background: transparent !important;
     border: none !important;
     margin: 0 !important;
