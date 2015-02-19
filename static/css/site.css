@@ -1,0 +1,45 @@
+.main {
+    margin-top: 60px;
+}
+
+.footer {
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+.hljs {
+    background: none !important;
+}
+
+.alert-danger {
+    background-color: #EB3838;
+    border-color: #EB3838;
+}
+
+.ng-cloak {
+    display: none;
+    visibility: hidden;
+}
+
+.param {
+    color: #D14000;
+    white-space: nowrap;
+    border: 1px solid #E1E1E8;
+    padding: 0 2px 0 2px;
+    background: #F8F8F8;
+    font-size: 12px;
+    font-family: monospace;
+}
+
+table {
+    font-size: 14px;
+}
+
+span.required {
+    color: #C71616;
+    font-weight: bold;
+}
+
+.form-control {
+    color: inherit;
+}
