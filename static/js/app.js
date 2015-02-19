@@ -11,8 +11,11 @@ $(document).ready(function () {
 
 angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http', function ($scope, $sce, $http) {
 
-    $scope.types = [{ id: 'gist' , desc: 'Gist' }, { id: 'repo', desc: 'Repository' }];
+    $scope.fileTypes = [{ id: 'js' , desc: 'JavaScript' }, { id: 'html', desc: 'HTML (jQuery or AngularJS)' }];
+    $scope.fileTypesFor = [{ id: 'jquery' , desc: 'jQuery' }, { id: 'angular', desc: 'AngularJS' }];
     $scope.hosts = [{ id: 'github', desc: 'GitHub' }, { id: 'bitbucket', desc: 'Bitbucket' }];
+    $scope.styles = [{ id: 'github' , desc: 'GitHub' }, { id: 'monokai', desc: 'Monokay' }, { id: 'monokai_sublime', desc: 'Monokay Sublime' }];
+    $scope.types = [{ id: 'gist' , desc: 'Gist' }, { id: 'repo', desc: 'Repository' }];
 
     $scope.model = {
         type: null,
@@ -20,21 +23,45 @@ angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http
         host: null,
         user: null,
         repo: null,
-        file: null
+        file: null,
+        branch: null,
+        slice: null,
+        lang: null,
+        style: null,
+        fileType: null,
+        fileTypeFor: null
     };
 
     $scope.result = {
         url: null,
         show: false,
         html: null,
+        type: null,
         hasError: false,
         errorMsg: null
     };
+
+    $scope.showMore = false;
 
     $scope.changeType = function () {
         $scope.isGist = ($scope.model.type !== null) && ($scope.model.type.id === 'gist');
         $scope.isRepo = ($scope.model.type !== null) && ($scope.model.type.id === 'repo');
         $scope.result.show = false;
+        $scope.showMore = false;
+
+        $scope.model = {
+            type: $scope.model.type,
+            id: null,
+            host: null,
+            user: null,
+            repo: null,
+            file: null,
+            branch: null,
+            slice: null,
+            lang: null,
+            style: null,
+            fileType: null,
+        };
     };
 
     $scope.thisYear = function () {
@@ -54,10 +81,47 @@ angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http
             url = '/' + $scope.model.host.id + '/' + $scope.model.user + '/' + $scope.model.repo + '/' + $scope.model.file;
         }
 
-        $http({ method: 'GET', url: url + '?type=html' })
+        var params = [];
+
+        if ($scope.showMore) {
+
+            if ($scope.model.branch) {
+                params.push('branch=' + $scope.model.branch);
+            }
+
+            if ($scope.model.slice) {
+                params.push('slice=' + $scope.model.slice);
+            }
+
+            if ($scope.model.lang) {
+                params.push('lang=' + $scope.model.lang);
+            }
+
+            if ($scope.model.style) {
+                params.push('style=' + $scope.model.style.id);
+            }
+        }
+
+        var sep;
+
+        if (params.length > 0) {
+            url = url + '?' + params.join('&');
+            sep = '&';
+        } else {
+            sep = '?';
+        }
+
+        $http({ method: 'GET', url: url + sep + 'type=html' })
             .success(function (data, status, headers, config) {
                 $scope.result.url = /*'http://www.gistfy.com'*/location.origin + url;
                 $scope.result.html = $sce.trustAsHtml(data);
+
+                if ($scope.model.fileType && $scope.model.fileType.id === 'html') {
+                    $scope.result.type = $scope.model.fileTypeFor.id;
+                } else {
+                    $scope.result.type = 'js';
+                }
+
                 $scope.result.hasError = false;
                 $scope.result.show = true;
             })
