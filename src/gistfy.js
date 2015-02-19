@@ -115,11 +115,23 @@ function processData(data, slice) {
             slice = slice.split(':');
             if (slice) {
                 // e.g 1:5 or -3:-1
-                start = parseInt(slice.shift()) || 0;
+                start = parseInt(slice.shift());
+
+                if (start === 0) {
+                    start = 1;
+                }
+
+                start = start - 1 || 0;
                 end = parseInt(slice.shift()) || -1;
             }
         } else {
-            start = parseInt(slice) || 0;
+            start = parseInt(slice);
+
+            if (start === 0) {
+                start = 1;
+            }
+
+            start = start  - 1 || 0;
             end = start;
         }
 
