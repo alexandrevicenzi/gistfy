@@ -26,8 +26,8 @@ Gistfy is an easy way to create embeddable code snippets from your GitHub and Bi
 
 ## API
 
-See the [docs](http://www.gistfy.com#api).
+See the [Api docs](http://www.gistfy.com/api.html).
 
 ## Usage
 
-See the [docs](http://www.gistfy.com#usage).
+See the [Usage docs](http://www.gistfy.com/usage.html).
