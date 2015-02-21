@@ -31,3 +31,13 @@ See the [Api docs](http://www.gistfy.com/api.html).
 ## Usage
 
 See the [Usage docs](http://www.gistfy.com/usage.html).
+
+## Changelog
+
+### 0.3.0
+
+- Fix slice problem
+- Fix #15
+- Add "More Options" button
+- Update components
+- Split site in multiple pages
