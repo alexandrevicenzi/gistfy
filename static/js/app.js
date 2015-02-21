@@ -110,7 +110,8 @@ angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http
 
         $http({ method: 'GET', url: url + sep + 'type=html' })
             .success(function (data, status, headers, config) {
-                $scope.result.url = /*'http://www.gistfy.com'*/location.origin + url;
+                //$scope.result.url = location.origin + url;
+                $scope.result.url = 'http://www.gistfy.com' + url;
                 $scope.result.html = $sce.trustAsHtml(data);
 
                 if ($scope.model.fileType && $scope.model.fileType.id === 'html') {
