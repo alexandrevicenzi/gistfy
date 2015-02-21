@@ -10,6 +10,17 @@
     <link href="css/site.css" rel="stylesheet">
     <link href="css/min-github.css" rel="stylesheet">
 
+    {% block og %}
+    <meta property="og:title" content="Gistfy"/>
+    <meta property="og:description" content="Gistfy is an easy way to create embeddable code snippets from your GitHub and Bitbucket repositories or your GitHub Gist."/>
+    <meta property="og:url" content="http://www.gistfy.com"/>
+    {% endblock %}
+    <meta property="og:site_name" content="Gistfy"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:image" content="http://www.gistfy.com/img/gistfy.png">
+    <meta property="og:image:url" content="http://www.gistfy.com/img/gistfy.png">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
