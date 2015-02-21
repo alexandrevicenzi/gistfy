@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.gistfy.com/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<url><loc>http://www.gistfy.com/</loc><changefreq>monthly</changefreq><priority>1.00</priority></url>
+<url><loc>http://www.gistfy.com/api.html</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+<url><loc>http://www.gistfy.com/index.html</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+<url><loc>http://www.gistfy.com/usage.html</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+<url><loc>http://www.gistfy.com/examples.html</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+<url><loc>http://www.gistfy.com/about.html</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+</urlset>
