@@ -1,14 +1,3 @@
-$(document).ready(function () {
-    var hash = location.hash;
-    if (hash) {
-        $('#tabMenu a[href="' + hash + '"]').tab('show');
-    }
-
-    $('#tabMenu a').click(function () {
-        location.hash = $(this).context.hash;
-    });
-});
-
 angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http', function ($scope, $sce, $http) {
 
     $scope.fileTypes = [{ id: 'js' , desc: 'JavaScript' }, { id: 'html', desc: 'HTML (jQuery or AngularJS)' }];
@@ -42,6 +31,14 @@ angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http
     };
 
     $scope.showMore = false;
+
+    $scope.isActive = function (viewLocation) {
+        if (Array.isArray(viewLocation)) {
+            return viewLocation.indexOf(location.pathname) > -1;
+        } else {
+            return viewLocation === location.pathname;
+        }
+    };
 
     $scope.changeType = function () {
         $scope.isGist = ($scope.model.type !== null) && ($scope.model.type.id === 'gist');

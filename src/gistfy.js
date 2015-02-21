@@ -307,7 +307,30 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
     });
 });
 
-app.use(express.static(path.resolve(__dirname, '../static/')));
+app.use(express.static(path.resolve(__dirname, '../static')));
+
+app.engine('html', swig.renderFile);
+
+app.set('view engine', 'html');
+app.set('views', path.resolve(__dirname, '../views/'));
+
+app.get('/', function (req, res) {
+    res.render('index');
+});
+
+app.get('/:path.html', function (req, res) {
+    res.render(req.params.path, function(err, html){
+        if (err) {
+            res.render('404');
+        } else {
+            res.send(html);
+        }
+    });
+});
+
+app.get('*', function (req, res) {
+    res.render('404');
+});
 
 app.listen(config.port, config.host, function () {
     console.log(util.format('Listening on http://%s:%s', config.host, config.port));

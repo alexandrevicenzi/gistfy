@@ -1,0 +1,115 @@
+{% extends 'layout.html' %}
+
+{% block title %}Gistfy - Api{% endblock %}
+
+{% block content %}
+<div class="tab-pane active" id="api">
+    <h1>API</h1>
+
+    <h2 id="gist">Gistfy a Gist from GitHub</h2>
+    <pre><code class="ng-binding min-hljs xml"><span class="min-hljs-tag">&lt;<span class="min-hljs-title">script</span> <span class="min-hljs-attribute">type</span>=<span class="min-hljs-value">'text/javascript'</span> <span class="min-hljs-attribute">src</span>=<span class="min-hljs-value">'http://www.gistfy.com/github/gist/:id'</span>&gt;</span><span class="min-hljs-tag">&lt;/<span class="min-hljs-title">script</span>&gt;</span></code></pre>
+    <strong>Parameters</strong>
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="width: 75px;">lang</td>
+                <td style="width: 75px;">string</td>
+                <td>Set programming language used for code highlighting. For example, 
+                    <span class="param">lang=python</span>. See supported languages 
+                    <a href="http://highlightjs.readthedocs.org/en/latest/css-classes-reference.html" target="_blank">here</a>.
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 75px;">slice</td>
+                <td style="width: 75px;">int</td>
+                <td>Show only selected lines. For example, 
+                    <span class="param">slice=1</span> show only line 1, 
+                    <span class="param">slice=-1</span> show only the last line, 
+                    <span class="param">slice=2:</span> skip the first line, 
+                    <span class="param">slice=:-2</span> skip the last line, 
+                    <span class="param">slice=1:4</span> show lines 1 through 4, 
+                    <span class="param">slice=-5:-1</span> show (last - 5) line through last line.
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 75px;">style</td>
+                <td style="width: 75px;">string</td>
+                <td>Set CSS color scheme. Can be <i>github</i>, <i>monokai</i> or <i>monokai_sublime</i>. 
+                    Default: <i>github</i>. For example, <span class="param">style=monokai</span>.
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 75px;">type</td>
+                <td style="width: 75px;">string</td>
+                <td>Set response type. Can be <i>js</i> or <i>html</i>. For example, <span class="param">type=js</span> for JavaScript to be used with
+                    <span class="param">script</span> tag and <span class="param">type=html</span> 
+                    for HTML to be used with AngularJS or jQuery.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <h2 id="githubbitbucket">Gistfy a file from Bitbucket or GitHub</h2>
+    <pre><code class="ng-binding min-hljs xml"><span class="min-hljs-tag">&lt;<span class="min-hljs-title">script</span> <span class="min-hljs-attribute">type</span>=<span class="min-hljs-value">'text/javascript'</span> <span class="min-hljs-attribute">src</span>=<span class="min-hljs-value">'http://www.gistfy.com/:host/:user/:repo/:path'</span>&gt;</span><span class="min-hljs-tag">&lt;/<span class="min-hljs-title">script</span>&gt;</span></code></pre>
+    <strong>Parameters</strong>
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="width: 75px;">branch</td>
+                <td style="width: 75px;">string</td>
+                <td>Set branch or changeset to be used. Default is <i>master</i>. 
+                    For example, <span class="param">branch=0ff893db335695744dfed3d3e4be4eb4f9815534</span> to use a specific changeset.
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 75px;">lang</td>
+                <td style="width: 75px;">string</td>
+                <td>Set programming language used for code highlighting. For example, 
+                    <span class="param">lang=python</span>. See supported languages 
+                    <a href="http://highlightjs.readthedocs.org/en/latest/css-classes-reference.html" target="_blank">here</a>.
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 75px;">slice</td>
+                <td style="width: 75px;">int</td>
+                <td>Show only selected lines. For example, 
+                    <span class="param">slice=1</span> show only line 1, 
+                    <span class="param">slice=-1</span> show only the last line, 
+                    <span class="param">slice=2:</span> skip the first line, 
+                    <span class="param">slice=:-2</span> skip the last line, 
+                    <span class="param">slice=1:4</span> show lines 1 through 4, 
+                    <span class="param">slice=-5:-1</span> show (last - 5) line through last line.
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 75px;">style</td>
+                <td style="width: 75px;">string</td>
+                <td>Set CSS color scheme. Can be <i>github</i>, <i>monokai</i> or <i>monokai_sublime</i>. 
+                    Default: <i>github</i>. For example, <span class="param">style=monokai</span>.
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 75px;">type</td>
+                <td style="width: 75px;">string</td>
+                <td>Set response type. Can be <i>js</i> or <i>html</i>. For example, <span class="param">type=js</span> for JavaScript to be used with
+                    <span class="param">script</span> tag and <span class="param">type=html</span> 
+                    for HTML to be used with AngularJS or jQuery.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

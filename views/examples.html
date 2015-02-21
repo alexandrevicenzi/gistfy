@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block title %}Gistfy - Examples{% endblock %}
+
+{% block content %}
+<div class="tab-pane active" id="examples">
+    <h1>Gistfy snippets examples</h1>
+    <p>These examples are based on <a href="https://highlightjs.org/static/demo/" target="_blank">highlight.js</a> examples. Most snippets do not contain working code.</p>
+    <div>
+        <strong>C++</strong>
+        <script type="text/javascript" src="/github/isagalaev/highlight.js/test/detect/cpp/default.txt?type=js&lang=c"></script>
+    </div>
+    <div>
+        <strong>CSS</strong>
+        <script type="text/javascript" src="/github/isagalaev/highlight.js/test/detect/css/default.txt?type=js&lang=css"></script>
+    </div>
+    <div>
+        <strong>Java</strong>
+        <script type="text/javascript" src="/github/isagalaev/highlight.js/test/detect/java/default.txt?type=js&lang=java"></script>
+    </div>
+    <div>
+        <strong>Python</strong>
+        <script type="text/javascript" src="/github/isagalaev/highlight.js/test/detect/python/default.txt?type=js&lang=python"></script>
+    </div>
+</div>
+{% endblock %}
