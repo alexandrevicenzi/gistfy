@@ -1,12 +1,15 @@
 {
   "name": "gistfy",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Gist your GitHub and Bitbucket repositories",
   "bin": "src/gistfy.js",
   "keywords": [
     "Gist",
     "GitHub",
-    "Bitbucket"
+    "Bitbucket",
+    "Snippets",
+    "Code snippet",
+    "Code"
   ],
   "author": {
     "name": "Alexandre Vicenzi",
