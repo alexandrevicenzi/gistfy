@@ -1,6 +1,6 @@
 {
   "name": "gistfy",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "Gist your GitHub and Bitbucket repositories",
   "bin": "src/gistfy.js",
   "keywords": [
