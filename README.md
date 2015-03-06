@@ -34,6 +34,10 @@ See the [Usage docs](http://www.gistfy.com/usage.html).
 
 ## Changelog
 
+### 0.3.2
+
+- Fix [#19](https://github.com/alexandrevicenzi/gistfy/issues/19)
+
 ### 0.3.1
 
 - Add Sitemap.xml
@@ -42,7 +46,7 @@ See the [Usage docs](http://www.gistfy.com/usage.html).
 ### 0.3.0
 
 - Fix slice problem
-- Fix #15
+- Fix [#15](https://github.com/alexandrevicenzi/gistfy/issues/15)
 - Add "More Options" button
 - Update components
 - Split site in multiple pages
