@@ -30,7 +30,7 @@ String.prototype.endsWith = function (searchString, position) {
 };
 
 function escapeJS(s) {
-    return s.replace(/\\/g, '&#92;')/*.replace(/\\/g,"\\\\")*/.replace(/\n/g, '<br>').replace(/\'/g, '\\\'').replace(/\"/g, '\\\"');
+    return s.replace(/\\/g, '&#92;')/*.replace(/\\/g,"\\\\")*/.replace(/\n/g, '<br>&#08;').replace(/\'/g, '\\\'').replace(/\"/g, '\\\"');
 }
 
 function highlight(code, language) {
@@ -100,60 +100,60 @@ function processData(data, slice) {
 
     var start, end, len;
 
-    // TODO: Use while, maybe more than once.
-    if (data.startsWith('\n')) {
-        data = data.substring(1);
-    }
-
     if (data.endsWith('\n')) {
         data = data.substring(0, data.length - 1);
     }
 
     if (slice) {
-
         if (slice.indexOf(':') > -1) {
             slice = slice.split(':');
+
             if (slice) {
-                // e.g 1:5 or -3:-1
+                // From line X to line Y.
+                // e.g: slice=1:5 or slice=-3:-1
                 start = parseInt(slice.shift());
 
-                if (start === 0) {
+                if (start === 0 || Number.isNaN(start)) {
                     start = 1;
                 }
 
-                start = start - 1 || 0;
-                end = parseInt(slice.shift()) || -1;
+                end = parseInt(slice.shift());
+
+                if (end === 0 || Number.isNaN(end)) {
+                    end = -1;
+                }
             }
         } else {
+            // Single line.
+            // e.g: slice=5
             start = parseInt(slice);
 
-            if (start === 0) {
+            if (Number.isNaN(start)) {
                 start = 1;
+                end = -1;
+            } else {
+                end = start;
             }
-
-            start = start  - 1 || 0;
-            end = start;
         }
 
         len = data.split('\n').length;
 
         if (start < 0) {
-            start = len + start;
-        } else if (start + 1 > len) {
-            start = 0;
+            start = (len + start) + 1;
+        } else if (start > len) {
+            start = 1;
         }
 
         if (end < 0) {
-            end = len + end;
-        } else if (end + 1 > len) {
-            end = len - 1;
+            end = (len + end) + 1;
+        } else if (end > len) {
+            end = len;
         }
 
-        data = data.split('\n').slice(start, end + 1).join('\n');
-
+        data = data.split('\n').slice(start - 1, end).join('\n');
     } else {
-        start = 0;
-        end = data.split('\n').length - 1;
+        start = 1;
+        end = data.split('\n').length;
     }
 
     return { data: data, start: start, end: end };
@@ -167,7 +167,7 @@ function buildResponse(type, options, callback) {
             callback(200, js, 'text/javascript; charset=utf-8');
             break;
         case "html":
-            var html = '<link rel=\"stylesheet\" href=\"' + config.base_url + '/css/gistfy.' + options.style + '.min.css\">' + template(options);
+            var html = '<link rel=\"stylesheet\" href=\"' + config.base_url + '/css/gistfy.' + options.style + '.min.css\">' + template(options).replace(/\n/g, '<br>&#08;');
             callback(200, html, 'text/html; charset=utf-8');
             break;
         default:
@@ -202,7 +202,6 @@ app.get('/github/gist/:id', function (req, res) {
 
             for (var k in data.files) {
                 var file = data.files[k];
-
                 var newData = processData(file.content, slice),
                     lines = range(newData.start, newData.end),
                     c = highlight(newData.data, lang || guessLanguage(file.filename));
