@@ -34,6 +34,11 @@ See the [Usage docs](http://www.gistfy.com/usage.html).
 
 ## Changelog
 
+### 0.3.3
+
+- Support HTTP/HTTPS
+- Drop OpenShift configuration
+
 ### 0.3.2
 
 - Fix [#19](https://github.com/alexandrevicenzi/gistfy/issues/19)
