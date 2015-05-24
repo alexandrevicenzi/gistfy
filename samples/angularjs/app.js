@@ -1,7 +1,7 @@
 angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http', function ($scope, $sce, $http) {
     $scope.result = null;
 
-    $http({ method: 'GET', url: 'http://www.gistfy.com/github/isagalaev/highlight.js/test/detect/python/default.txt?type=html&lang=python' })
+    $http({ method: 'GET', url: '//www.gistfy.com/github/isagalaev/highlight.js/test/detect/python/default.txt?type=html&lang=python' })
         .success(function (data, status, headers, config) {
             $scope.result = $sce.trustAsHtml(data);
         })

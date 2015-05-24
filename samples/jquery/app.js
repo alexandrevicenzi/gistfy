@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $.ajax({ type: 'GET', url: 'http://www.gistfy.com/github/isagalaev/highlight.js/test/detect/python/default.txt?type=html&lang=python' })
+    $.ajax({ type: 'GET', url: '//www.gistfy.com/github/isagalaev/highlight.js/test/detect/python/default.txt?type=html&lang=python' })
         .done(function (data) {
             $('#result').html(data);
         })
