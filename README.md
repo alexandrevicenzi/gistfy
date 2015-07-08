@@ -1,5 +1,7 @@
 ## Gistfy [![Version](http://img.shields.io/npm/v/gistfy.svg)](https://www.npmjs.org/package/gistfy)
 
+[![npm package](https://nodei.co/npm/gistfy.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/gistfy/)
+
 Gist your GitHub and Bitbucket repositories
 
 Gistfy is an easy way to create embeddable code snippets from your GitHub and Bitbucket repositories or your GitHub Gists.
