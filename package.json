@@ -29,9 +29,9 @@
     "npm": ">=1.4.21"
   },
   "dependencies": {
-    "express": "^4.9.0",
-    "highlight.js": ">=8.2.0",
-    "rc": "^0.5.1",
+    "express": "^4.13.1",
+    "highlight.js": "^8.6.0",
+    "rc": "^1.0.3",
     "swig": "^1.4.2"
   },
   "devDependencies": {
