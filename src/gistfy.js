@@ -5,13 +5,14 @@ var config = require('./config'),
     fs = require('fs'),
     hljs = require('highlight.js'),
     https = require('https'),
+    nunjucks = require('nunjucks'),
     path = require('path'),
-    swig  = require('swig'),
     url = require('url'),
     util = require('util');
 
 var app = express(),
-    template = swig.compileFile(path.resolve(__dirname, '../template.min.html'));
+    templateFile = fs.readFileSync(path.resolve(__dirname, '../template.min.html'), 'utf8'),
+    template = nunjucks.compile(templateFile);
 
 /* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String */
 String.prototype.startsWith = function (searchString, position) {
@@ -30,7 +31,11 @@ String.prototype.endsWith = function (searchString, position) {
 };
 
 function escapeJS(s) {
-    return s.replace(/\\/g, '&#92;')/*.replace(/\\/g,"\\\\")*/.replace(/\n/g, '<br>&#08;').replace(/\'/g, '\\\'').replace(/\"/g, '\\\"');
+    return s.replace(/\\/g, '&#92;')
+          /*.replace(/\\/g,"\\\\")*/
+            .replace(/\n/g, '<br>&#08;')
+            .replace(/\'/g, '\\\'')
+            .replace(/\"/g, '\\\"');
 }
 
 function highlight(code, language) {
@@ -111,13 +116,13 @@ function processData(data, slice) {
             if (slice) {
                 // From line X to line Y.
                 // e.g: slice=1:5 or slice=-3:-1
-                start = parseInt(slice.shift());
+                start = parseInt(slice.shift(), 10);
 
                 if (start === 0 || Number.isNaN(start)) {
                     start = 1;
                 }
 
-                end = parseInt(slice.shift());
+                end = parseInt(slice.shift(), 10);
 
                 if (end === 0 || Number.isNaN(end)) {
                     end = -1;
@@ -126,7 +131,7 @@ function processData(data, slice) {
         } else {
             // Single line.
             // e.g: slice=5
-            start = parseInt(slice);
+            start = parseInt(slice, 10);
 
             if (Number.isNaN(start)) {
                 start = 1;
@@ -163,11 +168,11 @@ function buildResponse(type, options, callback) {
     switch (type) {
         case "js":
             var js = 'document.write(\'<link rel=\"stylesheet\" href=\"' + config.base_url + '/css/gistfy.' + options.style + '.min.css\">\');\n'+
-                     'document.write(\'' + escapeJS(template(options)) + '\');';
+                     'document.write(\'' + escapeJS(template.render(options)) + '\');';
             callback(200, js, 'text/javascript; charset=utf-8');
             break;
         case "html":
-            var html = '<link rel=\"stylesheet\" href=\"' + config.base_url + '/css/gistfy.' + options.style + '.min.css\">' + template(options).replace(/\n/g, '<br>&#08;');
+            var html = '<link rel=\"stylesheet\" href=\"' + config.base_url + '/css/gistfy.' + options.style + '.min.css\">' + template.render(options).replace(/\n/g, '<br>&#08;');
             callback(200, html, 'text/html; charset=utf-8');
             break;
         default:
@@ -189,10 +194,10 @@ app.get('/github/gist/:id', function (req, res) {
 
     var extended = req.query.extended,
         lang = req.query.lang,
-        locale = req.query.locale || config.locale,
+        locale = req.query.locale || 'en',
         slice = req.query.slice,
-        style = req.query.style || config.style,
-        type = req.query.type || config.type;
+        style = req.query.style || 'github',
+        type = req.query.type || 'js';
 
     var url = util.format('https://api.github.com/gists/%s', req.params.id);
 
@@ -251,13 +256,13 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
         path = req.params.path,
         repo = req.params.repo,
         user = req.params.user,
-        branch = req.query.branch || config.branch,
+        branch = req.query.branch || 'master',
         extended = req.query.extended,
         lang = req.query.lang,
-        locale = req.query.locale || config.locale,
+        locale = req.query.locale || 'en',
         slice = req.query.slice,
-        style = req.query.style || config.style,
-        type = req.query.type || config.type,
+        style = req.query.style || 'github',
+        type = req.query.type || 'js',
         fileName = path.split('/').pop(),
         htmlUrl, rawUrl, repoUrl, from, to;
 
@@ -297,7 +302,7 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
             buildResponse(type, options, function (status, content, contentType) {
                 res.header("Access-Control-Allow-Origin", "*");
                 res.header("Access-Control-Allow-Headers", "X-Requested-With");
-                res.setHeader('content-type', contentType);
+                res.setHeader('Content-Type', contentType);
                 res.send(content);
             });
         } else {
@@ -307,28 +312,57 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
 });
 
 app.use(express.static(path.resolve(__dirname, '../static')));
-
-app.engine('html', swig.renderFile);
-
-app.set('view engine', 'html');
 app.set('views', path.resolve(__dirname, '../views/'));
 
+var env = nunjucks.configure(app.get('views'), {
+    autoescape: true,
+    express: app
+});
+
+env.addGlobal('ga', config.ga_id);
+
+function ThisYearExtension() {
+    this.tags = ['thisyear'];
+
+    this.parse = function(parser, nodes, lexer) {
+        var tok = parser.nextToken();
+        var args = parser.parseSignature(null, true);
+        parser.advanceAfterBlockEnd(tok.value);
+        var body = parser.parseUntilBlocks('endthisyear');
+        parser.advanceAfterBlockEnd();
+        return new nodes.CallExtension(this, 'run', args, [body]);
+    };
+
+    this.run = function(context, url, body) {
+        date = new Date().getFullYear().toString();
+        return new nunjucks.runtime.SafeString(date);
+    };
+}
+
+env.addExtension('ThisYearExtension', new ThisYearExtension());
+
+app.set('view engine', 'nunjucks');
+
 app.get('/', function (req, res) {
-    res.render('index');
+    res.redirect('/index.html');
 });
 
 app.get('/:path.html', function (req, res) {
-    res.render(req.params.path, function(err, html){
-        if (err) {
-            res.render('404');
-        } else {
-            res.send(html);
-        }
+    res.render(req.params.path + '.html', {
+            year: (new Date()).getFullYear(),
+        }, function(err, html){
+            if (err) {
+                res.render('404.html', {
+                    year: (new Date()).getFullYear(),
+                });
+            } else {
+                res.send(html);
+            }
     });
 });
 
 app.get('*', function (req, res) {
-    res.render('404');
+    res.render('404.html');
 });
 
 app.listen(config.port, config.host, function () {

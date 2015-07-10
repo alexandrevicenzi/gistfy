@@ -61,10 +61,6 @@ angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http
         };
     };
 
-    $scope.thisYear = function () {
-        return (new Date()).getFullYear();
-    };
-
     $scope.btnOkClick = function () {
         if (!$scope.formTry.$valid) {
             return;
