@@ -1,12 +1,8 @@
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
 
-{% block title %}Gistfy - Examples{% endblock %}
-
-{% block og %}
-<meta property="og:title" content="Gistfy - Examples"/>
-<meta property="og:description" content="Gistfy snippets examples. These examples are based on highlight.js examples. Most snippets do not contain working code."/>
-<meta property="og:url" content="http://www.gistfy.com/examples.html"/>
-{% endblock %}
+{% set title = "Gistfy - Examples" %}
+{% set description = "Gistfy embeddable snippets examples." %}
+{% set url = "http://www.gistfy.com/examples.html" %}
 
 {% block content %}
 <div class="tab-pane active" id="examples">

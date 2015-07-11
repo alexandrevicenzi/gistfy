@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="App">
 <head>
+    {% eval year="new Date().getFullYear()" %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Gistfy{% endblock %}</title>
+    <meta name="description" content="{{ description }}">
+    <meta name="keywords" content="Code, Snippet, Gist, GitHub, Bitbucket, Git">
+    <meta name="author" content="Alexandre Vicenzi">
+
+    <title>{{ title }}</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/site.css" rel="stylesheet">
 
-    {% block og %}
-    <meta property="og:title" content="Gistfy"/>
-    <meta property="og:description" content="Gistfy is an easy way to create embeddable code snippets from your GitHub and Bitbucket repositories or your GitHub Gist."/>
-    <meta property="og:url" content="http://www.gistfy.com"/>
-    {% endblock %}
+    <meta property="og:title" content="{{ title }}"/>
+    <meta property="og:description" content="{{ description }}"/>
+    <meta property="og:url" content="{{ url }}"/>
     <meta property="og:site_name" content="Gistfy"/>
     <meta property="og:type" content="website"/>
     <meta property="og:locale" content="en_US"/>
@@ -42,7 +46,7 @@
             </div>
             <div class="navbar-collapse collapse" id="navbar-main">
                 <ul class="nav navbar-nav">
-                    <li ng-class="{ active: isActive(['/', '/index.html'])}">
+                    <li ng-class="{ active: isActive('/index.html')}">
                         <a href="/index.html">Home</a>
                     </li>
                     <li ng-class="{ active: isActive('/api.html')}">
@@ -74,7 +78,7 @@
     </section>
 
     <footer class="footer text-center">
-        <div>Copyright © Gistfy {% thisyear %}2015{% endthisyear %}. Theme created by <a href="http://bootswatch.com/yeti/" target="_blank">Bootswatch</a>.</div>
+        <div>Copyright © Gistfy {{ year }}. Theme created by <a href="http://bootswatch.com/yeti/" target="_blank">Bootswatch</a>.</div>
     </footer>
 
     <script type="text/javascript" src="js/jquery.min.js"></script>

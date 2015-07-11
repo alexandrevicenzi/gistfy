@@ -1,12 +1,8 @@
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
 
-{% block title %}Gistfy - Api{% endblock %}
-
-{% block og %}
-<meta property="og:title" content="Gistfy - Api"/>
-<meta property="og:description" content="Gistfy Api documentation"/>
-<meta property="og:url" content="http://www.gistfy.com/api.html"/>
-{% endblock %}
+{% set title = "Gistfy - Api" %}
+{% set description = "Gistfy Api Documentation" %}
+{% set ulr = "http://www.gistfy.com/api.html" %}
 
 {% block content %}
 <div class="tab-pane active" id="api">

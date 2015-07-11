@@ -1,13 +1,12 @@
 # Changelog
 
-### 0.3.4 (dev)
+### 0.4 (dev)
 
 - swig replaced by nunjucks. See [this](https://github.com/paularmstrong/swig/issues/628)
 - Update packages
 - Remove unused CSS
 - Add Google Analytics Track ID option
 - Remove unused command line options
-- Add Favicon
 
 ### 0.3.3
 

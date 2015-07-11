@@ -1,13 +1,8 @@
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
 
-{% block title %}Gistfy - About{% endblock %}
-
-{% block og %}
-<meta property="og:title" content="Gistfy - About"/>
-<meta property="og:description" content="Gists are a great way to share code snippets, but unfortunately you can't gist a repository. Gistfy provides a way to create snippets like Gist. Just drop your code anywhere, and we will provide a way to create embeddable code snippets similar to a Gist."/>
-<meta property="og:url" content="http://www.gistfy.com/about.html"/>
-{% endblock %}
-
+{% set title = "Gistfy - About" %}
+{% set description = "Gists are a great way to share code snippets, but unfortunately you can't gist a repository. Gistfy provides a way to create snippets like Gist. Just drop your code anywhere, and we will provide a way to create embeddable code snippets similar to a Gist." %}
+{% set url = "http://www.gistfy.com/about.html" %}
 
 {% block content %}
 <div class="tab-pane active" id="about">

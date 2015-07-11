@@ -1,13 +1,8 @@
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
 
-{% block title %}Gistfy - Usage{% endblock %}
-
-{% block og %}
-<meta property="og:title" content="Gistfy - Usage"/>
-<meta property="og:description" content="Full working samples in AngularJS, jQuery and HTML."/>
-<meta property="og:url" content="http://www.gistfy.com/usage.html"/>
-{% endblock %}
-
+{% set title = "Gistfy - Usage" %}
+{% set description = "Full working samples in AngularJS, jQuery and HTML." %}
+{% set url = "http://www.gistfy.com/usage.html" %}
 
 {% block content %}
 <div class="tab-pane active" id="usage">

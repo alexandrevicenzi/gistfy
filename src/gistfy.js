@@ -6,6 +6,7 @@ var config = require('./config'),
     hljs = require('highlight.js'),
     https = require('https'),
     nunjucks = require('nunjucks'),
+    njeval = require('nunjucks-eval'),
     path = require('path'),
     url = require('url'),
     util = require('util');
@@ -319,50 +320,27 @@ var env = nunjucks.configure(app.get('views'), {
     express: app
 });
 
+njeval.install(env);
 env.addGlobal('ga', config.ga_id);
-
-function ThisYearExtension() {
-    this.tags = ['thisyear'];
-
-    this.parse = function(parser, nodes, lexer) {
-        var tok = parser.nextToken();
-        var args = parser.parseSignature(null, true);
-        parser.advanceAfterBlockEnd(tok.value);
-        var body = parser.parseUntilBlocks('endthisyear');
-        parser.advanceAfterBlockEnd();
-        return new nodes.CallExtension(this, 'run', args, [body]);
-    };
-
-    this.run = function(context, url, body) {
-        date = new Date().getFullYear().toString();
-        return new nunjucks.runtime.SafeString(date);
-    };
-}
-
-env.addExtension('ThisYearExtension', new ThisYearExtension());
-
 app.set('view engine', 'nunjucks');
 
 app.get('/', function (req, res) {
     res.redirect('/index.html');
 });
 
-app.get('/:path.html', function (req, res) {
-    res.render(req.params.path + '.html', {
-            year: (new Date()).getFullYear(),
-        }, function(err, html){
-            if (err) {
-                res.render('404.html', {
-                    year: (new Date()).getFullYear(),
-                });
-            } else {
-                res.send(html);
-            }
+app.get('/:path(index|api|usage|examples|about).html', function (req, res) {
+    res.render(req.params.path + '.html', function(err, html){
+        if (err) {
+            console.log(err);
+            res.render('500.html');
+        } else {
+            res.send(html);
+        }
     });
 });
 
 app.get('*', function (req, res) {
-    res.render('404.html');
+    res.status(404).render('404.html');
 });
 
 app.listen(config.port, config.host, function () {
