@@ -12,7 +12,7 @@ var config = require('./config'),
     util = require('util');
 
 var app = express(),
-    templateFile = fs.readFileSync(path.resolve(__dirname, '../template.min.html'), 'utf8'),
+    templateFile = fs.readFileSync(path.resolve(__dirname, '../template.html'), 'utf8'),
     template = nunjucks.compile(templateFile);
 
 /* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String */
@@ -33,8 +33,10 @@ String.prototype.endsWith = function (searchString, position) {
 
 function escapeJS(s) {
     return s.replace(/\\/g, '&#92;')
-          /*.replace(/\\/g,"\\\\")*/
-            .replace(/\n/g, '<br>&#08;')
+            //.replace(/\\/g,"\\\\")
+            //.replace(/\n/g, '<br>&#08;')
+            .replace(/\n/g, '\\n')
+            .replace(/\r/g, '\\r')
             .replace(/\'/g, '\\\'')
             .replace(/\"/g, '\\\"');
 }
@@ -45,14 +47,6 @@ function highlight(code, language) {
     } else {
         return hljs.highlightAuto(code).value;
     }
-}
-
-function range(low, high) {
-    var list = [];
-    for (var i = low; i <= high; i++) {
-        list.push(i);
-    }
-    return list;
 }
 
 function downloadFile(urlStr, callback) {
@@ -75,9 +69,8 @@ function downloadFile(urlStr, callback) {
             callback(body, response.statusCode, response.headers);
         });
 
-
     }).on('error', function (e) {
-        // TODO:
+        console.log(e);
     });
 }
 
@@ -173,7 +166,8 @@ function buildResponse(type, options, callback) {
             callback(200, js, 'text/javascript; charset=utf-8');
             break;
         case "html":
-            var html = '<link rel=\"stylesheet\" href=\"' + config.base_url + '/css/gistfy.' + options.style + '.min.css\">' + template.render(options).replace(/\n/g, '<br>&#08;');
+            var html = '<link rel=\"stylesheet\" href=\"' + config.base_url + '/css/gistfy.' + options.style + '.min.css\">' +
+                       template.render(options);
             callback(200, html, 'text/html; charset=utf-8');
             break;
         default:
@@ -182,7 +176,6 @@ function buildResponse(type, options, callback) {
 }
 
 /*
-
 Optional parameters:
     @param extended     Use extended template. Show user information at header. e.g., extended=true. Default: false. 
     @param lang         Set code language, for highlight. e.g., lang=python. Default is based in file extension. e.g., file.py returns python highlight style.
@@ -209,7 +202,6 @@ app.get('/github/gist/:id', function (req, res) {
             for (var k in data.files) {
                 var file = data.files[k];
                 var newData = processData(file.content, slice),
-                    lines = range(newData.start, newData.end),
                     c = highlight(newData.data, lang || guessLanguage(file.filename));
 
                 files.push({
@@ -217,7 +209,8 @@ app.get('/github/gist/:id', function (req, res) {
                     rawUrl: file.raw_url,
                     fileName: file.filename,
                     content: c,
-                    lineRange: lines,
+                    lineStart: newData.start,
+                    lineEnd: newData.end + 1
                 });
             }
 
@@ -241,7 +234,6 @@ app.get('/github/gist/:id', function (req, res) {
 });
 
 /*
-
 Optional parameters:
     @param branch       Set file branch or changeset. e.g., branch=master or branch=38d25e12627b. Default: master.
     @param extended     Use extended template. Show user information at header. e.g., extended=true. Default: false. 
@@ -284,7 +276,6 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
 
         if (status === 200) {
             var newData = processData(data, slice),
-                lines = range(newData.start, newData.end),
                 content = highlight(newData.data, lang || guessLanguage(fileName));
 
             var options = {
@@ -293,7 +284,8 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
                     rawUrl: rawUrl,
                     fileName: fileName,
                     content: content,
-                    lineRange: lines
+                    lineStart: newData.start,
+                    lineEnd: newData.end + 1
                 }],
                 repoUrl: repoUrl,
                 style: style,

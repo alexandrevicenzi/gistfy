@@ -1,10 +1,10 @@
 angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http', function ($scope, $sce, $http) {
 
-    $scope.fileTypes = [{ id: 'js' , desc: 'JavaScript' }, { id: 'html', desc: 'HTML (jQuery or AngularJS)' }];
+    $scope.fileTypes = [{ id: 'js' , desc: 'JavaScript' }, { id: 'html', desc: 'HTML (for jQuery or AngularJS)' }];
     $scope.fileTypesFor = [{ id: 'jquery' , desc: 'jQuery' }, { id: 'angular', desc: 'AngularJS' }];
     $scope.hosts = [{ id: 'github', desc: 'GitHub' }, { id: 'bitbucket', desc: 'Bitbucket' }];
     $scope.styles = [{ id: 'github' , desc: 'GitHub' }, { id: 'monokai', desc: 'Monokay' }, { id: 'monokai_sublime', desc: 'Monokay Sublime' }];
-    $scope.types = [{ id: 'gist' , desc: 'Gist' }, { id: 'repo', desc: 'Repository' }];
+    $scope.types = [{ id: 'gist' , desc: 'GitHub Gist' }, { id: 'repo', desc: 'GitHub or Bitbucket repository' }];
 
     $scope.model = {
         type: null,
@@ -14,7 +14,8 @@ angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http
         repo: null,
         file: null,
         branch: null,
-        slice: null,
+        sliceFrom: null,
+        sliceTo: null,
         lang: null,
         style: null,
         fileType: null,
@@ -54,7 +55,8 @@ angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http
             repo: null,
             file: null,
             branch: null,
-            slice: null,
+            sliceFrom: null,
+            sliceTo: null,
             lang: null,
             style: null,
             fileType: null,
@@ -82,8 +84,12 @@ angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http
                 params.push('branch=' + $scope.model.branch);
             }
 
-            if ($scope.model.slice) {
-                params.push('slice=' + $scope.model.slice);
+            if ($scope.model.sliceFrom && $scope.model.sliceTo) {
+                params.push('slice=' + $scope.model.sliceFrom + ':' + $scope.model.sliceTo);
+            } else if ($scope.model.sliceFrom) {
+                params.push('slice=' + $scope.model.sliceFrom);
+            } else if ($scope.model.sliceTo) {
+                params.push('slice=' + $scope.model.sliceTo);
             }
 
             if ($scope.model.lang) {

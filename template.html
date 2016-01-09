@@ -1,14 +1,14 @@
 <div class="gist">
-    {% for file in files %}
+    {%- for file in files -%}
     <div class="gist-file">
         <div class="gist-data">
             <table cellpadding="0" cellspacing="0">
                 <tbody>
                     <tr>
                         <td class="line-numbers">
-                            {% for line in file.lineRange %}
+                            {%- for line in range(file.lineStart, file.lineEnd) -%}
                             <span class="line-number">{{ line }}</span>
-                            {% endfor %}
+                            {%- endfor -%}
                         </td>
                         <td class="line-data">
                             <pre class="line-pre">{{ file.content | safe }}</pre>
@@ -19,11 +19,11 @@
         </div>
         <div class="gist-meta">
             <div style="float: right;">
-                {% if repoUrl %}<a href="{{ repoUrl }}">repository</a>&nbsp;|&nbsp;{% endif %}
+                {%- if repoUrl -%}<a href="{{ repoUrl }}">repository</a>&nbsp;|&nbsp;{%- endif -%}
                 <a href="{{ file.rawUrl }}">view raw</a>
             </div>
             <a href="{{ file.htmlUrl }}">{{ file.fileName }}</a> brought to you by <a href="//www.gistfy.com">Gistfy</a>
         </div>
     </div>
-    {% endfor %}
+    {%- endfor -%}
 </div>

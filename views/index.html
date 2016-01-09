@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="tab-pane active" id="home">
-<h1>Gist your GitHub and Bitbucket repositories</h1>
+<h1>Create snippets from GitHub and Bitbucket repositories</h1>
 <p>Gistfy is an easy way to create embeddable code snippets from your <a href="https://github.com/" target="_blank">GitHub</a> and <a href="https://bitbucket.org/" target="_blank">Bitbucket</a> repositories or your <a href="https://gist.github.com/" target="_blank">GitHub Gist</a>.</p>
 <br>
 <div class="row">
@@ -21,7 +21,7 @@
                             <label for="select" class="col-md-2 control-label"><span class="required">*</span> Type</label>
                             <div class="col-md-10">
                                 <select class="form-control" name="type" ng-model="model.type" ng-options="t.desc for t in types" ng-change="changeType()">
-                                    <option value="" selected="selected">Choose gist type</option>
+                                    <option value="" selected="selected">Choose snippet type</option>
                                 </select>
                             </div>
                         </div>
@@ -70,8 +70,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="slice" class="col-md-2 control-label">Slice <a href="/api.html" target="_blank" title="Get some help"><i class="glyphicon glyphicon-question-sign"></i></a></label>
-                                <div class="col-md-10">
-                                    <input class="form-control" name="slice" ng-model="model.slice" placeholder="Slice format"/>
+                                <div class="col-md-2">
+                                    <input class="form-control" name="slice-from" ng-model="model.sliceFrom" placeholder="From"/>
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" name="slice-to" ng-model="model.sliceTo" placeholder="To"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -89,7 +92,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="filetype" class="col-md-2 control-label">Type</label>
+                                <label for="filetype" class="col-md-2 control-label">Output Type</label>
                                 <div class="col-md-10">
                                     <select class="form-control" name="filetype" ng-model="model.fileType" ng-options="h.desc for h in fileTypes">
                                         <option value="" selected="selected">Choose a type</option>
