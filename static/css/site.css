@@ -49,6 +49,22 @@ span.required {
     font-weight: bold;
 }
 
+h2.small {
+    font-size: 18px;
+}
+
+.btn-ok {
+    min-width: 75px;
+}
+
+.fork-me {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+    z-index: -1;
+}
+
 .form-control {
     color: inherit;
 }

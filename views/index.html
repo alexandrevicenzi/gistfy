@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 
-{% set title = "Gistfy" %}
+{% set title = "Gistfy - Embeddable code snippets" %}
 {% set description = "Gistfy is an easy way to create embeddable code snippets from your GitHub and Bitbucket repositories or your GitHub Gist." %}
 {% set url = "http://www.gistfy.com" %}
 
 {% block content %}
 <div class="tab-pane active" id="home">
 <h1>Create snippets from GitHub and Bitbucket repositories</h1>
-<p>Gistfy is an easy way to create embeddable code snippets from your <a href="https://github.com/" target="_blank">GitHub</a> and <a href="https://bitbucket.org/" target="_blank">Bitbucket</a> repositories or your <a href="https://gist.github.com/" target="_blank">GitHub Gist</a>.</p>
+<h2 class="small">Gistfy is an easy way to create embeddable code snippets from your <a href="https://github.com/" target="_blank">GitHub</a> and <a href="https://bitbucket.org/" target="_blank">Bitbucket</a> repositories or your <a href="https://gist.github.com/" target="_blank">GitHub Gist</a>.</h2>
 <br>
 <div class="row">
     <div class="col-md-offset-1 col-md-10">
@@ -110,7 +110,7 @@
                         </div>
                         <div class="form-group" ng-show="isRepo || isGist">
                             <div class="col-md-offset-2 col-md-1">
-                                <button class="btn btn-primary" type="submit" style="min-width: 75px;" ng-click="btnOkClick()">OK</button>
+                                <button class="btn btn-primary btn-ok" type="submit" ng-click="btnOkClick()">OK</button>
                             </div>
                             <div class="col-md-1">
                                 <button class="btn btn-primary" type="button" ng-click="showMore = !showMore" ng-bind="!showMore ? 'More options' : 'Less options'"></button>
