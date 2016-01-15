@@ -25,9 +25,8 @@ html, body {
     border-color: #EB3838;
 }
 
-.ng-cloak {
+.hide-me {
     display: none;
-    visibility: hidden;
 }
 
 .param {
@@ -44,9 +43,11 @@ table {
     font-size: 14px;
 }
 
-span.required {
+.required:before {
+    content: '*';
     color: #C71616;
     font-weight: bold;
+    padding-right: 2px;
 }
 
 h2.small {
@@ -75,20 +76,24 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 */
 
+pre {
+
+}
+
 .min-hljs {
-  display: block;
-  overflow-x: auto;
-  padding: 0.5em;
-  color: #333;
-  background: #f8f8f8;
-  -webkit-text-size-adjust: none;
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    color: #333;
+    background: #f8f8f8;
+    -webkit-text-size-adjust: none;
 }
 
 .min-hljs-comment,
 .min-hljs-template_comment,
 .min-hljs-javadoc {
-  color: #998;
-  font-style: italic;
+    color: #998;
+    font-style: italic;
 }
 
 .min-hljs-keyword,
@@ -96,62 +101,62 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 .min-hljs-subst,
 .min-hljs-request,
 .min-hljs-status {
-  color: #333;
-  font-weight: bold;
+    color: #333;
+    font-weight: bold;
 }
 
 .min-hljs-number,
 .min-hljs-hexcolor {
-  color: #008080;
+    color: #008080;
 }
 
 .min-hljs-string,
 .min-hljs-tag .min-hljs-value,
 .min-hljs-phpdoc,
 .min-hljs-dartdoc {
-  color: #d14;
+    color: #d14;
 }
 
 .min-hljs-title,
 .min-hljs-id{
-  color: #900;
-  font-weight: bold;
+    color: #900;
+    font-weight: bold;
 }
 
 .min-hljs-list .min-hljs-keyword,
 .min-hljs-subst {
-  font-weight: normal;
+    font-weight: normal;
 }
 
 .min-hljs-class .min-hljs-title,
 .min-hljs-type {
-  color: #458;
-  font-weight: bold;
+    color: #458;
+    font-weight: bold;
 }
 
 .min-hljs-tag,
 .min-hljs-tag .min-hljs-title,
 .min-hljs-rules .min-hljs-property {
-  color: #000080;
-  font-weight: normal;
+    color: #000080;
+    font-weight: normal;
 }
 
 .min-hljs-attribute,
 .min-hljs-variable {
-  color: #008080;
+    color: #008080;
 }
 
 .min-hljs-regexp {
-  color: #009926;
+    color: #009926;
 }
 
 .min-hljs-symbol,
 .min-hljs-prompt {
-  color: #990073;
+    color: #990073;
 }
 
 .min-hljs-built_in {
-  color: #0086b3;
+    color: #0086b3;
 }
 
 .min-hljs-preprocessor,
@@ -160,22 +165,26 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 .min-hljs-doctype,
 .min-hljs-shebang,
 .min-hljs-cdata {
-  color: #999;
-  font-weight: bold;
+    color: #999;
+    font-weight: bold;
 }
 
 .min-hljs-deletion {
-  background: #fdd;
+    background: #fdd;
 }
 
 .min-hljs-addition {
-  background: #dfd;
+    background: #dfd;
 }
 
 .diff .min-hljs-change {
-  background: #0086b3;
+    background: #0086b3;
 }
 
 .min-hljs-chunk {
-  color: #aaa;
+    color: #aaa;
+}
+
+.min-hljs-code {
+    color: #333;
 }

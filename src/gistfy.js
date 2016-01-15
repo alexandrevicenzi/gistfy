@@ -309,7 +309,9 @@ app.set('views', path.resolve(__dirname, '../views/'));
 
 var env = nunjucks.configure(app.get('views'), {
     autoescape: true,
-    express: app
+    express: app,
+    // watch: true,
+    // noCache: true
 });
 
 njeval.install(env);

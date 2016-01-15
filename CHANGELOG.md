@@ -3,10 +3,11 @@
 ### 0.4 (dev)
 
 - swig replaced by nunjucks. See [this](https://github.com/paularmstrong/swig/issues/628)
-- Update packages
+- Update dependencies
 - Remove unused CSS
 - Add Google Analytics Track ID option
 - Remove unused command line options
+- Remove AngularJS dependency
 
 ### 0.3.3
 

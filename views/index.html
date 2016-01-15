@@ -6,8 +6,8 @@
 
 {% block content %}
 <div class="tab-pane active" id="home">
-<h1>Create snippets from GitHub and Bitbucket repositories</h1>
-<h2 class="small">Gistfy is an easy way to create embeddable code snippets from your <a href="https://github.com/" target="_blank">GitHub</a> and <a href="https://bitbucket.org/" target="_blank">Bitbucket</a> repositories or your <a href="https://gist.github.com/" target="_blank">GitHub Gist</a>.</h2>
+<h2>Create snippets from GitHub and Bitbucket repositories</h2>
+<p>Gistfy is an easy way to create embeddable code snippets from your <a href="https://github.com/" target="_blank">GitHub</a> and <a href="https://bitbucket.org/" target="_blank">Bitbucket</a> repositories or your <a href="https://gist.github.com/" target="_blank">GitHub Gist</a>.</p>
 <br>
 <div class="row">
     <div class="col-md-offset-1 col-md-10">
@@ -16,109 +16,131 @@
                 <h3 class="panel-title">Try</h3>
             </div>
             <div class="panel-body">
-                <form name="formTry" class="form-horizontal">
+                <form id="formtry" class="form-horizontal">
                         <div class="form-group">
-                            <label for="select" class="col-md-2 control-label"><span class="required">*</span> Type</label>
+                            <label for="select" class="col-md-2 control-label required">Type</label>
                             <div class="col-md-10">
-                                <select class="form-control" name="type" ng-model="model.type" ng-options="t.desc for t in types" ng-change="changeType()">
-                                    <option value="" selected="selected">Choose snippet type</option>
+                                <select class="form-control" name="type" id="type" required>
+                                    <option value="">Choose snippet type</option>
+                                    <option value="gist">GitHub Gist</option>
+                                    <option value="repo">GitHub or Bitbucket repository</option>
                                 </select>
                             </div>
                         </div>
-                        <div ng-show="isGist">
+                        <div class="is-gist hide-me">
                             <div class="form-group">
-                                <label for="gistId" class="col-md-2 control-label"><span class="required">*</span> Id</label>
+                                <label for="gistid" class="col-md-2 control-label required">Id</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" name="gistId" placeholder="Gist id" type="text" ng-model="model.id" ng-required="isGist">
+                                    <input class="form-control" name="gistid" id="gistid" placeholder="Gist id" type="text">
                                 </div>
                             </div>
                         </div>
-                        <div ng-show="isRepo">
+                        <div class="is-repo hide-me">
                             <div class="form-group">
-                                <label for="host" class="col-md-2 control-label"><span class="required">*</span> Host</label>
+                                <label for="host" class="col-md-2 control-label required">Host</label>
                                 <div class="col-md-10">
-                                    <select class="form-control" name="host" ng-model="model.host" ng-options="h.desc for h in hosts" ng-required="isRepo">
-                                        <option value="" selected="selected">Choose a host</option>
+                                    <select class="form-control" name="host" id="host">
+                                        <option value="">Choose a host</option>
+                                        <option value="github">GitHub</option>
+                                        <option value="bitbucket">Bitbucket</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="user" class="col-md-2 control-label"><span class="required">*</span> User</label>
+                                <label for="user" class="col-md-2 control-label required">User</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" name="user" placeholder="User name" type="text" ng-model="model.user" ng-required="isRepo">
+                                    <input class="form-control" name="user" id="user" placeholder="User name" type="text">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="repo" class="col-md-2 control-label"><span class="required">*</span> Repo</label>
+                                <label for="repo" class="col-md-2 control-label required">Repo</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" name="repo" placeholder="Repository name" type="text" ng-model="model.repo" ng-required="isRepo">
+                                    <input class="form-control" name="repo" id="repo" placeholder="Repository name" type="text">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="path" class="col-md-2 control-label"><span class="required">*</span> File</label>
+                                <label for="branch" class="col-md-2 control-label">Branch</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" name="path" placeholder="File path" type="text" ng-model="model.file" ng-required="isRepo">
+                                    <input class="form-control" name="branch" id="branch" placeholder="Branch name"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="path" class="col-md-2 control-label required">File</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" name="path" id="path" placeholder="File path" type="text">
                                 </div>
                             </div>
                         </div>
-                        <div ng-show="showMore">
-                            <div class="form-group" ng-show="isRepo">
-                                <label for="branch" class="col-md-2 control-label">Branch</label>
-                                <div class="col-md-10">
-                                    <input class="form-control" name="branch" ng-model="model.branch" placeholder="Branch name"/>
-                                </div>
-                            </div>
+                        <div class="show-more hide-me">
                             <div class="form-group">
-                                <label for="slice" class="col-md-2 control-label">Slice <a href="/api.html" target="_blank" title="Get some help"><i class="glyphicon glyphicon-question-sign"></i></a></label>
+                                <label for="slicefrom" class="col-md-2 control-label">Slice
+                                    <a href="/api.html" target="_blank" title="Show only selected lines. Click for more.">
+                                        <i class="glyphicon glyphicon-question-sign"></i>
+                                    </a>
+                                </label>
                                 <div class="col-md-2">
-                                    <input class="form-control" name="slice-from" ng-model="model.sliceFrom" placeholder="From"/>
+                                    <input class="form-control" name="slicefrom" id="slicefrom" placeholder="From"/>
                                 </div>
                                 <div class="col-md-2">
-                                    <input class="form-control" name="slice-to" ng-model="model.sliceTo" placeholder="To"/>
+                                    <input class="form-control" name="sliceto" id="sliceto" placeholder="To"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="lang" class="col-md-2 control-label">Language <a href="http://highlightjs.readthedocs.org/en/latest/css-classes-reference.html" target="_blank" title="Get some help"><i class="glyphicon glyphicon-question-sign"></i></a></label>
+                                <label for="lang" class="col-md-2 control-label">Language
+                                    <a href="http://highlightjs.readthedocs.org/en/latest/css-classes-reference.html#language-names-and-aliases"
+                                       target="_blank"
+                                       title="Choose the programming language. Click for more.">
+                                       <i class="glyphicon glyphicon-question-sign"></i>
+                                   </a>
+                               </label>
                                 <div class="col-md-10">
-                                    <input class="form-control" name="lang" ng-model="model.lang" placeholder="Programming language"/>
+                                    <input class="form-control" name="lang" id="lang" placeholder="Programming language"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="style" class="col-md-2 control-label">Style</label>
+                                <label for="style" class="col-md-2 control-label">Color Style</label>
                                 <div class="col-md-10">
-                                    <select class="form-control" name="style" ng-model="model.style" ng-options="h.desc for h in styles">
-                                        <option value="" selected="selected">Choose a color style</option>
+                                    <select class="form-control" name="style" id="style">
+                                        <option value="">Choose a color style</option>
+                                        <option value="github">GitHub</option>
+                                        <option value="monokai">Monokay</option>
+                                        <option value="monokai_sublime">Monokay Sublime</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="filetype" class="col-md-2 control-label">Output Type</label>
                                 <div class="col-md-10">
-                                    <select class="form-control" name="filetype" ng-model="model.fileType" ng-options="h.desc for h in fileTypes">
-                                        <option value="" selected="selected">Choose a type</option>
+                                    <select class="form-control" name="filetype" id="filetype">
+                                        <option value="">Choose a type</option>
+                                        <option value="js">JavaScript</option>
+                                        <option value="html">HTML (for jQuery or AngularJS)</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group" ng-show="model.fileType.id === 'html'">
-                                <label for="filetype" class="col-md-2 control-label"><span class="required">*</span> Library</label>
+                            <div class="form-group hide-me is-html">
+                                <label for="library" class="col-md-2 control-label required">JS Library</label>
                                 <div class="col-md-10">
-                                    <select class="form-control" name="filetype" ng-model="model.fileTypeFor" ng-options="h.desc for h in fileTypesFor" ng-required="model.fileType.id === 'html'">
-                                        <option value="" selected="selected">Choose a library</option>
+                                    <select class="form-control" name="library" id="library">
+                                        <option value="">Choose a library</option>
+                                        <option value="jquery">jQuery</option>
+                                        <option value="angular">AngularJS</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" ng-show="isRepo || isGist">
+                        <div class="form-group hide-me" id="btn-group">
                             <div class="col-md-offset-2 col-md-1">
-                                <button class="btn btn-primary btn-ok" type="submit" ng-click="btnOkClick()">OK</button>
+                                <button class="btn btn-primary btn-ok" type="submit">OK</button>
                             </div>
                             <div class="col-md-1">
-                                <button class="btn btn-primary" type="button" ng-click="showMore = !showMore" ng-bind="!showMore ? 'More options' : 'Less options'"></button>
+                                <button class="btn btn-primary" type="button" id="btn-more">More options</button>
+                                <button class="btn btn-primary hide-me" type="button" id="btn-less">Less options</button>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-8">
-                                <small><span class="required">*</span> Required</small>
+                                <small class="required">Required</small>
                             </div>
                         </div>
                 </form>
@@ -126,47 +148,50 @@
         </div>
     </div>
 </div>
-<div class="row" ng-show="result.show">
+<div class="row hide-me result result-all">
     <div class="col-md-offset-1 col-md-10">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <button type="button" class="close" ng-click="result.show = false;"><span>&times;</span></button>
+                <button type="button" class="close" onclick="$('.result').hide();"><span>&times;</span></button>
                 <h3 class="panel-title">Result</h3>
             </div>
             <div class="panel-body">
-                <div ng-hide="result.hasError">
+                <div class="result code hide-me">
                     <strong>Add this snippet to your page</strong>
-                    <div ng-show="result.type === 'js'">
-                        <pre><code class="ng-binding min-hljs xml"><span class="min-hljs-tag">&lt;<span class="min-hljs-title">script</span> <span class="min-hljs-attribute">type</span>=<span class="min-hljs-value">'text/javascript'</span> <span class="min-hljs-attribute">src</span>=<span class="min-hljs-value">'<span ng-bind="result.url"></span>'</span>&gt;</span><span class="min-hljs-tag">&lt;/<span class="min-hljs-title">script</span>&gt;</span></code></pre>
-                    </div>
-                    <div ng-show="result.type === 'jquery'">
-                        <pre><span class="min-hljs-tag">&lt;<span class="min-hljs-title">div</span> <span class="min-hljs-attribute">id</span>=<span class="min-hljs-value">"result"</span>&gt;</span><span class="min-hljs-tag">&lt;/<span class="min-hljs-title">div</span>&gt;</span></pre>
 
-                        <pre>$.ajax({ type: <span class="min-hljs-string">'GET'</span>, url: <span class="min-hljs-string">'<span ng-bind="result.url"></span>'</span> })
- .done(<span class="min-hljs-function"><span class="min-hljs-keyword">function</span> <span class="min-hljs-params">(data)</span> </span>{
+                    <!-- JS Result -->
+                    <div class="js result hide-me">
+                        <pre><span class="min-hljs-tag">&lt;<span class="min-hljs-title">script</span> <span class="min-hljs-attribute">type</span>=<span class="min-hljs-value">'text/javascript'</span> <span class="min-hljs-attribute">src</span>=<span class="min-hljs-value">'<span class="result-url"></span>'</span>&gt;</span><span class="min-hljs-tag">&lt;/<span class="min-hljs-title">script</span>&gt;</span></pre>
+                    </div>
+                    <!-- JS Result -->
+
+                    <!-- jQuery Result -->
+                    <div class="jquery result hide-me">
+                        <pre><span class="min-hljs-tag">&lt;<span class="min-hljs-title">div</span> <span class="min-hljs-attribute">id</span>=<span class="min-hljs-value">"result"</span>&gt;</span><span class="min-hljs-tag">&lt;/<span class="min-hljs-title">div</span>&gt;</span></pre>
+                        <pre class="min-hljs-code">$.get(<span class="min-hljs-string">'<span class="result-url"></span>'</span>, <span class="min-hljs-keyword">function</span> <span class="min-hljs-params">(data)</span> </span>{
      $(<span class="min-hljs-string">'#result'</span>).html(data);
 });</pre>
                     </div>
-                    <div ng-show="result.type === 'angular'">
-                        <pre><span class="min-hljs-tag">&lt;<span class="min-hljs-title">div</span> <span class="min-hljs-attribute">ng-bind-html</span>=<span class="min-hljs-value">"result"</span>&gt;</span><span class="min-hljs-tag">&lt;/<span class="min-hljs-title">div</span>&gt;</span></pre>
+                    <!-- jQuery Result -->
 
-                        <pre>$http({ method: <span class="min-hljs-string">'GET'</span>, url: <span class="min-hljs-string">'<span ng-bind="result.url"></span>'</span> })
+                    <!-- AngularJS Result -->
+                    <div class="angular result hide-me">
+                        <pre><span class="min-hljs-tag">&lt;<span class="min-hljs-title">div</span> <span class="min-hljs-attribute">ng-bind-html</span>=<span class="min-hljs-value">"result"</span>&gt;</span><span class="min-hljs-tag">&lt;/<span class="min-hljs-title">div</span>&gt;</span></pre>
+                        <pre class="min-hljs-code">$http({ method: <span class="min-hljs-string">'GET'</span>, url: <span class="min-hljs-string">'<span class="result-url"></span>'</span> })
 .success(<span class="min-hljs-function"><span class="min-hljs-keyword">function</span> <span class="min-hljs-params">(data, status, headers, config)</span> </span>{
     $scope.result = $sce.trustAsHtml(data);
 });</pre>
-                        </div>
-                        <strong>And this will be the result</strong>
-                        <div ng-bind-html="result.html"></div>
                     </div>
-                    <div ng-show="!result.hasError">
-                        <small ng-show="result.type === 'js'">If you want full working examples, please <a href="/usage.html#html" target="_blank">click here</a>.</small>
-                        <small ng-show="result.type === 'jquery'">If you want full working examples, please <a href="/usage.html#jQuery" target="_blank">click here</a>.</small>
-                        <small ng-show="result.type === 'angular'">If you want full working examples, please <a href="/usage.html#AngularJS" target="_blank">click here</a>.</small>
-                    </div>
-                    <div ng-show="result.hasError">
-                        <div class="alert alert-danger" role="alert"><span ng-bind="result.errorMsg"></span></div>
-                    </div>
+                    <!-- AngularJS Result -->
+
+                    <strong>And this will be the result</strong>
+                    <div id="html-result"></div>
+                    <small>If you want full working examples, please <a href="/usage.html" target="_blank">click here</a>.</small>
                 </div>
+                <div class="result error-msg hide-me">
+                    <div class="alert alert-danger" role="alert"><span id="error-msg"></span></div>
+                </div>
+            </div>
             </div>
         </div>
     </div>

@@ -1,145 +1,154 @@
-angular.module('App', []).controller('MainController', ['$scope', '$sce', '$http', function ($scope, $sce, $http) {
+function getVal(elem) {
+    return $('#' + elem).val();
+}
 
-    $scope.fileTypes = [{ id: 'js' , desc: 'JavaScript' }, { id: 'html', desc: 'HTML (for jQuery or AngularJS)' }];
-    $scope.fileTypesFor = [{ id: 'jquery' , desc: 'jQuery' }, { id: 'angular', desc: 'AngularJS' }];
-    $scope.hosts = [{ id: 'github', desc: 'GitHub' }, { id: 'bitbucket', desc: 'Bitbucket' }];
-    $scope.styles = [{ id: 'github' , desc: 'GitHub' }, { id: 'monokai', desc: 'Monokay' }, { id: 'monokai_sublime', desc: 'Monokay Sublime' }];
-    $scope.types = [{ id: 'gist' , desc: 'GitHub Gist' }, { id: 'repo', desc: 'GitHub or Bitbucket repository' }];
+function getBaseUrl() {
+    if (getVal('type') === 'gist') {
+        return '/github/gist/' + getVal('gistid');
+    } else if ($scope.isRepo) {
+        return '/' + getVal('host') + '/' + getVal('user') + '/' +getVal('repo') + '/' + getVal('file');
+    }
+}
 
-    $scope.model = {
-        type: null,
-        id: null,
-        host: null,
-        user: null,
-        repo: null,
-        file: null,
-        branch: null,
-        sliceFrom: null,
-        sliceTo: null,
-        lang: null,
-        style: null,
-        fileType: null,
-        fileTypeFor: null
-    };
+function getParams(alwaysHtml) {
+    var params = [];
 
-    $scope.result = {
-        url: null,
-        show: false,
-        html: null,
-        type: null,
-        hasError: false,
-        errorMsg: null
-    };
+    var branch = getVal('branch'),
+        sliceFrom = getVal('slicefrom'),
+        sliceTo = getVal('sliceto'),
+        lang = getVal('lang'),
+        style = getVal('style');
+        type = getVal('filetype');
 
-    $scope.showMore = false;
+    if (branch) {
+        params.push('branch=' + branch);
+    }
 
-    $scope.isActive = function (viewLocation) {
-        if (Array.isArray(viewLocation)) {
-            return viewLocation.indexOf(location.pathname) > -1;
+    if (sliceFrom && sliceTo) {
+        params.push('slice=' + sliceFrom + ':' + sliceTo);
+    } else if (sliceFrom) {
+        params.push('slice=' + sliceFrom);
+    } else if (sliceTo) {
+        params.push('slice=' + sliceTo);
+    }
+
+    if (lang) {
+        params.push('lang=' + lang);
+    }
+
+    if (style) {
+        params.push('style=' + style);
+    }
+
+    if (alwaysHtml) {
+        params.push('type=html');
+    } else if (type) {
+        params.push('type=' + type);
+    }
+
+    return params;
+}
+
+function getQueryString(params) {
+    if (params.length > 0) {
+        return '?' + params.join('&');
+    } else {
+        return '';
+    }
+}
+
+function showFile() {
+
+    $('.result').hide();
+
+    var url = getBaseUrl();
+    var resultUrl = url + getQueryString(getParams());
+    var getUrl = url + getQueryString(getParams(true));
+
+    $.get(getUrl)
+        .done(function (data) {
+            $('.result-url').text('//' + location.host + resultUrl);
+            $('#html-result').html(data);
+
+            var library = getVal('library');
+
+            if (library === 'jquery') {
+                $('.result-all, .code, .jquery').show();
+            } else if (library === 'angular') {
+                $('.result-all, .code, .angular').show();
+            } else {
+                $('.result-all, .code, .js').show();
+            }
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status === 400 || jqXHR.status === 412) {
+                $('#error-msg').html(jqXHR.responseText);
+            } else if (jqXHR.status === 404) {
+                $('#error-msg').text('File not found.');
+            } else {
+                $('#error-msg').text('Oh snap! There\'s an error.');
+            }
+
+            $('.result-all, .error-msg').show();
+        });
+}
+
+
+$(document).ready(function () {
+    $('#btn-more').click(function () {
+        $('#btn-more').hide();
+        $('#btn-less').show();
+        $('.show-more').show();
+    });
+
+    $('#btn-less').click(function () {
+        $('#btn-less').hide();
+        $('#btn-more').show();
+        $('.show-more').hide();
+    });
+
+    $('#type').change(function () {
+        var type = $(this).val();
+
+        if (type) {
+            $('#btn-group').show();
+
+            if (type === 'gist') {
+                $('.is-repo').hide();
+                $('.is-gist').show();
+            } else if (type === 'repo') {
+                $('.is-gist').hide();
+                $('.is-repo').show();
+            }
         } else {
-            return viewLocation === location.pathname;
+            $('#btn-group').hide();
+            $('.is-gist').hide();
+            $('.is-repo').hide();
         }
-    };
+    });
 
-    $scope.changeType = function () {
-        $scope.isGist = ($scope.model.type !== null) && ($scope.model.type.id === 'gist');
-        $scope.isRepo = ($scope.model.type !== null) && ($scope.model.type.id === 'repo');
-        $scope.result.show = false;
-        $scope.showMore = false;
+    $('#filetype').change(function () {
+        var type = $(this).val();
 
-        $scope.model = {
-            type: $scope.model.type,
-            id: null,
-            host: null,
-            user: null,
-            repo: null,
-            file: null,
-            branch: null,
-            sliceFrom: null,
-            sliceTo: null,
-            lang: null,
-            style: null,
-            fileType: null,
-        };
-    };
-
-    $scope.btnOkClick = function () {
-        if (!$scope.formTry.$valid) {
-            return;
-        }
-
-        var url;
-
-        if ($scope.isGist) {
-            url = '/github/gist/' + $scope.model.id;
-        } else if ($scope.isRepo) {
-            url = '/' + $scope.model.host.id + '/' + $scope.model.user + '/' + $scope.model.repo + '/' + $scope.model.file;
-        }
-
-        var params = [];
-
-        if ($scope.showMore) {
-
-            if ($scope.model.branch) {
-                params.push('branch=' + $scope.model.branch);
-            }
-
-            if ($scope.model.sliceFrom && $scope.model.sliceTo) {
-                params.push('slice=' + $scope.model.sliceFrom + ':' + $scope.model.sliceTo);
-            } else if ($scope.model.sliceFrom) {
-                params.push('slice=' + $scope.model.sliceFrom);
-            } else if ($scope.model.sliceTo) {
-                params.push('slice=' + $scope.model.sliceTo);
-            }
-
-            if ($scope.model.lang) {
-                params.push('lang=' + $scope.model.lang);
-            }
-
-            if ($scope.model.style) {
-                params.push('style=' + $scope.model.style.id);
-            }
-        }
-
-        var sep;
-
-        if (params.length > 0) {
-            url = url + '?' + params.join('&');
-            sep = '&';
+        if (type === 'html') {
+            $('.is-html').show();
         } else {
-            sep = '?';
+            $('.is-html').hide();
         }
+    });
 
-        $http({ method: 'GET', url: url + sep + 'type=html' })
-            .success(function (data, status, headers, config) {
-                $scope.result.url = '//' + location.host + url;
-                //$scope.result.url = '//www.gistfy.com' + url;
-                $scope.result.html = $sce.trustAsHtml(data);
+    $('select').change(function () {
+        $('#gistid, #host, #user, #repo, #path, #library').each(function (idx, elem) {
+            if ($(elem).is(":visible")) {
+                $(elem).attr('required', '');
+            } else {
+                $(elem).removeAttr('required');
+            }
+        });
+    });
 
-                if ($scope.model.fileType && $scope.model.fileType.id === 'html') {
-                    $scope.result.type = $scope.model.fileTypeFor.id;
-                } else {
-                    $scope.result.type = 'js';
-                }
-
-                $scope.result.hasError = false;
-                $scope.result.show = true;
-            })
-            .error(function (data, status, headers, config) {
-                $scope.result.html = null;
-                $scope.result.hasError = true;
-
-                if (status === 400 || status === 412) {
-                    $scope.result.errorMsg =  $sce.trustAsHtml(data);
-                } else if (status === 404) {
-                    $scope.result.errorMsg = ($scope.isGist ? 'Gist not found.' : 'File not found.');
-                } else {
-                    $scope.result.errorMsg = 'Oh snap! There\'s an error.';
-                }
-
-                $scope.result.show = true;
-            });
-    };
-
-    $scope.changeType();
-}]);
+    $('#formtry').submit(function (e) {
+        e.preventDefault();
+        showFile();
+    });
+});

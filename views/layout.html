@@ -46,19 +46,19 @@
             </div>
             <div class="navbar-collapse collapse" id="navbar-main">
                 <ul class="nav navbar-nav">
-                    <li ng-class="{ active: isActive('/index.html')}">
+                    <li>
                         <a href="/index.html">Home</a>
                     </li>
-                    <li ng-class="{ active: isActive('/api.html')}">
+                    <li>
                         <a href="/api.html">API</a>
                     </li>
-                    <li ng-class="{ active: isActive('/usage.html')}">
+                    <li>
                         <a href="/usage.html">Usage</a>
                     </li>
-                    <li ng-class="{ active: isActive('/examples.html')}">
+                    <li>
                         <a href="/examples.html">Examples</a>
                     </li>
-                    <li ng-class="{ active: isActive('/about.html')}">
+                    <li>
                         <a href="/about.html">About</a>
                     </li>
                 </ul>
@@ -71,7 +71,7 @@
         </a>
     </nav>
 
-    <section class="ng-cloak container main">
+    <section class="container main">
         <div class="tab-content">
            {% block content %}{% endblock %}
         </div>
@@ -83,7 +83,6 @@
 
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/angular.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
     {% if ga %}
     <script>
