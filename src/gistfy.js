@@ -161,12 +161,12 @@ function processData(data, slice) {
 function buildResponse(type, options, callback) {
     switch (type) {
         case "js":
-            var js = 'document.write(\'<link rel=\"stylesheet\" href=\"' + config.base_url + '/css/gistfy.' + options.style + '.min.css\">\');\n'+
+            var js = 'document.write(\'<link rel=\"stylesheet\" href=\"' + config.base_url + '/assets/styles/gistfy.' + options.style + '.min.css\">\');\n'+
                      'document.write(\'' + escapeJS(template.render(options)) + '\');';
             callback(200, js, 'text/javascript; charset=utf-8');
             break;
         case "html":
-            var html = '<link rel=\"stylesheet\" href=\"' + config.base_url + '/css/gistfy.' + options.style + '.min.css\">' +
+            var html = '<link rel=\"stylesheet\" href=\"' + config.base_url + '/assets/styles/gistfy.' + options.style + '.min.css\">' +
                        template.render(options);
             callback(200, html, 'text/html; charset=utf-8');
             break;
@@ -188,14 +188,14 @@ app.get('/github/gist/:id', function (req, res) {
 
     var extended = req.query.extended,
         lang = req.query.lang,
-        locale = req.query.locale || 'en',
+        //locale = req.query.locale || 'en',
         slice = req.query.slice,
         style = req.query.style || 'github',
         type = req.query.type || 'js';
 
     var url = util.format('https://api.github.com/gists/%s', req.params.id);
 
-    downloadJSON(url, function (data, status, headers) {
+    downloadJSON(url, function (data, status) {
         if (status === 200) {
             var files = [];
 
@@ -252,12 +252,12 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
         branch = req.query.branch || 'master',
         extended = req.query.extended,
         lang = req.query.lang,
-        locale = req.query.locale || 'en',
+        //locale = req.query.locale || 'en',
         slice = req.query.slice,
         style = req.query.style || 'github',
         type = req.query.type || 'js',
         fileName = path.split('/').pop(),
-        htmlUrl, rawUrl, repoUrl, from, to;
+        htmlUrl, rawUrl, repoUrl;
 
     if (host === 'github') {
         htmlUrl =  util.format('https://github.com/%s/%s/blob/%s/%s', user, repo, branch, path);
@@ -272,7 +272,7 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
         return;
     }
 
-    downloadFile(rawUrl, function (data, status, headers) {
+    downloadFile(rawUrl, function (data, status) {
 
         if (status === 200) {
             var newData = processData(data, slice),
@@ -304,7 +304,7 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
     });
 });
 
-app.use(express.static(path.resolve(__dirname, '../static')));
+app.use('/assets', express.static(path.resolve(__dirname, '../static')));
 app.set('views', path.resolve(__dirname, '../views/'));
 
 var env = nunjucks.configure(app.get('views'), {
