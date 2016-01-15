@@ -26,8 +26,8 @@
     "url": "https://github.com/alexandrevicenzi/gistfy/issues"
   },
   "engines": {
-    "node": ">=0.10.31",
-    "npm": ">=1.4.21"
+    "node": ">=0.12.0",
+    "npm": ">=2.0.0"
   },
   "dependencies": {
     "express": "^4.13.3",

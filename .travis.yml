@@ -4,7 +4,6 @@ node_js:
   - "4.0"
   - "0.12"
   - "0.11"
-  - "0.10"
 before_script:
   - npm install -g gulp gulp-cssnano gulp-jshint gulp-minify gulp-rename gulp-uglify
 script: gulp
