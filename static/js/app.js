@@ -10,6 +10,36 @@ function getBaseUrl() {
     }
 }
 
+function unpackUrlToBaseUrl(url) {
+    var gistMatch = /http[s]?:\/\/gist\.github\.com\/([a-zA-Z0-9\-\_]*)[\/]?([a-zA-Z0-9\-\_]*)/.exec(url);
+
+    if (gistMatch) {
+        var id = gistMatch[2] || gistMatch[1];
+
+        if (id) {
+            return '/github/gist/' + id;
+        }
+
+        return undefined;
+    }
+
+    var repoMatch = /http[s]?:\/\/(github|bitbucket)\.(com|org)\/([a-zA-Z0-9\-\_]+)[\/]([a-zA-Z0-9\-\_]+)[\/][a-zA-Z0-9\-\_]*[\/]([a-zA-Z0-9\-\_\.]*)[\/]([a-zA-Z0-9\-\_\/\.]*)/.exec(url);
+
+    if (repoMatch) {
+        var host = repoMatch[1],
+            user = repoMatch[3],
+            repo = repoMatch[4],
+            branch = repoMatch[5],
+            file = repoMatch[6];
+
+        if (host && user && repo && branch && file) {
+            return '/' + host + '/' + user + '/' + repo + '/' + file + '?branch=' + branch;
+        }
+
+        return undefined;
+    }
+}
+
 function getParams(alwaysHtml) {
     var params = [];
 
