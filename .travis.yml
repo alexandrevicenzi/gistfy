@@ -7,3 +7,5 @@ node_js:
 before_script:
   - npm install -g gulp gulp-cssnano gulp-jshint gulp-minify gulp-rename gulp-uglify
 script: gulp
+notifications:
+  email: false
