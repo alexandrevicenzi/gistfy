@@ -47,5 +47,8 @@
   "license": "MIT",
   "bundleDependencies": [],
   "private": false,
-  "main": "src/gistfy.js"
+  "main": "src/gistfy.js",
+  "scripts": {
+    "test": "gulp lint"
+  }
 }
