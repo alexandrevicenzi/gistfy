@@ -1,4 +1,4 @@
-## Gistfy [![Version](http://img.shields.io/npm/v/gistfy.svg)](https://www.npmjs.org/package/gistfy) [![Dependency Status](https://img.shields.io/david/alexandrevicenzi/gistfy.svg)](https://david-dm.org/alexandrevicenzi/gistfy)
+## Gistfy [![Version](http://img.shields.io/npm/v/gistfy.svg)](https://www.npmjs.org/package/gistfy) [![Dependency Status](https://img.shields.io/david/alexandrevicenzi/gistfy.svg)](https://david-dm.org/alexandrevicenzi/gistfy) [![Build Status](https://travis-ci.org/alexandrevicenzi/gistfy.svg?branch=master)](https://travis-ci.org/alexandrevicenzi/gistfy)
 
 [![npm package](https://nodei.co/npm/gistfy.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/gistfy/)
 
@@ -16,11 +16,6 @@ Gistfy is an easy way to create embeddable code snippets from your GitHub and Bi
 - highlight.js
 - nunjucks
 - rc
-
-## Build dependencies
-
-- jshint
-- minify
 
 ## Install
 
