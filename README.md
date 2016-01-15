@@ -4,12 +4,27 @@
 
 [Gistfy](https://wwww.gistfy.com) is an easy way to create embeddable code snippets from your GitHub and Bitbucket repositories or your GitHub Gists.
 
-## Requirements
+## About
 
-- Node.js
+Most people have code on GitHub, Bitbucket or any other kind of version control.  
+Well, sometimes you like to share your code on your blog, wiki or website.  
+How do you do this?  
+You copy and paste your code from this service to another, right?  
+No, don't do this. It's not good.  
+But why?  
+Most of the time you change the code and you need to update all references, right?  
+Is for this that Gistfy was built for.  
+Code once, share everywhere.
+
+## Supported Services
+
+- GitHub (public repository only)
+- GitHub Gist (public gist only)
+- Bitbucket (public repository only)
 
 ## Dependencies
 
+- Node.js
 - express
 - highlight.js
 - nunjucks
