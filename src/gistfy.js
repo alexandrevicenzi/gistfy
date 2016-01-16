@@ -334,10 +334,23 @@ app.get('/', function (req, res) {
     res.redirect('/index.html');
 });
 
-app.get('/:path(index|api|usage|examples|about).html', function (req, res) {
+app.get('/:path(index|api|usage|about).html', function (req, res) {
     var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
 
     res.render(req.params.path + '.html', { fullUrl: fullUrl }, function(err, html){
+        if (err) {
+            console.log(err);
+            res.render('500.html');
+        } else {
+            res.send(html);
+        }
+    });
+});
+
+app.get('/examples.html', function (req, res) {
+    var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+
+    res.render('examples.html', { fullUrl: fullUrl, style: req.query.style }, function(err, html){
         if (err) {
             console.log(err);
             res.render('500.html');

@@ -86,6 +86,11 @@
 
     <script type="text/javascript" src="assets/js/jquery.min.js"></script>
     <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    {% if debug %}
+    <script type="text/javascript" src="assets/js/tab.js"></script>
+    {% else %}
+    <script type="text/javascript" src="assets/js/tab.min.js"></script>
+    {% endif%}
     {% block additional_js %}{% endblock %}
     {% if ga %}
     <script>
