@@ -20,9 +20,12 @@ html, body {
     background: none !important;
 }
 
-.alert-danger {
-    background-color: #EB3838;
-    border-color: #EB3838;
+.alert-popup {
+    display: none;
+    bottom: -10px;
+    right: 10px;
+    z-index: 1002;
+    position: fixed;
 }
 
 .hide-me {
@@ -43,19 +46,12 @@ table {
     font-size: 14px;
 }
 
-.required:before {
-    content: '*';
-    color: #C71616;
-    font-weight: bold;
-    padding-right: 2px;
-}
-
-h2.small {
-    font-size: 18px;
-}
-
 .btn-ok {
-    min-width: 75px;
+    min-width: 90px;
+}
+
+.btn-help {
+    margin-top: 4px;
 }
 
 .fork-me {
@@ -70,15 +66,15 @@ h2.small {
     color: inherit;
 }
 
+.no-wrap {
+    white-space: nowrap;
+}
+
 /*
 
 github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 */
-
-pre {
-
-}
 
 .min-hljs {
     display: block;

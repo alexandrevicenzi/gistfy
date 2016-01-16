@@ -1,13 +1,12 @@
 {% extends "layout.html" %}
 
-{% set title = "Gistfy - Embeddable code snippets" %}
-{% set description = "Gistfy is an easy way to create embeddable code snippets from your GitHub and Bitbucket repositories or your GitHub Gist." %}
-{% set url = "http://www.gistfy.com" %}
+{% set title = "Gistfy - Code once, share everywhere." %}
+{% set description = "Gistify is a simple way to create snippets to share your code with others." %}
 
 {% block content %}
 <div class="tab-pane active" id="home">
-<h2>Create snippets from GitHub and Bitbucket repositories</h2>
-<p>Gistfy is an easy way to create embeddable code snippets from your <a href="https://github.com/" target="_blank">GitHub</a> and <a href="https://bitbucket.org/" target="_blank">Bitbucket</a> repositories or your <a href="https://gist.github.com/" target="_blank">GitHub Gist</a>.</p>
+<h2>Code once, share everywhere.</h2>
+<p>Gistify is a simple way to create snippets to share your code with others.</p>
 <br>
 <div class="row">
     <div class="col-md-offset-1 col-md-10">
@@ -17,183 +16,283 @@
             </div>
             <div class="panel-body">
                 <form id="formtry" class="form-horizontal">
-                        <div class="form-group">
-                            <label for="select" class="col-md-2 control-label required">Type</label>
-                            <div class="col-md-10">
-                                <select class="form-control" name="type" id="type" required>
-                                    <option value="">Choose snippet type</option>
-                                    <option value="gist">GitHub Gist</option>
-                                    <option value="repo">GitHub or Bitbucket repository</option>
-                                </select>
-                            </div>
+                    <div class="form-group">
+                        <label for="select" class="col-md-2 control-label">Url</label>
+                        <div class="col-md-9">
+                            <input class="form-control" name="url" id="url" required placeholder="Just paste the URL you want to share here"></input>
                         </div>
-                        <div class="is-gist hide-me">
-                            <div class="form-group">
-                                <label for="gistid" class="col-md-2 control-label required">Id</label>
-                                <div class="col-md-10">
-                                    <input class="form-control" name="gistid" id="gistid" placeholder="Gist id" type="text">
-                                </div>
-                            </div>
+                        <div class="col-md-1">
+                            <a href="#"
+                               class="btn btn-primary btn-xs btn-help"
+                               data-toggle="modal"
+                               data-target="#url-help">
+                                <i class="glyphicon glyphicon-question-sign"></i>
+                            </a>
                         </div>
-                        <div class="is-repo hide-me">
-                            <div class="form-group">
-                                <label for="host" class="col-md-2 control-label required">Host</label>
-                                <div class="col-md-10">
-                                    <select class="form-control" name="host" id="host">
-                                        <option value="">Choose a host</option>
-                                        <option value="github">GitHub</option>
-                                        <option value="bitbucket">Bitbucket</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="user" class="col-md-2 control-label required">User</label>
-                                <div class="col-md-10">
-                                    <input class="form-control" name="user" id="user" placeholder="User name" type="text">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="repo" class="col-md-2 control-label required">Repo</label>
-                                <div class="col-md-10">
-                                    <input class="form-control" name="repo" id="repo" placeholder="Repository name" type="text">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="branch" class="col-md-2 control-label">Branch</label>
-                                <div class="col-md-10">
-                                    <input class="form-control" name="branch" id="branch" placeholder="Branch name"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="path" class="col-md-2 control-label required">File</label>
-                                <div class="col-md-10">
-                                    <input class="form-control" name="path" id="path" placeholder="File path" type="text">
-                                </div>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lang" class="col-md-2 control-label">Syntax</label>
+                        <div class="col-md-4">
+                            <select class="form-control" name="lang" id="lang">
+                                <option value="">None</option>
+                                <option value="1c">1C</option>
+                                <option value="accesslog">Access logs</option>
+                                <option value="armasm">ARM assembler</option>
+                                <option value="avrasm">AVR assembler</option>
+                                <option value="actionscript">ActionScript</option>
+                                <option value="apache">Apache</option>
+                                <option value="applescript">AppleScript</option>
+                                <option value="asciidoc">AsciiDoc</option>
+                                <option value="aspectj">AspectJ</option>
+                                <option value="autohotkey">AutoHotkey</option>
+                                <option value="autoit">AutoIt</option>
+                                <option value="axapta">Axapta</option>
+                                <option value="bash">Bash</option>
+                                <option value="basic">Basic</option>
+                                <option value="brainfuck">Brainfuck</option>
+                                <option value="cs">C#</option>
+                                <option value="cpp">C++</option>
+                                <option value="cal">C/AL</option>
+                                <option value="cos">Cache Object Script</option>
+                                <option value="cmake">CMake</option>
+                                <option value="css">CSS</option>
+                                <option value="capnproto">Cap’n Proto</option>
+                                <option value="clojure">Clojure</option>
+                                <option value="coffeescript">CoffeeScript</option>
+                                <option value="crmsh">Crmsh</option>
+                                <option value="crystal">Crystal</option>
+                                <option value="d">D</option>
+                                <option value="dns">DNS Zone file</option>
+                                <option value="dos">DOS</option>
+                                <option value="dart">Dart</option>
+                                <option value="delphi">Delphi</option>
+                                <option value="diff">Diff</option>
+                                <option value="django">Django</option>
+                                <option value="dockerfile">Dockerfile</option>
+                                <option value="dts">DTS (Device Tree)</option>
+                                <option value="dust">Dust</option>
+                                <option value="elixir">Elixir</option>
+                                <option value="elm">Elm</option>
+                                <option value="erlang">Erlang</option>
+                                <option value="fsharp">F#</option>
+                                <option value="fix">FIX</option>
+                                <option value="fortran">Fortran</option>
+                                <option value="gcode">G-Code</option>
+                                <option value="gams">Gams</option>
+                                <option value="gauss">GAUSS</option>
+                                <option value="gherkin">Gherkin</option>
+                                <option value="go">Go</option>
+                                <option value="golo">Golo</option>
+                                <option value="gradle">Gradle</option>
+                                <option value="groovy">Groovy</option>
+                                <option value="xml">HTML, XML</option>
+                                <option value="http">HTTP</option>
+                                <option value="haml">Haml</option>
+                                <option value="handlebars">Handlebars</option>
+                                <option value="haskell">Haskell</option>
+                                <option value="haxe">Haxe</option>
+                                <option value="ini">Ini</option>
+                                <option value="inform7">Inform7</option>
+                                <option value="irpf90">IRPF90</option>
+                                <option value="json">JSON</option>
+                                <option value="java">Java</option>
+                                <option value="javascript">JavaScript</option>
+                                <option value="lasso">Lasso</option>
+                                <option value="less">Less</option>
+                                <option value="lisp">Lisp</option>
+                                <option value="livecodeserver">LiveCode Server</option>
+                                <option value="livescript">LiveScript</option>
+                                <option value="lua">Lua</option>
+                                <option value="makefile">Makefile</option>
+                                <option value="markdown">Markdown</option>
+                                <option value="mathematica">Mathematica</option>
+                                <option value="matlab">Matlab</option>
+                                <option value="mel">Maya Embedded Language</option>
+                                <option value="mercury">Mercury</option>
+                                <option value="mizar">Mizar</option>
+                                <option value="mojolicious">Mojolicious</option>
+                                <option value="monkey">Monkey</option>
+                                <option value="nsis">NSIS</option>
+                                <option value="nginx">Nginx</option>
+                                <option value="nimrod">Nimrod</option>
+                                <option value="nix">Nix</option>
+                                <option value="ocaml">OCaml</option>
+                                <option value="objectivec">Objective C</option>
+                                <option value="glsl">OpenGL Shading Language</option>
+                                <option value="openscad">OpenSCAD</option>
+                                <option value="ruleslanguage">Oracle Rules Language</option>
+                                <option value="oxygene">Oxygene</option>
+                                <option value="pf">PF</option>
+                                <option value="php">PHP</option>
+                                <option value="parser3">Parser3</option>
+                                <option value="perl">Perl</option>
+                                <option value="powershell">PowerShell</option>
+                                <option value="processing">Processing</option>
+                                <option value="prolog">Prolog</option>
+                                <option value="protobuf">Protocol Buffers</option>
+                                <option value="puppet">Puppet</option>
+                                <option value="python">Python</option>
+                                <option value="profile">Python profiler results</option>
+                                <option value="k">Q</option>
+                                <option value="qml">QML</option>
+                                <option value="r">R</option>
+                                <option value="rib">RenderMan RIB</option>
+                                <option value="rsl">RenderMan RSL</option>
+                                <option value="graph">Roboconf</option>
+                                <option value="ruby">Ruby</option>
+                                <option value="rust">Rust</option>
+                                <option value="scss">SCSS</option>
+                                <option value="sql">SQL</option>
+                                <option value="p21">STEP Part 21</option>
+                                <option value="scala">Scala</option>
+                                <option value="scheme">Scheme</option>
+                                <option value="scilab">Scilab</option>
+                                <option value="smali">Smali</option>
+                                <option value="smalltalk">Smalltalk</option>
+                                <option value="stan">Stan</option>
+                                <option value="stata">Stata</option>
+                                <option value="stylus">Stylus</option>
+                                <option value="swift">Swift</option>
+                                <option value="tcl">Tcl</option>
+                                <option value="tex">TeX</option>
+                                <option value="thrift">Thrift</option>
+                                <option value="tp">TP</option>
+                                <option value="twig">Twig</option>
+                                <option value="typescript">TypeScript</option>
+                                <option value="vbnet">VB.Net</option>
+                                <option value="vbscript">VBScript</option>
+                                <option value="vhdl">VHDL</option>
+                                <option value="vala">Vala</option>
+                                <option value="verilog">Verilog</option>
+                                <option value="vim">Vim Script</option>
+                                <option value="x86asm">x86 Assembly</option>
+                                <option value="xl">XL</option>
+                                <option value="xpath">XQuery</option>
+                                <option value="zephir">Zephir</option>
+                            </select>
                         </div>
-                        <div class="show-more hide-me">
-                            <div class="form-group">
-                                <label for="slicefrom" class="col-md-2 control-label">Slice
-                                    <a href="/api.html" target="_blank" title="Show only selected lines. Click for more.">
-                                        <i class="glyphicon glyphicon-question-sign"></i>
-                                    </a>
-                                </label>
-                                <div class="col-md-2">
-                                    <input class="form-control" name="slicefrom" id="slicefrom" placeholder="From"/>
-                                </div>
-                                <div class="col-md-2">
-                                    <input class="form-control" name="sliceto" id="sliceto" placeholder="To"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="lang" class="col-md-2 control-label">Language
-                                    <a href="http://highlightjs.readthedocs.org/en/latest/css-classes-reference.html#language-names-and-aliases"
-                                       target="_blank"
-                                       title="Choose the programming language. Click for more.">
-                                       <i class="glyphicon glyphicon-question-sign"></i>
-                                   </a>
-                               </label>
-                                <div class="col-md-10">
-                                    <input class="form-control" name="lang" id="lang" placeholder="Programming language"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="style" class="col-md-2 control-label">Color Style</label>
-                                <div class="col-md-10">
-                                    <select class="form-control" name="style" id="style">
-                                        <option value="">Choose a color style</option>
-                                        <option value="github">GitHub</option>
-                                        <option value="monokai">Monokay</option>
-                                        <option value="monokai_sublime">Monokay Sublime</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="filetype" class="col-md-2 control-label">Output Type</label>
-                                <div class="col-md-10">
-                                    <select class="form-control" name="filetype" id="filetype">
-                                        <option value="">Choose a type</option>
-                                        <option value="js">JavaScript</option>
-                                        <option value="html">HTML (for jQuery or AngularJS)</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group hide-me is-html">
-                                <label for="library" class="col-md-2 control-label required">JS Library</label>
-                                <div class="col-md-10">
-                                    <select class="form-control" name="library" id="library">
-                                        <option value="">Choose a library</option>
-                                        <option value="jquery">jQuery</option>
-                                        <option value="angular">AngularJS</option>
-                                    </select>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="style" class="col-md-2 control-label">Color Style</label>
+                        <div class="col-md-4">
+                            <select class="form-control" name="style" id="style">
+                                <option value="">None</option>
+                                <option value="androidstudio">Android Studio</option>
+                                <option value="arduino">Arduino</option>
+                                <option value="codepen">CodePen</option>
+                                <option value="github">GitHub</option>
+                                <option value="monokai">Monokay</option>
+                                <option value="monokai_sublime">Monokay Sublime</option>
+                                <option value="vs">Visual Studio</option>
+                                <option value="xcode">Xcode</option>
+                            </select>
                         </div>
-                        <div class="form-group hide-me" id="btn-group">
-                            <div class="col-md-offset-2 col-md-1">
-                                <button class="btn btn-primary btn-ok" type="submit">OK</button>
-                            </div>
-                            <div class="col-md-1">
-                                <button class="btn btn-primary" type="button" id="btn-more">More options</button>
-                                <button class="btn btn-primary hide-me" type="button" id="btn-less">Less options</button>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="slicefrom" class="col-md-2 control-label">Show Lines</label>
+                        <div class="col-md-2">
+                            <input class="form-control" name="slicefrom" id="slicefrom" placeholder="From"/>
                         </div>
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-8">
-                                <small class="required">Required</small>
-                            </div>
+                        <div class="col-md-2">
+                            <input class="form-control" name="sliceto" id="sliceto" placeholder="To"/>
                         </div>
+                        <div class="col-md-4">
+                            <label class="control-label"><em>Show only selected lines.</em></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-1">
+                            <button class="btn btn-success btn-ok" type="submit">OK</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<div class="row hide-me result result-all">
+
+<div class="row hide-me" id="result">
     <div class="col-md-offset-1 col-md-10">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <button type="button" class="close" onclick="$('.result').hide();"><span>&times;</span></button>
+                <button type="button" class="close" onclick="$('#result').hide();"><span>&times;</span></button>
                 <h3 class="panel-title">Result</h3>
             </div>
             <div class="panel-body">
-                <div class="result code hide-me">
-                    <strong>Add this snippet to your page</strong>
-
-                    <!-- JS Result -->
-                    <div class="js result hide-me">
-                        <pre><span class="min-hljs-tag">&lt;<span class="min-hljs-title">script</span> <span class="min-hljs-attribute">type</span>=<span class="min-hljs-value">'text/javascript'</span> <span class="min-hljs-attribute">src</span>=<span class="min-hljs-value">'<span class="result-url"></span>'</span>&gt;</span><span class="min-hljs-tag">&lt;/<span class="min-hljs-title">script</span>&gt;</span></pre>
-                    </div>
-                    <!-- JS Result -->
-
-                    <!-- jQuery Result -->
-                    <div class="jquery result hide-me">
-                        <pre><span class="min-hljs-tag">&lt;<span class="min-hljs-title">div</span> <span class="min-hljs-attribute">id</span>=<span class="min-hljs-value">"result"</span>&gt;</span><span class="min-hljs-tag">&lt;/<span class="min-hljs-title">div</span>&gt;</span></pre>
-                        <pre class="min-hljs-code">$.get(<span class="min-hljs-string">'<span class="result-url"></span>'</span>, <span class="min-hljs-keyword">function</span> <span class="min-hljs-params">(data)</span> </span>{
-     $(<span class="min-hljs-string">'#result'</span>).html(data);
-});</pre>
-                    </div>
-                    <!-- jQuery Result -->
-
-                    <!-- AngularJS Result -->
-                    <div class="angular result hide-me">
-                        <pre><span class="min-hljs-tag">&lt;<span class="min-hljs-title">div</span> <span class="min-hljs-attribute">ng-bind-html</span>=<span class="min-hljs-value">"result"</span>&gt;</span><span class="min-hljs-tag">&lt;/<span class="min-hljs-title">div</span>&gt;</span></pre>
-                        <pre class="min-hljs-code">$http({ method: <span class="min-hljs-string">'GET'</span>, url: <span class="min-hljs-string">'<span class="result-url"></span>'</span> })
-.success(<span class="min-hljs-function"><span class="min-hljs-keyword">function</span> <span class="min-hljs-params">(data, status, headers, config)</span> </span>{
-    $scope.result = $sce.trustAsHtml(data);
-});</pre>
-                    </div>
-                    <!-- AngularJS Result -->
-
-                    <strong>And this will be the result</strong>
-                    <div id="html-result"></div>
-                    <small>If you want full working examples, please <a href="/usage.html" target="_blank">click here</a>.</small>
-                </div>
-                <div class="result error-msg hide-me">
-                    <div class="alert alert-danger" role="alert"><span id="error-msg"></span></div>
-                </div>
-            </div>
+                <strong>Add this snippet to your page</strong>
+                <pre class="no-wrap"><span class="min-hljs-tag">&lt;<span class="min-hljs-title">script</span> <span class="min-hljs-attribute">type</span>=<span class="min-hljs-value">'text/javascript'</span> <span class="min-hljs-attribute">src</span>=<span class="min-hljs-value">'<span id="result-url"></span>'</span>&gt;</span><span class="min-hljs-tag">&lt;/<span class="min-hljs-title">script</span>&gt;</span></pre>
+                <strong>And this will be the result</strong>
+                <div id="html-result"></div>
+                <small>If you want to use with AngularJS and jQuery, please <a href="/usage.html" target="_blank">click here</a>.</small>
             </div>
         </div>
     </div>
 </div>
+
+<div class="alert alert-dismissible alert-success alert-popup">
+    <button type="button" class="close" onclick="$(this).parent().fadeOut();">&times;</button>
+    <strong>Well done!</strong> Time to share your code.
+</div>
+
+<div class="alert alert-dismissible alert-danger alert-popup">
+    <button type="button" class="close" onclick="$(this).parent().fadeOut();">&times;</button>
+    <strong>Oh snap!</strong> <span id="error-msg"></span>
+</div>
+
+<div class="modal" id="url-help">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">URL Formats</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Service</th>
+                            <th>URL example</th>
+                            <th>Try</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="https://gist.github.com/" target="_blank">GitHub&nbsp;Gist</a></td>
+                            <td>https://gist.github.com/schacon/1/</td>
+                            <td><a href="javascript:void(0);"
+                                   data-try-url="https://gist.github.com/schacon/1/"
+                                   class="btn btn-success btn-xs">Try this</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://github.com/" target="_blank">GitHub</a></td>
+                            <td>https://github.com/alexandrevicenzi/gistfy/blob/master/src/gistfy.js</td>
+                            <td><a href="javascript:void(0);"
+                                   data-try-url="https://github.com/alexandrevicenzi/gistfy/blob/master/src/gistfy.js"
+                                   class="btn btn-success btn-xs">Try this</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://bitbucket.org/"  target="_blank">Bitbucket</a></td>
+                            <td>https://bitbucket.org/alexandrevicenzi/snakegl/src/
+                                c6a6ef5e58a7ae55a1c91e3b13be21086811380f/src/main.cpp?at=master&amp;fileviewer=file-view-default</td>
+                            <td><a href="javascript:void(0);"
+                                   data-try-url="https://bitbucket.org/alexandrevicenzi/snakegl/src/c6a6ef5e58a7ae55a1c91e3b13be21086811380f/src/main.cpp?at=master&amp;fileviewer=file-view-default"
+                                   class="btn btn-success btn-xs">Try this</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block additional_js %}
+    {% if debug %}
+    <script type="text/javascript" src="assets/js/app.js"></script>
+    {% else %}
+    <script type="text/javascript" src="assets/js/app.min.js"></script>
+    {% endif %}
 {% endblock %}

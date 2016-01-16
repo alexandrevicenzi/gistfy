@@ -304,18 +304,30 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
     });
 });
 
-app.use('/assets', express.static(path.resolve(__dirname, '../static')));
+if (config.no_static === false) {
+    app.use('/assets', express.static(path.resolve(__dirname, '../static')));
+} else {
+    console.log('Static file hosting disabled.');
+}
+
 app.set('views', path.resolve(__dirname, '../views/'));
 
-var env = nunjucks.configure(app.get('views'), {
+var envOptions = {
     autoescape: true,
     express: app,
-    // watch: true,
-    // noCache: true
-});
+};
+
+if (config.debug) {
+    console.log('Template cache disabled.');
+    envOptions.watch = true;
+    envOptions.noCache = true;
+}
+
+var env = nunjucks.configure(app.get('views'), envOptions);
 
 njeval.install(env);
 env.addGlobal('ga', config.ga_id);
+env.addGlobal('debug', config.debug);
 app.set('view engine', 'nunjucks');
 
 app.get('/', function (req, res) {
@@ -323,7 +335,9 @@ app.get('/', function (req, res) {
 });
 
 app.get('/:path(index|api|usage|examples|about).html', function (req, res) {
-    res.render(req.params.path + '.html', function(err, html){
+    var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+
+    res.render(req.params.path + '.html', { fullUrl: fullUrl }, function(err, html){
         if (err) {
             console.log(err);
             res.render('500.html');

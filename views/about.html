@@ -1,16 +1,33 @@
 {% extends "layout.html" %}
 
 {% set title = "Gistfy - About" %}
-{% set description = "Gists are a great way to share code snippets, but unfortunately you can't gist a repository. Gistfy provides a way to create snippets like Gist. Just drop your code anywhere, and we will provide a way to create embeddable code snippets similar to a Gist." %}
-{% set url = "http://www.gistfy.com/about.html" %}
+{% set description = "Gistify is a simple way to create snippets to share your code with others." %}
 
 {% block content %}
 <div class="tab-pane active" id="about">
     <h1>About</h1>
-    <p><a href="https://gist.github.com/" target="_blank">Gists</a> are a great way to share code snippets, but unfortunately you can't gist a repository. Gistfy provides a way to create snippets like Gist. Just drop your code anywhere, and we will provide a way to create embeddable code snippets similar to a Gist.</p>
-    <h1 id="author">Author</h1>
+    <p>
+        Most people have their code on GitHub, Bitbucket or any other kind of version control.<br>
+        Sometimes you want to share your code on a blog, wiki or website.<br>
+        How do you do this?<br>
+        Probably, you copy and paste the code from one service to another, right?<br>
+        Stop doing this.<br>
+        Why?<br>
+        Most of the time you change the code and you need to update all references, right?<br>
+        Is for this that Gistfy was built for.<br>
+        Code once, share everywhere.
+    </p>
+    <h2 id="whats-not">What this isn't</h2>
+    <p>This isn't a <a href="http://pastebin.com/">pastebin</a> like tool. To use Gistfy you need to have your code somewhere.</p>
+    <h2 id="supported-services">Supported Services</h2>
+    <ul>
+        <li>GitHub (public repository only)</li>
+        <li>GitHub Gist (public gist only)</li>
+        <li>Bitbucket (public repository only)</li>
+    </ul>
+    <h2 id="author">Author</h2>
     <p>This project is maintained by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>.</p>
-    <h1 id="licensce">License</h1>
+    <h2 id="licensce">License</h2>
     <pre>The MIT License (MIT)
 
 Copyright (c) 2014 Alexandre Vicenzi

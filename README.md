@@ -6,12 +6,12 @@
 
 ## About
 
-Most people have code on GitHub, Bitbucket or any other kind of version control.  
-Well, sometimes you like to share your code on your blog, wiki or website.  
+Most people have their code on GitHub, Bitbucket or any other kind of version control.  
+Sometimes you want to share your code on a blog, wiki or website.  
 How do you do this?  
-You copy and paste your code from this service to another, right?  
-No, don't do this. It's not good.  
-But why?  
+Probably, you copy and paste the code from one service to another, right?  
+Stop doing this.  
+Why?  
 Most of the time you change the code and you need to update all references, right?  
 Is for this that Gistfy was built for.  
 Code once, share everywhere.
@@ -33,14 +33,6 @@ Code once, share everywhere.
 ## Install
 
 `npm install -g gistfy`
-
-## API
-
-See the [Api docs](http://www.gistfy.com/api.html).
-
-## Usage
-
-See the [Usage docs](http://www.gistfy.com/usage.html).
 
 ## Donate
 
