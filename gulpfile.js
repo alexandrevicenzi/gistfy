@@ -5,7 +5,7 @@ var gulp = require('gulp'),
     minifyCss = require('gulp-cssnano');
 
 gulp.task('minify-js', function () {
-  return gulp.src('static/js/app.js')
+  return gulp.src(['static/js/app.js', 'static/js/tab.js'])
     .pipe(minifyJs())
     .pipe(rename({
         extname: '.min.js'
