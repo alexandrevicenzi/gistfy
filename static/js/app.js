@@ -75,6 +75,12 @@ function getQueryString(type, html) {
     return '';
 }
 
+function fadeOut() {
+    setTimeout(function () {
+        $('.alert-popup').fadeOut();
+    }, 10 * 1000);
+}
+
 function showResult() {
     $('#result').hide();
     $('.alert-popup').fadeOut();
@@ -90,7 +96,7 @@ function showResult() {
                 $('#result-url').text('//' + location.host + resultUrl);
                 $('#html-result').html(data);
                 $('#result').show();
-                $('.alert-success').fadeIn();
+                $('.alert-success').fadeIn(fadeOut);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 if (jqXHR.status === 400 || jqXHR.status === 412) {
@@ -101,11 +107,11 @@ function showResult() {
                     $('#error-msg').text('Unknown error.');
                 }
 
-                $('.alert-danger').fadeIn();
+                $('.alert-danger').fadeIn(fadeOut);
             });
     } else {
         $('#error-msg').text('Invalid URL.');
-        $('.alert-danger').fadeIn();
+        $('.alert-danger').fadeIn(fadeOut);
     }
 }
 
