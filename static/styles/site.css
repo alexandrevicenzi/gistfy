@@ -51,7 +51,7 @@ table {
 }
 
 .btn-help {
-    margin-top: 4px;
+    font-size: 16px;
 }
 
 .fork-me {
@@ -68,6 +68,46 @@ table {
 
 .no-wrap {
     white-space: nowrap;
+}
+
+/*
+    GitHub social buttons.
+*/
+
+.btn-github, .github-count {
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 20px;
+    color: #333;
+    vertical-align: middle;
+    padding: 2px 4px 2px 4px;
+}
+
+.btn-github {
+    background-color: #eee;
+    background-image: linear-gradient(#fcfcfc, #eee);
+    border: 1px solid #d5d5d5;
+    border-radius: 3px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.btn-github svg {
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+.github-count {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-left: 0;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.social-group {
+    padding: 4px;
+    display: inline-block;
 }
 
 /*

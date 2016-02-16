@@ -17,16 +17,56 @@
         Is for this that Gistfy was built for.<br>
         Code once, share everywhere.
     </p>
+
     <h2 id="whats-not">What this isn't</h2>
     <p>This isn't a <a href="http://pastebin.com/">pastebin</a> like tool. To use Gistfy you need to have your code somewhere.</p>
+
     <h2 id="supported-services">Supported Services</h2>
     <ul>
         <li>GitHub (public repository only)</li>
         <li>GitHub Gist (public gist only)</li>
         <li>Bitbucket (public repository only)</li>
     </ul>
+
     <h2 id="author">Author</h2>
     <p>This project is maintained by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>.</p>
+
+    <h2 id="code">Code</h2>
+    <p>The source code is available on <a href="https://github.com/alexandrevicenzi/gistfy">GitHub</a>.</p>
+
+    <div class="social-group fork">
+        <span class="btn-github" title="Fork alexandrevicenzi/gistfy">
+            <svg height="16"
+                 role="img"
+                 version="1.1"
+                 viewBox="0 0 10 16"
+                 width="10"><path d="M8 1c-1.11 0-2 0.89-2 2 0 0.73 0.41 1.38 1 1.72v1.28L5 8 3 6v-1.28c0.59-0.34 1-0.98 1-1.72 0-1.11-0.89-2-2-2S0 1.89 0 3c0 0.73 0.41 1.38 1 1.72v1.78l3 3v1.78c-0.59 0.34-1 0.98-1 1.72 0 1.11 0.89 2 2 2s2-0.89 2-2c0-0.73-0.41-1.38-1-1.72V9.5l3-3V4.72c0.59-0.34 1-0.98 1-1.72 0-1.11-0.89-2-2-2zM2 4.2c-0.66 0-1.2-0.55-1.2-1.2s0.55-1.2 1.2-1.2 1.2 0.55 1.2 1.2-0.55 1.2-1.2 1.2z m3 10c-0.66 0-1.2-0.55-1.2-1.2s0.55-1.2 1.2-1.2 1.2 0.55 1.2 1.2-0.55 1.2-1.2 1.2z m3-10c-0.66 0-1.2-0.55-1.2-1.2s0.55-1.2 1.2-1.2 1.2 0.55 1.2 1.2-0.55 1.2-1.2 1.2z"></path>
+             </svg>Fork
+        </span><a class="github-count" href="https://github.com/alexandrevicenzi/gistfy/network" target="_blank">0</a>
+    </div>
+
+    <div class="social-group star">
+        <span class="btn-github" title="Star alexandrevicenzi/gistfy">
+            <svg height="16"
+                 role="img"
+                 version="1.1"
+                 viewBox="0 0 14 16"
+                 width="14"><path d="M14 6l-4.9-0.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14l4.33-2.33 4.33 2.33L10.4 9.26 14 6z"></path>
+             </svg>Star
+        </span><a class="github-count" href="https://github.com/alexandrevicenzi/gistfy/stargazers" target="_blank">0</a>
+    </div>
+
+    <div class="social-group watch">
+        <span class="btn-github" title="Watch alexandrevicenzi/gistfy">
+            <svg height="16"
+                 role="img"
+                 version="1.1"
+                 viewBox="0 0 16 16"
+                 width="16"><path d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6c4.94 0 7.94-6 7.94-6S13 2 8.06 2z m-0.06 10c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4z m2-4c0 1.11-0.89 2-2 2s-2-0.89-2-2 0.89-2 2-2 2 0.89 2 2z"></path>
+            </svg>Watch
+        </span><a class="github-count" href="https://github.com/alexandrevicenzi/gistfy/watchers" target="_blank">0</a>
+    </div>
+
     <h2 id="licensce">License</h2>
     <pre>The MIT License (MIT)
 
@@ -51,4 +91,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.</pre>
     <br>
 </div>
+{% endblock %}
+
+{% block additional_js %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.get('https://api.github.com/repos/alexandrevicenzi/gistfy', function (data) {
+                forkCount = data.forks_count;
+                starCount = data.stargazers_count;
+                watchCount = data.watchers_count;
+
+                $('.social-group.fork').find('a').text(forkCount);
+                $('.social-group.star').find('a').text(starCount);
+                $('.social-group.watch').find('a').text(watchCount);
+            });
+        });
+    </script>
 {% endblock %}
