@@ -1,6 +1,13 @@
 # Changelog
 
-### 0.4 (dev)
+### 1.0
+
+There are breaking changes.
+
+- Command line argument `base_url` was renamed to `cdn_url`.
+- All static assets are under `/assets` now.
+
+Fixes and Updates:
 
 - swig replaced by nunjucks. See [this](https://github.com/paularmstrong/swig/issues/628)
 - Update dependencies
@@ -8,6 +15,11 @@
 - Add Google Analytics Track ID option
 - Remove unused command line options
 - Remove AngularJS dependency
+- Added more syles. See [#13](https://github.com/alexandrevicenzi/gistfy/issues/13)
+- Use full url to create snippet. See [#9](https://github.com/alexandrevicenzi/gistfy/issues/9)
+- <iframe> support. See [#16](https://github.com/alexandrevicenzi/gistfy/issues/16)
+- Fixed problem with copy and paste. See [#23](https://github.com/alexandrevicenzi/gistfy/issues/23)
+- Add JSON-LD (For SEO)
 
 ### 0.3.3
 

@@ -1,7 +1,7 @@
 {
   "name": "gistfy",
-  "version": "0.4.0",
-  "description": "Gist your GitHub and Bitbucket repositories",
+  "version": "1.0",
+  "description": "Code once, share everywhere",
   "bin": "src/gistfy.js",
   "keywords": [
     "Gist",
@@ -10,7 +10,9 @@
     "Snippets",
     "Code snippet",
     "Code",
-    "Emdeb"
+    "Emdeb",
+    "Source",
+    "Source Code"
   ],
   "author": {
     "name": "Alexandre Vicenzi",
