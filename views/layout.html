@@ -12,16 +12,16 @@
 
     <title>{{ title }}</title>
 
-    <link href="assets/styles/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/styles/bootstrap.min.css" rel="stylesheet">
     {% if debug %}
-    <link href="assets/styles/site.css" rel="stylesheet">
+    <link href="/assets/styles/site.css" rel="stylesheet">
     {% else %}
-    <link href="assets/styles/site.min.css" rel="stylesheet">
+    <link href="/assets/styles/site.min.css" rel="stylesheet">
     {% endif %}
 
     <meta property="og:title" content="{{ title }}"/>
     <meta property="og:description" content="{{ description }}"/>
-    <meta property="og:url" content="{{ fullUrl }}"/>
+    <meta property="og:url" content="http://www.gistfy.com{{ url }}"/>
     <meta property="og:site_name" content="Gistfy"/>
     <meta property="og:type" content="website"/>
     <meta property="og:locale" content="en_US"/>
@@ -69,7 +69,7 @@
         </div>
         <a href="https://github.com/alexandrevicenzi/gistfy" target="_blank">
             <img class="fork-me"
-                 src="assets/img/forkme.png"
+                 src="/assets/img/forkme.png"
                  alt="Fork me on GitHub"/>
         </a>
     </nav>
@@ -84,12 +84,12 @@
         <div>Copyright © Gistfy {{ year }}. Theme created by <a href="http://bootswatch.com/yeti/" target="_blank">Bootswatch</a>.</div>
     </footer>
 
-    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
-    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
     {% if debug %}
-    <script type="text/javascript" src="assets/js/tab.js"></script>
+    <script type="text/javascript" src="/assets/js/tab.js"></script>
     {% else %}
-    <script type="text/javascript" src="assets/js/tab.min.js"></script>
+    <script type="text/javascript" src="/assets/js/tab.min.js"></script>
     {% endif%}
     {% block additional_js %}{% endblock %}
     {% if ga %}
@@ -109,7 +109,7 @@
             "@type" : "WebSite",
             "name" : "{{ title }}",
             "description" : "{{ description }}"
-            "url" : "{{ fullUrl }}",
+            "url" : "http://www.gistfy.com{{ url }}",
             "image": "http://www.gistfy.com/assets/img/gistfy.png",
         }
     </script>

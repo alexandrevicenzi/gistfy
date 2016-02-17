@@ -11,8 +11,8 @@ var config = {
     }()
 };
 
-config.base_url = (function() {
-    return '//' + this.host + ':' + this.port;
+config.cdn_url = (function() {
+    return '//' + this.host + ':' + this.port + '/assets/styles/';
 }).call(config);
 
 module.exports = rc('gistfy', config);

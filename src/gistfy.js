@@ -161,12 +161,12 @@ function processData(data, slice) {
 function buildResponse(type, options, callback) {
     switch (type) {
         case "js":
-            var js = 'document.write(\'<link rel=\"stylesheet\" href=\"' + config.base_url + '/assets/styles/gistfy.' + options.style + '.min.css\">\');\n'+
+            var js = 'document.write(\'<link rel=\"stylesheet\" href=\"' + config.cdn_url + 'gistfy.' + options.style + '.min.css\">\');\n'+
                      'document.write(\'' + escapeJS(template.render(options)) + '\');';
             callback(200, js, 'text/javascript; charset=utf-8');
             break;
         case "html":
-            var html = '<link rel=\"stylesheet\" href=\"' + config.base_url + '/assets/styles/gistfy.' + options.style + '.min.css\">' +
+            var html = '<link rel=\"stylesheet\" href=\"' + config.cdn_url + 'gistfy.' + options.style + '.min.css\">' +
                        template.render(options);
             callback(200, html, 'text/html; charset=utf-8');
             break;
@@ -335,9 +335,9 @@ app.get('/', function (req, res) {
 });
 
 app.get('/:path(index|api|usage|about).html', function (req, res) {
-    var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    var url = req.originalUrl;
 
-    res.render(req.params.path + '.html', { fullUrl: fullUrl }, function(err, html){
+    res.render(req.params.path + '.html', { url: url }, function(err, html){
         if (err) {
             console.log(err);
             res.render('500.html');
@@ -348,9 +348,9 @@ app.get('/:path(index|api|usage|about).html', function (req, res) {
 });
 
 app.get('/examples.html', function (req, res) {
-    var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    var url = req.originalUrl;
 
-    res.render('examples.html', { fullUrl: fullUrl, style: req.query.style }, function(err, html){
+    res.render('examples.html', { url: url, style: req.query.style }, function(err, html){
         if (err) {
             console.log(err);
             res.render('500.html');
