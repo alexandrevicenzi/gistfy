@@ -103,5 +103,15 @@
         ga('send', 'pageview');
     </script>
     {% endif %}
+    <script type="application/ld+json">
+        {
+            "@context" : "http://schema.org",
+            "@type" : "WebSite",
+            "name" : "{{ title }}",
+            "description" : "{{ description }}"
+            "url" : "{{ fullUrl }}",
+            "image": "http://www.gistfy.com/assets/img/gistfy.png",
+        }
+    </script>
 </body>
 </html>
