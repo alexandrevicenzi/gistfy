@@ -305,7 +305,7 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
 });
 
 if (config.no_static === false) {
-    app.use('/assets', express.static(path.resolve(__dirname, '../static')));
+    app.use(express.static(path.resolve(__dirname, '../static')));
 } else {
     console.log('Static file hosting disabled.');
 }
