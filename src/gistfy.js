@@ -12,7 +12,7 @@ var config = require('./config'),
     util = require('util');
 
 var app = express(),
-    templateFile = fs.readFileSync(path.resolve(__dirname, '../template.html'), 'utf8'),
+    templateFile = fs.readFileSync(path.resolve(__dirname, '../views/embed.html'), 'utf8'),
     template = nunjucks.compile(templateFile);
 
 /* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String */
@@ -161,12 +161,12 @@ function processData(data, slice) {
 function buildResponse(type, options, callback) {
     switch (type) {
         case "js":
-            var js = 'document.write(\'<link rel=\"stylesheet\" href=\"' + config.cdn_url + 'gistfy.' + options.style + '.min.css\">\');\n'+
+            var js = 'document.write(\'<link rel=\"stylesheet\" href=\"' + options.cdn_url + 'gistfy.' + options.style + '.min.css\">\');\n'+
                      'document.write(\'' + escapeJS(template.render(options)) + '\');';
             callback(200, js, 'text/javascript; charset=utf-8');
             break;
         case "html":
-            var html = '<link rel=\"stylesheet\" href=\"' + config.cdn_url + 'gistfy.' + options.style + '.min.css\">' +
+            var html = '<link rel=\"stylesheet\" href=\"' + options.cdn_url + 'gistfy.' + options.style + '.min.css\">' +
                        template.render(options);
             callback(200, html, 'text/html; charset=utf-8');
             break;
@@ -218,7 +218,8 @@ app.get('/github/gist/:id', function (req, res) {
                 files: files,
                 repoUrl: null,
                 style: style,
-                extended: extended
+                extended: extended,
+                cdn_url: config.cdn_url || util.format('//%s/assets/styles/', req.headers.host)
             };
 
             buildResponse(type, options, function (status, content, contentType) {
@@ -289,7 +290,8 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
                 }],
                 repoUrl: repoUrl,
                 style: style,
-                extended: extended
+                extended: extended,
+                cdn_url: config.cdn_url || util.format('//%s/assets/styles/', req.headers.host)
             };
 
             buildResponse(type, options, function (status, content, contentType) {

@@ -6,13 +6,10 @@ var config = {
     debug: false,
     no_static: false,
     ga_id: '',
+    cdn_url: '',
     user_agent: function() {
         return 'Gistfy-App ' + require('../package.json').version;
     }()
 };
-
-config.cdn_url = (function() {
-    return '//' + this.host + ':' + this.port + '/assets/styles/';
-}).call(config);
 
 module.exports = rc('gistfy', config);
