@@ -1,5 +1,10 @@
 # Changelog
 
+### 1.1.0
+
+- Heroku Button and deploy files.
+- Better way to discover default CDN url.
+
 ### 1.0.0
 
 There are breaking changes.
