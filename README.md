@@ -4,6 +4,8 @@
 
 [Gistfy](https://wwww.gistfy.com) is an easy way to create embeddable code snippets from your GitHub and Bitbucket repositories or your GitHub Gists.
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/alexandrevicenzi/gistfy)
+
 ## About
 
 Most people have their code on GitHub, Bitbucket or any other kind of version control.  
