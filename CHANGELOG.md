@@ -22,7 +22,7 @@ Fixes and Updates:
 - Remove AngularJS dependency
 - Added more syles. See [#13](https://github.com/alexandrevicenzi/gistfy/issues/13)
 - Use full url to create snippet. See [#9](https://github.com/alexandrevicenzi/gistfy/issues/9)
-- <iframe> support. See [#16](https://github.com/alexandrevicenzi/gistfy/issues/16)
+- &lt;iframe&gt; support. See [#16](https://github.com/alexandrevicenzi/gistfy/issues/16)
 - Fixed problem with copy and paste. See [#23](https://github.com/alexandrevicenzi/gistfy/issues/23)
 - Add JSON-LD (For SEO)
 
