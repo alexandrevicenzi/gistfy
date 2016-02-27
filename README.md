@@ -2,7 +2,7 @@
 
 [![npm package](https://nodei.co/npm/gistfy.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/gistfy/)
 
-[Gistfy](https://wwww.gistfy.com) is an easy way to create embeddable code snippets from your GitHub and Bitbucket repositories or your GitHub Gists.
+[Gistfy](https://www.gistfy.com) is an easy way to create embeddable code snippets from your GitHub and Bitbucket repositories or your GitHub Gists.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/alexandrevicenzi/gistfy)
 
