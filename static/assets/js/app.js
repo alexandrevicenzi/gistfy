@@ -3,12 +3,12 @@ function getVal(elem) {
 }
 
 function unpackUrl() {
-    var url = getVal('url');
+    var url = getVal('url'), id, host, user, repo, branch, file;
 
     var gistMatch = /http[s]?:\/\/gist\.github\.com\/([a-zA-Z0-9\-\_]*)[\/]?([a-zA-Z0-9\-\_]*)/.exec(url);
 
     if (gistMatch) {
-        var id = gistMatch[2] || gistMatch[1];
+        id = gistMatch[2] || gistMatch[1];
 
         if (id) {
             return {
@@ -20,19 +20,55 @@ function unpackUrl() {
         return undefined;
     }
 
-    var repoMatch = /http[s]?:\/\/(github|bitbucket)\.(com|org)\/([a-zA-Z0-9\-\_]+)[\/]([a-zA-Z0-9\-\_]+)[\/][a-zA-Z0-9\-\_]*[\/]([a-zA-Z0-9\-\_\.]*)[\/]([a-zA-Z0-9\-\_\/\.]*)/.exec(url);
+    var repoMatch = /http[s]?:\/\/(github|bitbucket)\.(com|org)\/([\w\d\-]+)\/([^\/]+)\/[\d\w]+\/([^\/]+)\/([^?]+)/.exec(url);
 
     if (repoMatch) {
-        var host = repoMatch[1],
-            user = repoMatch[3],
-            repo = repoMatch[4],
-            branch = repoMatch[5],
-            file = repoMatch[6];
+        host = repoMatch[1];
+        user = repoMatch[3];
+        repo = repoMatch[4];
+        branch = repoMatch[5];
+        file = repoMatch[6];
 
         if (host && user && repo && branch && file) {
             return {
                 type: 'repo',
                 url: '/' + host + '/' + user + '/' + repo + '/' + file + '?branch=' + branch,
+            };
+        }
+
+        return undefined;
+    }
+
+    var rawGitHubMatch = /http[s]?:\/\/raw\.githubusercontent\.com\/([\w\d\-]+)\/([^\/]+)\/([^\/]+)\/([^?\n]+)/.exec(url);
+
+    if (rawGitHubMatch) {
+        user = rawGitHubMatch[1];
+        repo = rawGitHubMatch[2];
+        branch = rawGitHubMatch[3];
+        file = rawGitHubMatch[4];
+
+        if (user && repo && branch && file) {
+            return {
+                type: 'repo',
+                url: '/github/' + user + '/' + repo + '/' + file + '?branch=' + branch,
+            };
+        }
+
+        return undefined;
+    }
+
+    var rawBitbucketMatch = /http[s]?:\/\/bitbucket\.org\/([\w\d\-]+)\/([^\/]+)\/raw\/([^\/]+)\/([^?\n]+)/.exec(url);
+
+    if (rawBitbucketMatch) {
+        user = rawBitbucketMatch[1];
+        repo = rawBitbucketMatch[2];
+        branch = rawBitbucketMatch[3];
+        file = rawBitbucketMatch[4];
+
+        if (user && repo && branch && file) {
+            return {
+                type: 'repo',
+                url: '/bitbucket/' + user + '/' + repo + '/' + file + '?branch=' + branch,
             };
         }
 
