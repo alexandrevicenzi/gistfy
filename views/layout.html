@@ -19,6 +19,8 @@
     <link href="/assets/styles/site.min.css" rel="stylesheet">
     {% endif %}
 
+    {% block head %}{% endblock %}
+
     <meta property="og:title" content="{{ title }}"/>
     <meta property="og:description" content="{{ description }}"/>
     <meta property="og:url" content="http://www.gistfy.com{{ url }}"/>
@@ -81,6 +83,9 @@
     </section>
 
     <footer class="footer text-center">
+        {% if do_refcode %}
+        <a href="https://m.do.co/c/{{ do_refcode }}"><img src="/assets/img/do-logo-small.png"></a>
+        {% endif %}
         <div>Copyright © Gistfy {{ year }}. Theme created by <a href="http://bootswatch.com/yeti/" target="_blank">Bootswatch</a>.</div>
     </footer>
 

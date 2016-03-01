@@ -3,6 +3,14 @@
 {% set title = "Gistfy - Code once, share everywhere." %}
 {% set description = "Gistify is a simple way to create snippets to share your code with others." %}
 
+{% block head %}
+    {% if debug %}
+    <link href="/assets/styles/hljs.css" rel="stylesheet">
+    {% else %}
+    <link href="/assets/styles/hljs.min.css" rel="stylesheet">
+    {% endif %}
+{% endblock %}
+
 {% block content %}
 <div class="tab-pane active" id="home">
 <h2>Code once, share everywhere.</h2>

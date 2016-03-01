@@ -328,8 +328,11 @@ if (config.debug) {
 var env = nunjucks.configure(app.get('views'), envOptions);
 
 njeval.install(env);
+
 env.addGlobal('ga', config.ga_id);
 env.addGlobal('debug', config.debug);
+env.addGlobal('do_refcode', config.do_refcode);
+
 app.set('view engine', 'nunjucks');
 
 app.get('/', function (req, res) {
