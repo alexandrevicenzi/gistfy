@@ -5,21 +5,21 @@ var gulp = require('gulp'),
     minifyCss = require('gulp-cssnano');
 
 gulp.task('minify-js', function () {
-  return gulp.src(['static/js/app.js', 'static/js/tab.js'])
+  return gulp.src(['static/assets/js/app.js', 'static/assets/js/tab.js'])
     .pipe(minifyJs())
     .pipe(rename({
         extname: '.min.js'
     }))
-    .pipe(gulp.dest('static/js'));
+    .pipe(gulp.dest('static/assets/js'));
 });
 
 gulp.task('minify-css', function () {
-  return gulp.src(['static/styles/*.css', '!static/styles/*.min.css'])
+  return gulp.src(['static/assets/styles/*.css', '!static/assets/styles/*.min.css'])
     .pipe(minifyCss())
     .pipe(rename({
         extname: '.min.css'
     }))
-    .pipe(gulp.dest('static/styles'));
+    .pipe(gulp.dest('static/assets/styles'));
 });
 
 gulp.task('lint', function () {
