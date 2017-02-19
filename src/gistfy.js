@@ -267,7 +267,7 @@ app.get('/:host/:user/:repo/:path(*)', function (req, res) {
     } else if (host === 'bitbucket') {
         htmlUrl =  util.format('https://bitbucket.org/%s/%s/src/%s/%s', user, repo, branch, path);
         rawUrl =  util.format('https://api.bitbucket.org/1.0/repositories/%s/%s/raw/%s/%s', user, repo, branch, path);
-        repoUrl = util.format('https://bitbucket.org/%s/$s', user, repo);
+        repoUrl = util.format('https://bitbucket.org/%s/%s', user, repo);
     } else {
         res.status(400).send('Invalid host: ' + host);
         return;
