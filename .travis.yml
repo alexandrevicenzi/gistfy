@@ -1,9 +1,11 @@
 language: node_js
 node_js:
-  - "4.1"
-  - "4.0"
   - "0.12"
-  - "0.11"
+  - "4.9"
+  - "6.17"
+  - "8.16"
+  - "10.15"
+  - "12.3"
 before_script:
   - npm install -g gulp gulp-cssnano gulp-jshint gulp-minify gulp-rename gulp-uglify
 script: gulp
