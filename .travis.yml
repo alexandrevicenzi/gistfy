@@ -5,9 +5,9 @@ node_js:
   - "6.17"
   - "8.16"
   - "10.15"
-  - "12.3"
+  - "12.12"
 before_script:
-  - npm install -g gulp gulp-cssnano gulp-jshint gulp-minify gulp-rename gulp-uglify
+  - npm install -g --dev
 script: gulp
 notifications:
   email: false
