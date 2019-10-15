@@ -36,5 +36,5 @@ gulp.task('lint', function () {
         .pipe(jshint.reporter("default"));
 });
 
-gulp.task('minify', ['minify-css', 'minify-js']);
-gulp.task('default', ['lint', 'minify']);
+gulp.task('minify', gulp.series('minify-css', 'minify-js'));
+gulp.task('default', gulp.series('lint', 'minify'));
