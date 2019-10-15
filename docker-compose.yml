@@ -1,0 +1,10 @@
+version: '2'
+services:
+  app:
+    build: .
+    working_dir: /gistify
+    command: node src/gistfy.js --port=5000 --host='0.0.0.0'
+    ports:
+     - '5000:5000'
+    volumes:
+     - .:/gistify
